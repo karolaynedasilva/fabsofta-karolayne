@@ -1,0 +1,73 @@
+@startuml
+package br.univille.projfabsoftagenda.entity {
+    class Usuario {
+        - long id
+        - String nome
+        - String tipo // "Paciente" ou "Cuidador"
+        + long getId()
+        + void setId(long id)
+        + String getNome()
+        + void setNome(String nome)
+        + String getTipo()
+        + void setTipo(String tipo)
+    }
+
+    class Paciente {
+        - int idade
+        - String endereco
+        - String numeroEmergencia
+        - List<Lembrete> lembretes
+        + int getIdade()
+        + void setIdade(int idade)
+        + String getEndereco()
+        + void setEndereco(String endereco)
+        + String getNumeroEmergencia()
+        + void setNumeroEmergencia(String numeroEmergencia)
+        + List<Lembrete> getLembretes()
+        + void setLembretes(List<Lembrete> lembretes)
+    }
+
+    class Cuidador {
+        - List<Paciente> pacientes
+        + List<Paciente> getPacientes()
+        + void setPacientes(List<Paciente> pacientes)
+    }
+
+    class Lembrete {
+        - long id
+        - String descricao
+        - LocalDateTime dataHora
+        + long getId()
+        + void setId(long id)
+        + String getDescricao()
+        + void setDescricao(String descricao)
+        + LocalDateTime getDataHora()
+        + void setDataHora(LocalDateTime dataHora)
+    }
+
+    class EstadoEmocional {
+        - long id
+        - String humor // Exemplo: "Feliz", "Triste", "Ansioso"
+        + long getId()
+        + void setId(long id)
+        + String getHumor()
+        + void setHumor(String humor)
+    }
+
+    class AtividadeInterativa {
+        - long id
+        - String tipo // Exemplo: "Jogo", "Exercício de memória"
+        - String descricao
+        + long getId()
+        + void setId(long id)
+        + String getTipo()
+        + void setTipo(String tipo)
+        + String getDescricao()
+        + void setDescricao(String descricao)
+    }
+
+    Usuario <|-- Paciente
+    Usuario <|-- Cuidador
+    Paciente "1" *-- "0..*" Lembrete
+}
+@enduml
