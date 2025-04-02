@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProjfabsoftagendaApplication<projfabsoftagenda>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.univille.projfabsoftagenda.ProjfabsoftagendaApplication",
+            "projectName": "projfabsoftagenda",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
