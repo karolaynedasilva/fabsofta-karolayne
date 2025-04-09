@@ -1,8 +1,15 @@
 package br.univille.entity;
 
+import jakarta.persistence.*;
+
+@Entity
 public class AtividadeInterativa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String tipo; // Exemplo: "Jogo", "Exercício de memória"
+
     private String descricao;
 
     public long getId() {

@@ -1,8 +1,16 @@
 package br.univille.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String nome;
+
     private String tipo; // "Paciente" ou "Cuidador"
 
     public long getId() {

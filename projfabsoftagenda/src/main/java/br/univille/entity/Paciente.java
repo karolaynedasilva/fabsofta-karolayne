@@ -1,11 +1,17 @@
 package br.univille.entity;
 
+import jakarta.persistence.*;
 import java.util.List;
 
+@Entity
 public class Paciente extends Usuario {
     private int idade;
+
     private String endereco;
+
     private String numeroEmergencia;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lembrete> lembretes;
 
     public int getIdade() {
