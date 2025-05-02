@@ -21,6 +21,24 @@ public class Foto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+
 
     @Lob
     private byte[] imagem; // Pode ser path ou bytes
