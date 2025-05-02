@@ -24,4 +24,38 @@ public class Paciente extends Usuario {
     @OneToMany(cascade = CascadeType.ALL)
     private List<HistoricoAtividade> historico;
 
+    public AlbumFotos getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(AlbumFotos album) {
+        this.album = album;
+    }
+
+    public EstadoEmocional getEstadoEmocionalAtual() {
+        return estadoEmocionalAtual;
+    }
+
+    public void setEstadoEmocionalAtual(EstadoEmocional estadoEmocionalAtual) {
+        this.estadoEmocionalAtual = estadoEmocionalAtual;
+    }
+
+    public List<AtividadeInterativa> getAtividades() {
+        return atividades;
+    }
+
+    public void setAtividades(List<AtividadeInterativa> atividades) {
+        this.atividades = atividades;
+    }
+
+    public List<HistoricoAtividade> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(List<HistoricoAtividade> historico) {
+        this.historico = historico;
+    }
+
+
+    
 }
