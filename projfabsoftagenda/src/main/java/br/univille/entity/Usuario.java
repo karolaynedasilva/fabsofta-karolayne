@@ -1,8 +1,17 @@
 package br.univille.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class Usuario {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
+    
     protected String nome;
     protected int idade;
     protected String endereco;

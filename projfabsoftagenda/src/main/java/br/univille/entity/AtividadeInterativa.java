@@ -1,10 +1,24 @@
 package br.univille.entity;
 
-public class AtividadeInterativa {
-    private long id;
-    private TipoAtividade tipo; // Exemplo: "Jogo", "Exercício de memória"
-    private String descricao;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class AtividadeInterativa {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoAtividade tipo; // Exemplo: "Jogo", "Exercício de memória"
+    
+    private String descricao;
+   
     public TipoAtividade getTipo() {
         return tipo;
     }
