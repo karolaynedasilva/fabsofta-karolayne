@@ -15,7 +15,25 @@ public class HistoricoAtividade {
     private LocalDate data;
     private String descricao;
     private boolean foiRealizada;
+    public LocalDate getData() {
+        return data;
+    }
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    public boolean isFoiRealizada() {
+        return foiRealizada;
+    }
+    public void setFoiRealizada(boolean foiRealizada) {
+        this.foiRealizada = foiRealizada;
+    }
 
-    // Getters e Setters
+    
 }
 
