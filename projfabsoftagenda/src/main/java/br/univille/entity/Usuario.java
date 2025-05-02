@@ -1,17 +1,12 @@
 package br.univille.entity;
 
-import jakarta.persistence.*;
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String nome;
-
-    private String tipo; // "Paciente" ou "Cuidador"
+    
+    protected long id;
+    protected String nome;
+    protected int idade;
+    protected String endereco;
+    protected String telefoneEmergencia;
 
     public long getId() {
         return id;
@@ -29,11 +24,28 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getTipo() {
-        return tipo;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefoneEmergencia() {
+        return telefoneEmergencia;
+    }
+
+    public void setTelefoneEmergencia(String telefoneEmergencia) {
+        this.telefoneEmergencia = telefoneEmergencia;
+    }
+
 }
