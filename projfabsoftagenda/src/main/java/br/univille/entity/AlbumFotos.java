@@ -31,4 +31,19 @@ public class AlbumFotos {
     public List<Foto> listarFotos() {
         return fotos;
     }
+
+    public Object getFotos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFotos'");
+    }
+
+    public void setFotos(Object fotos2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFotos'");
+    }
+
+    public int getId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    }
 }
