@@ -2,12 +2,9 @@ package br.univille.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.univille.entity.Paciente;
 import br.univille.repository.PacienteRepository;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PacienteService {

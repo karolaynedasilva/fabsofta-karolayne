@@ -12,9 +12,18 @@ public class HistoricoAtividade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private LocalDate data;
     private String descricao;
     private boolean foiRealizada;
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
     public LocalDate getData() {
         return data;
     }
@@ -33,7 +42,6 @@ public class HistoricoAtividade {
     public void setFoiRealizada(boolean foiRealizada) {
         this.foiRealizada = foiRealizada;
     }
-
     
 }
 
