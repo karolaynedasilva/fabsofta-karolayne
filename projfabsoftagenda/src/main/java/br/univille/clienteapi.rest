@@ -1,34 +1,39 @@
-### API REVISAO - POST POST http://localhost:8080/api/v1/revisoes Content-Type: application/json
-
+### GET - Listar todos os pacientes
 GET http://localhost:8080/api/v1/pacientes
 
-### API PACIENTE POST
+
+
+### POST - Criar novo paciente
 POST http://localhost:8080/api/v1/pacientes
 Content-Type: application/json
 
 {
-  "nome": "zezo",
-  "endereco": "rua leroro 100",
-  "idade": 60,
-  "telefoneEmergencia": "1111-1111"
+  "nome": "Maria da Silva",
+  "endereco": "Rua das Flores, 45",
+  "idade": 78,
+  "telefoneEmergencia": "(47) 99999-1234",
+  "estadoEmocionalAtual": "FELIZ",
+  "atividades": [],
+  "historico": [],
+  "album": null
 }
 
-## API PACIENTE PUT 
+
+### PUT - Atualizar paciente (id = 1)
 PUT http://localhost:8080/api/v1/pacientes/1
 Content-Type: application/json
 
 {
-  "nome": "zezo silva",
-  "endereco": "rua leroro 200",
-  "idade": 61,
-  "telefoneEmergencia": "2222-2222",
-  "estadoEmocionalAtual": "Calmo",
-  "atividades": "Pintura e caminhada",
-  "historico": "Diagnóstico leve de Alzheimer",
-  "album": "fotos-zezo.zip"
+  "nome": "Maria Atualizada",
+  "endereco": "Av. Brasil, 999",
+  "idade": 79,
+  "telefoneEmergencia": "(47) 98888-4321",
+  "estadoEmocionalAtual": "TRISTE",
+  "atividades": [],
+  "historico": [],
+  "album": null
 }
 
-## API PACIENTE DELETE
-DELETE http://localhost:8080/api/v1/pacientes/1
-Content-Type: application/json
 
+### DELETE - Excluir paciente (id = 1)
+DELETE http://localhost:8080/api/v1/pacientes/1
