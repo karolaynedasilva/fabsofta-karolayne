@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "br.univille.entity")
+@EntityScan(basePackages = "br.univille")
 
 public class ProjfabsoftagendaApplication {
 

@@ -1,0 +1,34 @@
+### API REVISAO - POST POST http://localhost:8080/api/v1/revisoes Content-Type: application/json
+
+GET http://localhost:8080/api/v1/pacientes
+
+### API PACIENTE POST
+POST http://localhost:8080/api/v1/pacientes
+Content-Type: application/json
+
+{
+  "nome": "zezo",
+  "endereco": "rua leroro 100",
+  "idade": 60,
+  "telefoneEmergencia": "1111-1111"
+}
+
+## API PACIENTE PUT 
+PUT http://localhost:8080/api/v1/pacientes/1
+Content-Type: application/json
+
+{
+  "nome": "zezo silva",
+  "endereco": "rua leroro 200",
+  "idade": 61,
+  "telefoneEmergencia": "2222-2222",
+  "estadoEmocionalAtual": "Calmo",
+  "atividades": "Pintura e caminhada",
+  "historico": "Diagnóstico leve de Alzheimer",
+  "album": "fotos-zezo.zip"
+}
+
+## API PACIENTE DELETE
+DELETE http://localhost:8080/api/v1/pacientes/1
+Content-Type: application/json
+
