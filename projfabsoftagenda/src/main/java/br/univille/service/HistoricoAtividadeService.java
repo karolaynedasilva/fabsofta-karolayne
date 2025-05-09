@@ -1,12 +1,13 @@
 package br.univille.service;
 
-import java.util.List;
 import br.univille.entity.HistoricoAtividade;
 
-public interface HistoricoAtividadeService {
-    List<HistoricoAtividade> getAll();
-    HistoricoAtividade getById(long id);
-    void save(HistoricoAtividade historico);
-    void delete(long id);
-}
+import java.util.List;
+import java.util.Optional;
 
+public interface HistoricoAtividadeService {
+    List<HistoricoAtividade> listarTodas();
+    Optional<HistoricoAtividade> buscarPorId(Long id);
+    HistoricoAtividade salvar(HistoricoAtividade atividade);
+    void deletar(Long id);
+}

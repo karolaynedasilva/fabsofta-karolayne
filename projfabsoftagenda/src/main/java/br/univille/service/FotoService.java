@@ -1,35 +1,13 @@
 package br.univille.service;
 
+import br.univille.entity.Foto;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
-import br.univille.entity.Foto;
-import br.univille.repository.FotoRepository;
-
-@Service
-public class FotoService {
-
-    private final FotoRepository repository;
-
-    public FotoService(FotoRepository repository) {
-        this.repository = repository;
-    }
-
-    public List<Foto> listarTodas() {
-        return repository.findAll();
-    }
-
-    public Optional<Foto> buscarPorId(Long id) {
-        return repository.findById(id);
-    }
-
-    public Foto salvar(Foto foto) {
-        return repository.save(foto);
-    }
-
-    public void deletar(Long id) {
-        repository.deleteById(id);
-    }
+public interface FotoService {
+    List<Foto> listarTodas();
+    Optional<Foto> buscarPorId(Long id);
+    Foto salvar(Foto foto);
+    void deletar(Long id);
 }
