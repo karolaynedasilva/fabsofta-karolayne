@@ -1,21 +1,15 @@
 package br.univille.entity;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class AlbumFotos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Foto> fotos = new ArrayList<>();
@@ -32,18 +26,19 @@ public class AlbumFotos {
         return fotos;
     }
 
-    public Object getFotos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFotos'");
+    public List<Foto> getFotos() {
+        return fotos;
     }
 
-    public void setFotos(Object fotos2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFotos'");
+    public void setFotos(List<Foto> fotos) {
+        this.fotos = fotos;
     }
 
-    public int getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

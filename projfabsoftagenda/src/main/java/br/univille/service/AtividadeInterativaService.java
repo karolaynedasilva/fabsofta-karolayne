@@ -1,12 +1,13 @@
 package br.univille.service;
 
-import java.util.List;
-
 import br.univille.entity.AtividadeInterativa;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface AtividadeInterativaService {
-    List<AtividadeInterativa> getAll();
-    AtividadeInterativa getById(long id);
-    void save(AtividadeInterativa atividade);
-    void delete(long id);
+    List<AtividadeInterativa> listarTodos();
+    Optional<AtividadeInterativa> buscarPorId(Long id);
+    AtividadeInterativa salvar(AtividadeInterativa atividade);
+    void deletar(Long id);
 }

@@ -2,46 +2,54 @@ package br.univille.controller;
 
 import br.univille.entity.AlbumFotos;
 import br.univille.service.AlbumFotosService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/albumfotos")
+@RequestMapping("/api/albuns")
 public class AlbumFotosController {
 
-    @Autowired
-    private AlbumFotosService service;
+    private final AlbumFotosService service;
+
+    public AlbumFotosController(AlbumFotosService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity<List<AlbumFotos>> getAll() {
-        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+    public List<AlbumFotos> listarTodos() {
+        return service.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumFotos> buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id)
+                     .map(ResponseEntity::ok)
+                     .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<AlbumFotos> post(@RequestBody AlbumFotos album) {
-        if (album == null || album.getId() != 0) return ResponseEntity.badRequest().build();
-        service.save(album);
-        return new ResponseEntity<>(album, HttpStatus.OK);
+    public AlbumFotos criar(@RequestBody AlbumFotos album) {
+        return service.salvar(album);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlbumFotos> put(@PathVariable long id, @RequestBody AlbumFotos album) {
-        var antigo = service.getById(id);
-        if (id <= 0 || album == null || antigo == null) return ResponseEntity.badRequest().build();
-        antigo.setFotos(album.getFotos());
-        service.save(antigo);
-        return new ResponseEntity<>(antigo, HttpStatus.OK);
+    public ResponseEntity<AlbumFotos> atualizar(@PathVariable Long id, @RequestBody AlbumFotos novoAlbum) {
+        return service.buscarPorId(id)
+                     .map(albumExistente -> {
+                         albumExistente.setFotos(novoAlbum.getFotos());
+                         return ResponseEntity.ok(service.salvar(albumExistente));
+                     })
+                     .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<AlbumFotos> delete(@PathVariable long id) {
-        var existente = service.getById(id);
-        if (id <= 0 || existente == null) return ResponseEntity.badRequest().build();
-        service.delete(id);
-        return new ResponseEntity<>(existente, HttpStatus.OK);
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        if (service.buscarPorId(id).isPresent()) {
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

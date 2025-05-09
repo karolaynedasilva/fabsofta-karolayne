@@ -1,11 +1,13 @@
 package br.univille.service;
 
-import java.util.List;
 import br.univille.entity.AlbumFotos;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface AlbumFotosService {
-    List<AlbumFotos> getAll();
-    AlbumFotos getById(long id);
-    void save(AlbumFotos album);
-    void delete(long id);
+    List<AlbumFotos> listarTodos();
+    Optional<AlbumFotos> buscarPorId(Long id);
+    AlbumFotos salvar(AlbumFotos album);
+    void deletar(Long id);
 }
