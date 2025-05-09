@@ -1,78 +1,62 @@
 package br.univille.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import br.univille.entity.Paciente;
+import br.univille.service.PacienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.univille.entity.Paciente;
-import br.univille.service.PacienteService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/pacientes")
+@RequestMapping("/api/pacientes")
 public class PacienteController {
 
-    @Autowired
-    private PacienteService service;
+    private final PacienteService service;
+
+    public PacienteController(PacienteService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> getPacientes() {
-        var listaPacientes = service.getAll();
-        return new ResponseEntity<>(listaPacientes, HttpStatus.OK);
+    public List<Paciente> listarTodos() {
+        return service.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id)
+                     .map(ResponseEntity::ok)
+                     .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Paciente> postPaciente(@RequestBody Paciente paciente) {
-        if (paciente == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (paciente.getId() == 0) {
-            service.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
-        }
-
-        return ResponseEntity.badRequest().build();
+    public Paciente criar(@RequestBody Paciente paciente) {
+        return service.salvar(paciente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> putPaciente(@PathVariable long id, @RequestBody Paciente paciente) {
-        if (id <= 0 || paciente == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        var pacienteAntigo = service.getById(id);
-        if (pacienteAntigo == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        pacienteAntigo.setNome(paciente.getNome());
-        pacienteAntigo.setEndereco(paciente.getEndereco());
-        pacienteAntigo.setTelefoneEmergencia(paciente.getTelefoneEmergencia());
-        pacienteAntigo.setIdade(paciente.getIdade());
-        pacienteAntigo.setEstadoEmocionalAtual(paciente.getEstadoEmocionalAtual());
-        pacienteAntigo.setAtividades(paciente.getAtividades());
-        pacienteAntigo.setHistorico(paciente.getHistorico());
-        pacienteAntigo.setAlbum(paciente.getAlbum());
-
-        service.save(pacienteAntigo);
-        return new ResponseEntity<>(pacienteAntigo, HttpStatus.OK);
+    public ResponseEntity<Paciente> atualizar(@PathVariable Long id, @RequestBody Paciente novoPaciente) {
+        return service.buscarPorId(id)
+                     .map(pacienteExistente -> {
+                         pacienteExistente.setNome(novoPaciente.getNome());
+                         pacienteExistente.setEmail(novoPaciente.getEmail());
+                         pacienteExistente.setSenha(novoPaciente.getSenha());
+                         pacienteExistente.setTelefone(novoPaciente.getTelefone());
+                         pacienteExistente.setAlbum(novoPaciente.getAlbum());
+                         pacienteExistente.setEstadoEmocionalAtual(novoPaciente.getEstadoEmocionalAtual());
+                         pacienteExistente.setAtividades(novoPaciente.getAtividades());
+                         pacienteExistente.setHistorico(novoPaciente.getHistorico());
+                         return ResponseEntity.ok(service.salvar(pacienteExistente));
+                     })
+                     .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Paciente> deletePaciente(@PathVariable long id) {
-        if (id <= 0) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        if (service.buscarPorId(id).isPresent()) {
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
         }
-
-        var pacienteExcluido = service.getById(id);
-        if (pacienteExcluido == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        service.delete(id);
-        return new ResponseEntity<>(pacienteExcluido, HttpStatus.OK);
+        return ResponseEntity.notFound().build();
     }
 }
