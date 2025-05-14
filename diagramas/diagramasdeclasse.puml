@@ -1,73 +1,122 @@
 @startuml
-package br.univille.projfabsoftagenda.entity {
-    class Usuario {
-        - long id
-        - String nome
-        - String tipo // "Paciente" ou "Cuidador"
-        + long getId()
-        + void setId(long id)
-        + String getNome()
-        + void setNome(String nome)
-        + String getTipo()
-        + void setTipo(String tipo)
+package br.univille.entity {
+    class AlbumFotos {
+        - Long id
+        - List<Foto> fotos
+        + void adicionarFoto(Foto foto)
+        + void removerFoto(Foto foto)
+        + List<Foto> listarFotos()
+        + List<Foto> getFotos()
+        + void setFotos(List<Foto> fotos)
+        + Long getId()
+        + void setId(Long id)
     }
 
-    class Paciente {
-        - int idade
-        - String endereco
-        - String numeroEmergencia
-        - List<Lembrete> lembretes
-        + int getIdade()
-        + void setIdade(int idade)
-        + String getEndereco()
-        + void setEndereco(String endereco)
-        + String getNumeroEmergencia()
-        + void setNumeroEmergencia(String numeroEmergencia)
-        + List<Lembrete> getLembretes()
-        + void setLembretes(List<Lembrete> lembretes)
+    class Foto {
+        - Long id
+        - String url
+        + Long getId()
+        + void setId(Long id)
+        + String getUrl()
+        + void setUrl(String url)
+    }
+
+    class AtividadeInterativa {
+        - Long id
+        - String tipo
+        - String descricao
+        + Long getId()
+        + void setId(Long id)
+        + String getTipo()
+        + void setTipo(String tipo)
+        + String getDescricao()
+        + void setDescricao(String descricao)
     }
 
     class Cuidador {
+        - Long id
+        - String nome
         - List<Paciente> pacientes
+        + Long getId()
+        + void setId(Long id)
+        + String getNome()
+        + void setNome(String nome)
         + List<Paciente> getPacientes()
         + void setPacientes(List<Paciente> pacientes)
     }
 
-    class Lembrete {
-        - long id
-        - String descricao
-        - LocalDateTime dataHora
-        + long getId()
-        + void setId(long id)
-        + String getDescricao()
-        + void setDescricao(String descricao)
-        + LocalDateTime getDataHora()
-        + void setDataHora(LocalDateTime dataHora)
-    }
-
     class EstadoEmocional {
-        - long id
-        - String humor // Exemplo: "Feliz", "Triste", "Ansioso"
-        + long getId()
-        + void setId(long id)
-        + String getHumor()
-        + void setHumor(String humor)
+        - Long id
+        - String descricao
+        - Paciente paciente
+        + Long getId()
+        + void setId(Long id)
+        + String getDescricao()
+        + void setDescricao(String descricao)
+        + Paciente getPaciente()
+        + void setPaciente(Paciente paciente)
     }
 
-    class AtividadeInterativa {
-        - long id
-        - String tipo // Exemplo: "Jogo", "Exercício de memória"
+    class HistoricoAtividade {
+        - Long id
         - String descricao
-        + long getId()
-        + void setId(long id)
-        + String getTipo()
-        + void setTipo(String tipo)
+        - Paciente paciente
+        + Long getId()
+        + void setId(Long id)
+        + String getDescricao()
+        + void setDescricao(String descricao)
+        + Paciente getPaciente()
+        + void setPaciente(Paciente paciente)
+    }
+
+    class Lembrete {
+        - Long id
+        - String descricao
+        - Paciente paciente
+        + Long getId()
+        + void setId(Long id)
+        + String getDescricao()
+        + void setDescricao(String descricao)
+        + Paciente getPaciente()
+        + void setPaciente(Paciente paciente)
+    }
+
+    class Paciente {
+        - Long id
+        - String nome
+        - AlbumFotos albumFotos
+        - List<Lembrete> lembretes
+        - List<EstadoEmocional> estadosEmocionais
+        - List<HistoricoAtividade> historicoAtividades
+        + Long getId()
+        + void setId(Long id)
+        + String getNome()
+        + void setNome(String nome)
+        + AlbumFotos getAlbumFotos()
+        + void setAlbumFotos(AlbumFotos albumFotos)
+        + List<Lembrete> getLembretes()
+        + void setLembretes(List<Lembrete> lembretes)
+        + List<EstadoEmocional> getEstadosEmocionais()
+        + void setEstadosEmocionais(List<EstadoEmocional> estadosEmocionais)
+        + List<HistoricoAtividade> getHistoricoAtividades()
+        + void setHistoricoAtividades(List<HistoricoAtividade> historicoAtividades)
+    }
+
+    class TipoAtividade {
+        - Long id
+        - String descricao
+        + Long getId()
+        + void setId(Long id)
         + String getDescricao()
         + void setDescricao(String descricao)
     }
 
-    Usuario <|-- Paciente
-    Usuario <|-- Cuidador
-    Paciente "1" *-- "0..*" Lembrete
+    AlbumFotos "1" --> "0..*" Foto : contém
+    Paciente "1" --> "1" AlbumFotos : possui
+    Cuidador "1" --> "0..*" Paciente : gerencia
+    Paciente "1" --> "0..*" Lembrete : possui
+    Paciente "1" --> "0..*" EstadoEmocional : registra
+    Paciente "1" --> "0..*" HistoricoAtividade : possui
+    HistoricoAtividade "1" --> "1" TipoAtividade : refere-se a
 }
 @enduml
