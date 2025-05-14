@@ -4,7 +4,7 @@ import br.univille.projfabsoftagenda.entity.EstadoEmocional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/estado-emocional")
+@RequestMapping("/api/v1/estado-emocional")
 public class EstadoEmocionalController {
 
     @GetMapping

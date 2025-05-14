@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/lembretes")
+@RequestMapping("/api/v1/lembretes")
 public class LembreteController {
 
     private final LembreteService service;
