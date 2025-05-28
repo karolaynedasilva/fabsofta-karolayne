@@ -4,4 +4,5 @@ export class Paciente {
     telefone: string;
     email: string;
     senha: string;    
+    // Paciente[]; lista
 }

@@ -1,6 +1,21 @@
 <main class="container">
     <h2>Paciente</h2>
     <table class="table">
-
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Senha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let umPaciente of listaPacientes">
+                <td>{{umPaciente.nome}}</td>
+                <td>{{umPaciente.telefone}}</td>
+                <td>{{umPaciente.email}}</td>
+                <td>{{umPaciente.senha}}</td>
+            </tr>
+        </tbody>
     </table>
 </main>
