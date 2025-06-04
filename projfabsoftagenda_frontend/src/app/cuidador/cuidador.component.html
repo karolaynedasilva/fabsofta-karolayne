@@ -1,0 +1,19 @@
+<main class="container">
+    <h2>Cuidadores</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Senha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let umCuidador of listaCuidadores">
+                <td>{{umCuidador.nome}}</td>
+                <td>{{umCuidador.email}}</td>
+                <td>{{umCuidador.senha}}</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
