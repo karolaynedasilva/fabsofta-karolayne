@@ -12,4 +12,8 @@ export class PacienteService {
   getPacientes() {
     return this.http.get<Paciente[]>(this.apiUrl);
   }
+
+  savePaciente(paciente: Paciente) {
+      return this.http.post(this.apiUrl, paciente);
+  }
 }

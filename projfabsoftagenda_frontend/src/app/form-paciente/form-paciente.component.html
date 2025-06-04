@@ -1,0 +1,13 @@
+<main class="container">
+    <h2>Paciente</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="txtNome">Nome</label>
+                <input type="text" class="form-control" id="txtNome" [(ngModel)]="paciente.nome" name="txtNome" placeholder="Digite o nome do paciente" required>
+            </div>
+        </div>
+        
+        <button class="btn btn-primary" (click)="salvar()">Salvar</button>
+    </div>
+</main>
