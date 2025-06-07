@@ -2,12 +2,47 @@
     <h2>Paciente</h2>
     <div class="card">
         <div class="card-body">
-            <div class="form-group">
-                <label for="txtNome">Nome</label>
-                <input type="text" class="form-control" id="txtNome" [(ngModel)]="paciente.nome" name="txtNome" placeholder="Digite o nome do paciente" required>
-            </div>
+            <form #formPaciente="ngForm" class="row g-3" (ngSubmit)="salvar()" novalidate>
+                <div class="col-md-6">
+                    <label for="txtNome" class="form-label" [ngClass]="{'text-danger': nome.invalid && nome.touched}">Nome</label>
+                    <input type="text" class="form-control" id="txtNome"
+                        [(ngModel)]="paciente.nome" name="nome" required #nome="ngModel"
+                        [ngClass]="{'is-invalid': nome.invalid && nome.touched}">
+                    <div *ngIf="nome.invalid && nome.touched" class="text-danger">Nome é obrigatório.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtIdade" class="form-label" [ngClass]="{'text-danger': idade.invalid && idade.touched}">Idade</label>
+                    <input type="number" class="form-control" id="txtIdade"
+                        [(ngModel)]="paciente.idade" name="idade" required #idade="ngModel"
+                        [ngClass]="{'is-invalid': idade.invalid && idade.touched}">
+                    <div *ngIf="idade.invalid && idade.touched" class="text-danger">Idade é obrigatória.</div>
+                </div>
+
+                <div class="col-12">
+                    <label for="txtEndereco" class="form-label" [ngClass]="{'text-danger': endereco.invalid && endereco.touched}">Endereço</label>
+                    <input type="text" class="form-control" id="txtEndereco"
+                        [(ngModel)]="paciente.endereco" name="endereco" required #endereco="ngModel"
+                        [ngClass]="{'is-invalid': endereco.invalid && endereco.touched}">
+                    <div *ngIf="endereco.invalid && endereco.touched" class="text-danger">Endereço é obrigatório.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtEmail" class="form-label" [ngClass]="{'text-danger': email.invalid && email.touched}">Email</label>
+                    <input type="email" class="form-control" id="txtEmail"
+                        [(ngModel)]="paciente.email" name="email" required #email="ngModel"
+                        [ngClass]="{'is-invalid': email.invalid && email.touched}">
+                    <div *ngIf="email.invalid && email.touched" class="text-danger">Email válido é obrigatório.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtTelefone" class="form-label" [ngClass]="{'text-danger': telefone.invalid && telefone.touched}">Telefone</label>
+                    <input type="text" class="form-control" id="txtTelefone"
+                        [(ngModel)]="paciente.telefone" name="telefone" required #telefone="ngModel" mask="(00) 00000-0000" [ngClass]="{'is-invalid': telefone.invalid && telefone.touched}">
+                    <div *ngIf="telefone.invalid && telefone.touched" class="text-danger">Telefone é obrigatório.</div>
+                </div>
+            </form>
         </div>
-        
         <button class="btn btn-primary" (click)="salvar()">Salvar</button>
     </div>
 </main>

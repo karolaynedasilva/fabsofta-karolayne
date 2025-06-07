@@ -40,7 +40,8 @@ public class PacienteController {
                      .map(pacienteExistente -> {
                          pacienteExistente.setNome(novoPaciente.getNome());
                          pacienteExistente.setEmail(novoPaciente.getEmail());
-                         pacienteExistente.setSenha(novoPaciente.getSenha());
+                         pacienteExistente.setIdade(novoPaciente.getIdade());
+                         pacienteExistente.setEndereco(novoPaciente.getEndereco());
                          pacienteExistente.setTelefone(novoPaciente.getTelefone());
                          pacienteExistente.setAlbum(novoPaciente.getAlbum());
                          pacienteExistente.setEstadoEmocionalAtual(novoPaciente.getEstadoEmocionalAtual());

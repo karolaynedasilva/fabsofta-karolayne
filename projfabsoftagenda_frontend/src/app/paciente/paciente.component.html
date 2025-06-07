@@ -5,17 +5,19 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Telefone</th>
+                <th>Idade</th>
+                <th>Endereço</th>
                 <th>Email</th>
-                <th>Senha</th>
+                <th>Telefone de Emergência</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let umPaciente of listaPacientes">
                 <td>{{umPaciente.nome}}</td>
-                <td>{{umPaciente.telefone}}</td>
+                <td>{{umPaciente.idade}}</td>
+                <td>{{umPaciente.endereco}}</td>
                 <td>{{umPaciente.email}}</td>
-                <td>{{umPaciente.senha}}</td>
+                <td>{{umPaciente.telefone}}</td>
             </tr>
         </tbody>
     </table>

@@ -9,8 +9,10 @@ Content-Type: application/json
 
 {
   "nome": "Maria da Silva",
+  "idade": 89,
   "email": "lalalalalla",
-  "telefoneEmergencia": "(47) 99999-1234",
+  "endereco": "lololo",
+  "telefone": "(47) 99999-1234",
   "estadoEmocionalAtual": "FELIZ",
   "atividades": [],
   "historico": [],
@@ -23,11 +25,12 @@ PUT http://localhost:8080/api/v1/pacientes/1
 Content-Type: application/json
 
 {
-  "nome": "Maria Atualizada",
-  "endereco": "Av. Brasil, 999",
-  "idade": 79,
-  "telefoneEmergencia": "(47) 98888-4321",
-  "estadoEmocionalAtual": "TRISTE",
+  "nome": "Maria da Silva",
+  "idade": 89,
+  "email": "lalalalalla",
+  "endereco": "lololo",
+  "telefone": "(47) 99999-1234",
+  "estadoEmocionalAtual": "FELIZ",
   "atividades": [],
   "historico": [],
   "album": null

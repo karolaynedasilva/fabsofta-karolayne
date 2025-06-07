@@ -11,8 +11,9 @@ public class Paciente {
     private long id;
     
     private String nome;
+    private int idade;
     private String email;
-    private String senha;
+    private String endereco;
     private String telefone;
     
     @OneToOne(cascade = CascadeType.ALL)
@@ -28,6 +29,22 @@ public class Paciente {
     private List<HistoricoAtividade> historico;
 
   
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
     public long getId() {
         return id;
     }
@@ -50,14 +67,6 @@ public class Paciente {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getTelefone() {
