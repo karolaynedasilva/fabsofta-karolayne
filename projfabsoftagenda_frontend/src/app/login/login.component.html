@@ -1,0 +1,22 @@
+<main class="container">
+    <form (ngSubmit)="autenticarOuCadastrar()">
+    <div class="mb-3">
+        <label>Email</label>
+        <input class="form-control" [(ngModel)]="usuario.email" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label>Senha</label>
+        <input type="password" class="form-control" [(ngModel)]="usuario.senha" name="senha" required>
+    </div>
+    <div *ngIf="!modoLogin" class="mb-3">
+        <label>Tipo de Usuário</label>
+        <select class="form-control" [(ngModel)]="usuario.tipo" name="tipo" required>
+        <option value="PACIENTE">Paciente</option>
+        <option value="CUIDADOR">Cuidador</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">
+        {{ modoLogin ? 'Entrar' : 'Cadastrar' }}
+    </button>
+    </form>
+</main>

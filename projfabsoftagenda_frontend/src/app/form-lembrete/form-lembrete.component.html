@@ -1,0 +1,30 @@
+<main class="container">
+  <h2>Cadastrar Lembrete</h2>
+  <form class="row g-3" (ngSubmit)="salvarLembrete()">
+    
+    <div class="col-md-6">
+      <label for="paciente" class="form-label">Paciente</label>
+      <select id="paciente" class="form-select" [(ngModel)]="lembrete.pacienteId" name="paciente" required>
+        <option value="" disabled selected>Selecione o paciente</option>
+        <option *ngFor="let paciente of pacientes" [value]="paciente.id">{{ paciente.nome }}</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label for="titulo" class="form-label">Título</label>
+      <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="lembrete.titulo" required>
+    </div>
+
+    <div class="col-12">
+      <label for="descricao" class="form-label">Descrição</label>
+      <textarea class="form-control" id="descricao" name="descricao" [(ngModel)]="lembrete.descricao" required></textarea>
+    </div>
+
+    <div class="col-md-6">
+      <label for="data" class="form-label">Data</label>
+      <input type="date" class="form-control" id="data" name="data" [(ngModel)]="lembrete.dataHora" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Salvar</button>
+  </form>
+</main>
