@@ -29,7 +29,7 @@ export class LoginComponent {
         next: (res) => {
           localStorage.setItem('usuario', JSON.stringify(res));
           if (res.tipo === 'CUIDADOR') {
-            this.router.navigate(['/form-lembrete']);
+            this.router.navigate(['/homecuidador']);
           } else {
             this.router.navigate(['/lembrete']);
           }

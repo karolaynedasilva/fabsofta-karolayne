@@ -1,0 +1,30 @@
+.card {
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+#main{
+    height: 60%;
+}
+
+/* Card maior e centralizado na tela */
+.d-flex {
+    display: flex;
+}
+
+.vh-100 {
+    height: 100vh;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.text-center {
+    text-align: center;
+}
+h2{
+    color: #29115a;
+    font-weight: bold;
+    font-size: 3dvw;
+
+}

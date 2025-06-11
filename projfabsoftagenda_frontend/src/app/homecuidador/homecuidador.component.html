@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 w-75" id="main">
+      <h2 class="text-center">Bem-vindo, Cuidador!</h2>
+      <p class="text-center">Escolha uma opção abaixo:</p>
+  
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card" (click)="navegarPara('/cadastro-paciente')">
+            <div class="card-body text-center">
+              <h5 class="card-title">Cadastrar Paciente</h5>
+              <p class="card-text">Adicione um novo paciente ao sistema.</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-6">
+          <div class="card" (click)="navegarPara('/cadastro-lembrete')">
+            <div class="card-body text-center">
+              <h5 class="card-title">Criar Lembrete</h5>
+              <p class="card-text">Registre um novo lembrete para os pacientes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

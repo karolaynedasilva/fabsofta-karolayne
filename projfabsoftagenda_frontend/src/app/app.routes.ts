@@ -6,6 +6,7 @@ import { LembreteComponent } from './lembrete/lembrete.component';
 import { FormLembreteComponent } from './form-lembrete/form-lembrete.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auto.guard';
+import { HomecuidadorComponent } from './homecuidador/homecuidador.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,7 +15,8 @@ export const routes: Routes = [
   { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard] },
   { path: 'pacientes/novo', component: FormPacienteComponent, canActivate: [AuthGuard] },
   { path: 'lembretes/novo', component: LembreteComponent, canActivate: [AuthGuard] },
-  { path: 'lembretes/form', component: FormLembreteComponent, canActivate: [AuthGuard] },
+  { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard] },
+  { path: 'form-lembrete', component: FormLembreteComponent, canActivate: [AuthGuard] },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
