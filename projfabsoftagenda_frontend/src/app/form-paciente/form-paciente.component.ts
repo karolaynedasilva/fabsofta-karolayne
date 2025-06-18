@@ -24,7 +24,7 @@ export class FormPacienteComponent {
         const id = this.activeRouter.snapshot.paramMap.get('id');
         
         if (id) {
-          this.pacienteService.getPacientePorId(id).subscribe(paciente => {
+          this.pacienteService.getPacienteById(id).subscribe(paciente => {
             this.paciente = paciente;
         });
       }
@@ -33,7 +33,7 @@ export class FormPacienteComponent {
     salvar(){
       this.pacienteService.savePaciente(this.paciente)
           .subscribe( res => {
-            this.router.navigate(['clientes']);
+            this.router.navigate(['pacientes']);
           });
     }
 }
