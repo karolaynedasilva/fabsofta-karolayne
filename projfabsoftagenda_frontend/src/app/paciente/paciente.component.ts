@@ -41,7 +41,7 @@ export class PacienteComponent {
   }
 
   alterar(paciente:Paciente){
-    this.router.navigate(['/pacientes/alterar', paciente.id])
+    this.router.navigate(['pacientes/alterar', paciente.id])
   }
 
   abrirConfirmacao(paciente:Paciente) {

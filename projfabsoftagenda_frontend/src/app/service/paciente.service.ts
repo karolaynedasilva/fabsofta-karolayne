@@ -21,10 +21,10 @@ export class PacienteService {
     return this.http.post(this.apiUrl,paciente);
   }
 
-  getPacientePorId(id: any) {
+  getPacienteById(id: any) {
     return this.http.get<Paciente>(this.apiUrl + '/' + id);
   }
-  
+
   excluirPaciente(id: any){
     return this.http.delete<Paciente>(this.apiUrl + '/' + id);
   }
