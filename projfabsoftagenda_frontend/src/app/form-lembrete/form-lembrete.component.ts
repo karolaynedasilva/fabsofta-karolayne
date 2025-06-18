@@ -10,11 +10,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-lembrete',
-  standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './form-lembrete.component.html',
   styleUrl: './form-lembrete.component.css',
-  providers: [LembreteService, PacienteService]
+  providers: [PacienteService, Router]
 })
 export class FormLembreteComponent {
   lembrete: Lembrete = new Lembrete();
