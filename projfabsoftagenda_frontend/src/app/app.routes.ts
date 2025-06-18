@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'lembretes/novo', component: LembreteComponent, canActivate: [AuthGuard] },
   { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard] },
   { path: 'form-lembrete', component: FormLembreteComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

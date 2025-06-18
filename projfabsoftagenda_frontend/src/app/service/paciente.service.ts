@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Paciente} from '../model/paciente';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,19 @@ export class PacienteService {
     return this.http.get<Paciente[]>(this.apiUrl);
   }
 
-  savePaciente(paciente: Paciente) {
-      return this.http.post(this.apiUrl, paciente);
+  savePaciente(paciente:Paciente){
+    if(paciente.id){
+      return this.http.put(this.apiUrl + '/' + paciente.id, paciente);
+    }
+    return this.http.post(this.apiUrl,paciente);
   }
+
+  getPacientePorId(id: any) {
+    return this.http.get<Paciente>(this.apiUrl + '/' + id);
+  }
+  
+  excluirPaciente(id: any){
+    return this.http.delete<Paciente>(this.apiUrl + '/' + id);
+  }
+  
 }
