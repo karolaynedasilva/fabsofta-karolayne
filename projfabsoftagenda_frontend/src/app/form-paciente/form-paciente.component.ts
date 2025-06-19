@@ -5,11 +5,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-form-paciente',
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './form-paciente.component.html',
   styleUrl: './form-paciente.component.css',
   providers: [PacienteService, Router, provideNgxMask()]
