@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Paciente } from '../model/paciente';
 import { Lembrete } from '../model/lembrete';
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
   providers: [PacienteService, Router]
 })
 export class FormLembreteComponent {
+  @ViewChild('formLembrete') formLembrete!: NgForm;
   lembrete: Lembrete = new Lembrete();
   pacientes: Paciente[] = [];
 
@@ -23,6 +24,8 @@ export class FormLembreteComponent {
     private lembreteService: LembreteService,
     private pacienteService: PacienteService,
     private router: Router
+
+    
   ) {}
 
   ngOnInit(): void {
@@ -31,11 +34,21 @@ export class FormLembreteComponent {
     });
   }
 
-  salvar(){
+  // salvar(){
+  //     this.lembreteService.saveLembrete(this.lembrete)
+  //         .subscribe( res => {
+  //           this.router.navigate(['lembretes']);
+  //         });
+  //   }
+  salvar() {
+    if (this.formLembrete.valid) {
       this.lembreteService.saveLembrete(this.lembrete)
-          .subscribe( res => {
-            this.router.navigate(['lembretes']);
-          });
+        .subscribe(res => {
+          this.router.navigate(['lembretes']);
+        });
+    } else {
+      this.formLembrete.form.markAllAsTouched();
     }
+  }
 
 }

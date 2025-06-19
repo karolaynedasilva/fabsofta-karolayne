@@ -4,13 +4,14 @@ import { LembreteService } from '../service/lembrete.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-lembrete',
   imports: [HttpClientModule, CommonModule, RouterLink],
   templateUrl: './lembrete.component.html',
   styleUrl: './lembrete.component.css',
-  providers: [LembreteService]
+  providers: [LembreteService,  provideNgxMask()]
 })
 export class LembreteComponent {
 
