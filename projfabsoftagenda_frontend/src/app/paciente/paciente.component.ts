@@ -4,6 +4,7 @@ import { PacienteService } from '../service/paciente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, ActivatedRoute, ParamMap } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import * as bootstrap from 'bootstrap';
 
 @Component({
@@ -11,7 +12,7 @@ import * as bootstrap from 'bootstrap';
   imports: [HttpClientModule, CommonModule, RouterLink],
   templateUrl: './paciente.component.html',
   styleUrl: './paciente.component.css',
-  providers: [PacienteService, Router]
+  providers: [PacienteService, Router, provideNgxMask()]
 })
 export class PacienteComponent {
 

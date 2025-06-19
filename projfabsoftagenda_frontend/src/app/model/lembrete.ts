@@ -2,7 +2,8 @@ export class Lembrete {
     id: number;
     titulo: string;
     descricao: string;
-    dataHora: string;
+    data: Date;
+    hora: Date;
     pacienteId: number;
     cuidadorId: number;
 }

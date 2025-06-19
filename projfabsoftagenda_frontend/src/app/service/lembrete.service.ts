@@ -7,7 +7,7 @@ import { Lembrete } from '../model/lembrete';
   providedIn: 'root'
 })
 export class LembreteService {
-  private apiUrl = '/api/v1/lembretes';
+  private apiUrl = 'http://localhost:8080/api/v1/lembretes';
 
   constructor(private http: HttpClient) {}
 
@@ -22,4 +22,11 @@ export class LembreteService {
   listarPorPaciente(pacienteId: number): Observable<Lembrete[]> {
     return this.http.get<Lembrete[]>(`${this.apiUrl}/paciente/${pacienteId}`);
   }
+  saveLembrete(lembrete:Lembrete){
+      if(lembrete.id){
+        return this.http.put(this.apiUrl + '/' + lembrete.id, lembrete);
+      }
+      return this.http.post(this.apiUrl,lembrete);
+    }
+  
 }

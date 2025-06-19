@@ -5,6 +5,7 @@
     <thead class="table">
       <tr>
         <th>Data</th>
+        <th>Hora</th>
         <th>Descrição</th>
         <th>Paciente</th>
         <th>Cuidador</th>
@@ -12,7 +13,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let lembrete of listaLembretes">
-        <td>{{ lembrete.dataHora | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ lembrete.data | date: 'dd/MM/yyyy' }}</td>
+        <td>{{lembrete.hora}}</td>
         <td>{{ lembrete.descricao }}</td>
         <td>{{ lembrete.pacienteId }}</td>
         <td>{{ lembrete.cuidadorId }}</td>

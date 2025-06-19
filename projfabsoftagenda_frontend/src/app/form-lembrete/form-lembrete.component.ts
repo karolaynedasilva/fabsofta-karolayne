@@ -31,9 +31,11 @@ export class FormLembreteComponent {
     });
   }
 
-  salvarLembrete() {
-    this.lembreteService.salvar(this.lembrete).subscribe(() => {
-      this.router.navigate(['/lembretes/form']);
-    });
-  }
+  salvar(){
+      this.lembreteService.saveLembrete(this.lembrete)
+          .subscribe( res => {
+            this.router.navigate(['lembretes']);
+          });
+    }
+
 }
