@@ -5,6 +5,8 @@ import { FormPacienteComponent } from './form-paciente/form-paciente.component';
 import { LembreteComponent } from './lembrete/lembrete.component';
 import { FormLembreteComponent } from './form-lembrete/form-lembrete.component';
 import { HomecuidadorComponent } from './homecuidador/homecuidador.component';
+import { Homepaciente } from './model/homepaciente';
+import { HomePacienteComponent } from './homepaciente/homepaciente.component';
 
 export const routes: Routes = [
   { path: 'pacientes', component: PacienteComponent,},
@@ -13,5 +15,7 @@ export const routes: Routes = [
   { path: 'lembretes/novo', component: FormLembreteComponent,},
   { path: 'lembretes', component: LembreteComponent,},
   { path: 'homecuidador', component: HomecuidadorComponent, },
-  { path: 'pacientes/alterar/:id', component: FormPacienteComponent,},
+  { path: 'homepaciente',  component: HomePacienteComponent, },
+  { path: 'homepaciente/:id',  component: HomePacienteComponent, },
+  { path: 'pacientes/alterar/:id', component: FormPacienteComponent,}
 ];
