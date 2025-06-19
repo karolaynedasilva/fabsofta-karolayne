@@ -1,7 +1,7 @@
 <main class="container mt-4">
   <h2 class="mb-4">Lembretes</h2>
 
-  <table class="table table-bordered table-striped">
+  <!-- <table class="table table-bordered table-striped">
     <thead class="table">
       <tr>
         <th>Data</th>
@@ -24,5 +24,30 @@
 
   <div *ngIf="listaLembretes.length === 0" class="alert alert-info">
     Nenhum lembrete cadastrado.
+  </div> -->
+
+  <div *ngIf="listaLembretes.length === 0" class="alert alert-info">
+  Nenhum lembrete cadastrado.
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3" *ngIf="listaLembretes.length > 0">
+  <div class="col" *ngFor="let lembrete of listaLembretes">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ lembrete.titulo }}</h5>
+        <p class="card-text">{{ lembrete.descricao }}</p>
+        <p class="card-text">
+          <small class="text-muted">
+            {{ lembrete.data | date: 'shortDate' }} às {{ lembrete.hora }}
+          </small>
+        </p>
+      </div>
+      <!-- <div class="card-footer text-end">
+        <button class="btn btn-sm btn-primary me-2" (click)="editarLembrete(lembrete)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="excluirLembrete(lembrete)">Excluir</button>
+      </div> -->
+    </div>
   </div>
+</div>
+
 </main>
