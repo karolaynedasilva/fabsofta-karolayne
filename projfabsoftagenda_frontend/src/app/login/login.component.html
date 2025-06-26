@@ -1,0 +1,33 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h3 class="mb-4 text-center">Login</h3>
+
+  <form (ngSubmit)="autenticar()" #formLogin="ngForm">
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mail</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="usuario.email"
+        name="email"
+        required
+        placeholder="Digite seu email"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <input
+        type="password"
+        class="form-control"
+        id="senha"
+        [(ngModel)]="usuario.senha"
+        name="senha"
+        required
+        placeholder="Digite sua senha"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+  </form>
+</div>
