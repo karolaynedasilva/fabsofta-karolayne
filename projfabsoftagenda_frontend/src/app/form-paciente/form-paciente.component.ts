@@ -30,7 +30,6 @@ export class FormPacienteComponent {
         });
       }
     }
-
     salvar() {
     if (this.formPaciente.valid) {
       this.pacienteService.savePaciente(this.paciente)
