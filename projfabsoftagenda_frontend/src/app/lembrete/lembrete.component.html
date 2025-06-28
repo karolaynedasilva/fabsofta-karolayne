@@ -1,51 +1,46 @@
-<main class="container mt-4">
-  <h2 class="mb-4">Lembretes</h2>
-<!-- 
-  <table class="table table-bordered table-striped">
-    <thead class="table">
-      <tr>
-        <th>Data</th>
-        <th>Hora</th>
-        <th>Descrição</th>
-        <th>Paciente</th>
-        <th>Cuidador</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let lembrete of listaLembretes">
-        <td>{{ lembrete.data | date: 'dd/MM/yyyy' }}</td>
-        <td>{{lembrete.hora}}</td>
-        <td>{{ lembrete.descricao }}</td>
-        <td>{{ lembrete.pacienteId }}</td>
-        <td>{{ lembrete.cuidadorId }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="listaLembretes.length === 0" class="alert alert-info">
-    Nenhum lembrete cadastrado.
-  </div> -->
-
-  <div *ngIf="listaLembretes.length === 0" class="alert alert-info">
-  Nenhum lembrete cadastrado.
-</div>
-
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3" *ngIf="listaLembretes.length > 0">
-  <div class="col" *ngFor="let lembrete of listaLembretes">
-    <div class="card h-100">
-      <div class="card-body">
-        <h5 class="card-title">{{ lembrete.titulo }}</h5>
-        <p class="card-text">{{ lembrete.descricao }}</p>
-        <p class="card-text">
-          <small class="text-muted">
-            {{ lembrete.data | date: 'shortDate' }} às {{ lembrete.hora }}
-          </small>
-        </p>
-      </div>
-      
-    </div>
-  </div>
-</div> 
-
+<main class="container">
+    <h2>Lembretes</h2>
+    <a (click)="novo()" class="btn btn-primary">Novo</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Descricao</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Paciente</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let umLembrete of listaLembretes">
+                <td>{{umLembrete.titulo}}</td>
+                <td>{{umLembrete.descricao}}</td>
+                <td>{{umLembrete.data}}</td>
+                <td>{{umLembrete.hora}}</td>
+                <td>{{umLembrete.paciente}}</td>
+                <td>
+                    <a (click)="alterar(umLembrete)" class="btn btn-secondary">Alterar</a>
+                    <a (click)="abrirConfirmacao(umLembrete)" class="btn btn-danger">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </main>
 
+<div class="modal fade" #myModal tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir lembrete</h5>
+            </div>
+            <div class="modal-body">
+            Confirma a exclusão do lembrete?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="confirmarExclusao()">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
