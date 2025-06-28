@@ -9,6 +9,7 @@ import { HomePacienteComponent } from './homepaciente/homepaciente.component';
 import { AuthGuard } from './guards/auto.guards';
 import { LoginComponent } from './login/login.component';
 import { FotoFamiliarComponent } from './foto/foto-familiar.component';
+import { FormLembreteComponent } from './form-lembrete/form-lembrete.component';
 
 
 export const routes: Routes = [
@@ -17,10 +18,10 @@ export const routes: Routes = [
   { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard]},
   { path: 'pacientes/novo', component: FormPacienteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes', component: LembreteComponent, canActivate: [AuthGuard]},
+  { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
   { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard]},
   { path: 'homepaciente/:id',  component: HomePacienteComponent,canActivate: [AuthGuard] },
   { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
   { path: 'fotos-familiares', component: FotoFamiliarComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
-//{ path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},

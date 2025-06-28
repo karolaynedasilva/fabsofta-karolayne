@@ -31,5 +31,4 @@ export class LembreteService {
   excluirLembrete(id: any){
     return this.http.delete<Lembrete>(this.apiUrl + '/' + id);
   }
-  
 }
