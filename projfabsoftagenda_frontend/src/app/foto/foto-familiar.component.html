@@ -1,0 +1,36 @@
+<main class="container mt-4">
+<h2>Album de Fotos</h2>
+  <form #formFotoFamiliar="ngForm" (ngSubmit)="salvar()" novalidate>
+    
+
+    <div class="col-md-6">
+      <label for="paciente" class="form-label">Paciente</label>
+      <select class="form-select" required
+              [(ngModel)]="fotoFamiliar.paciente" name="paciente" #paciente="ngModel">
+        <option [ngValue]="null" disabled selected>Selecione um paciente</option>
+        <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+      </select>
+      <div *ngIf="paciente.invalid && paciente.touched" class="text-danger">
+        Paciente é obrigatório.
+      </div>
+    </div>
+
+ 
+    <div class="col-md-6">
+      <label for="fileImagem" class="form-label">Imagem</label>
+      <input type="file" class="form-control" id="fileImagem" required
+             (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
+ 
+    <div class="col-12" *ngIf="fotoFamiliar.foto">
+      <label class="form-label">Pré-visualização</label>
+      <img [src]="'data:' + fotoFamiliar.mimeType + ';base64,' + fotoFamiliar.foto" class="img-fluid" width="250">
+    </div>
+
+    <div class="col-12 text-end">
+       <button class="btn btn-primary" type="submit">Salvar</button>
+      
+    </div>
+  </form>
+</main>
