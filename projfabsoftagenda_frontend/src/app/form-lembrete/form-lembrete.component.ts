@@ -47,7 +47,7 @@ export class FormLembreteComponent implements OnInit {
     if (this.formLembrete.valid) {
       this.lembreteService.saveLembrete(this.lembrete)
         .subscribe(res => {
-          this.router.navigate(['pacientes']);
+          this.router.navigate(['lembretes']);
         });
     } else {
       this.formLembrete.form.markAllAsTouched();

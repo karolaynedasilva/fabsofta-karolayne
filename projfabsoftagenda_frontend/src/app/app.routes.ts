@@ -4,12 +4,11 @@ import { CuidadorComponent } from './cuidador/cuidador.component';
 import { FormPacienteComponent } from './form-paciente/form-paciente.component';
 import { LembreteComponent } from './lembrete/lembrete.component';
 import { HomecuidadorComponent } from './homecuidador/homecuidador.component';
-import { Homepaciente } from './model/homepaciente';
-import { HomePacienteComponent } from './homepaciente/homepaciente.component';
 import { AuthGuard } from './guards/auto.guards';
 import { LoginComponent } from './login/login.component';
 import { FotoFamiliarComponent } from './foto/foto-familiar.component';
 import { FormLembreteComponent } from './form-lembrete/form-lembrete.component';
+import { PacienteHomeComponent } from './paciente-home/paciente-home.component';
 
 
 export const routes: Routes = [
@@ -20,7 +19,7 @@ export const routes: Routes = [
   { path: 'lembretes', component: LembreteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
   { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard]},
-  { path: 'homepaciente/:id',  component: HomePacienteComponent,canActivate: [AuthGuard] },
+  { path: 'paciente-home/:id',  component: PacienteHomeComponent,canActivate: [AuthGuard] },
   { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
   { path: 'fotos-familiares', component: FotoFamiliarComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
