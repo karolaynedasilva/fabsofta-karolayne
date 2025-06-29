@@ -11,10 +11,10 @@ import { LembreteService } from '../service/lembrete.service';
 @Component({
   selector: 'app-lembrete',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterLink, FormsModule],
+  imports: [HttpClientModule,RouterLink, CommonModule, FormsModule],
   templateUrl: './lembrete.component.html',
   styleUrl: './lembrete.component.css',
-  providers: [LembreteService]
+  providers: [LembreteService, Router]
 })
 export class LembreteComponent {
 

@@ -3,10 +3,10 @@
   <form #formLembrete="ngForm" (ngSubmit)="salvar()" novalidate>
     <div class="mb-3">
       <label class="form-label">Paciente</label>
-      <select class="form-select" name="paciente" required [(ngModel)]="lembrete.paciente" #paciente="ngModel">
-        <option [ngValue]="null" disabled selected>Selecione o paciente</option>
-        <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
-      </select>
+      <select class="form-select"name="paciente" required [(ngModel)]="lembrete.paciente" #paciente="ngModel">
+      <option [ngValue]="null" disabled>Selecione o paciente</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+    </select>
     </div>
 
     <div class="mb-3">

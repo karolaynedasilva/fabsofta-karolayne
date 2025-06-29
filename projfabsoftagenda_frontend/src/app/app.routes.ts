@@ -18,6 +18,7 @@ export const routes: Routes = [
   { path: 'pacientes/novo', component: FormPacienteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes', component: LembreteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
+  { path: 'lembretes/alterar/:id', component: FormLembreteComponent, canActivate: [AuthGuard] },
   { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard]},
   { path: 'paciente-home/:id',  component: PacienteHomeComponent,canActivate: [AuthGuard] },
   { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
