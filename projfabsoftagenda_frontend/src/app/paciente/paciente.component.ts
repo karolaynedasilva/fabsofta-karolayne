@@ -56,7 +56,7 @@ export class PacienteComponent {
     this.modal.hide();
   }
 
-  confirmarExclusao() {
+  confirmarExclusao(id:number) {
     this.pacienteService.excluirPaciente(this.pacienteSelecionado.id).subscribe(
         () => {
             this.fecharConfirmacao();
