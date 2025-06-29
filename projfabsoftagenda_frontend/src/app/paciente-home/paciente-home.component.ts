@@ -6,13 +6,14 @@ import { Paciente } from '../model/paciente';
 import { Lembrete } from '../model/lembrete';
 import { FotoFamiliar } from '../model/foto-familiar';
 import { FotoFamiliarService } from '../service/foto-familiar.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-paciente-home',
   standalone: true,
   templateUrl: './paciente-home.component.html',
   styleUrl: './paciente-home.component.css',
-  imports: []
+  imports: [CommonModule]
 })
 export class PacienteHomeComponent {
   pacienteId!: number;
