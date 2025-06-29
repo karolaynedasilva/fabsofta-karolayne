@@ -37,7 +37,6 @@ export class FormPacienteComponent {
           this.router.navigate(['pacientes']);
         });
     } else {
-      // marca todos os campos como tocados para exibir mensagens de erro
       this.formPaciente.form.markAllAsTouched();
     }
   }

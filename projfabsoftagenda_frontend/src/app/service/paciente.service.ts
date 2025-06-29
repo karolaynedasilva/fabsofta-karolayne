@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Paciente} from '../model/paciente';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,12 +14,26 @@ export class PacienteService {
     return this.http.get<Paciente[]>(this.apiUrl);
   }
 
-  savePaciente(paciente:Paciente){
-    if(paciente.id){
-      return this.http.put(this.apiUrl + '/' + paciente.id, paciente);
+  // savePaciente(paciente:Paciente){
+  //   if(paciente.id){
+  //     return this.http.put(this.apiUrl + '/' + paciente.id, paciente);
+  //   }
+  //   return this.http.post(this.apiUrl,paciente);
+  // }
+
+
+  savePaciente(paciente: Paciente): Observable<Paciente> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    if (paciente.id) {
+      // PUT (atualizar)
+      return this.http.put<Paciente>(`${this.apiUrl}/${paciente.id}`, paciente, { headers });
+    } else {
+      // POST (criar novo)
+      return this.http.post<Paciente>(this.apiUrl, paciente, { headers });
     }
-    return this.http.post(this.apiUrl,paciente);
   }
+
 
   getPacienteById(id: any) {
     return this.http.get<Paciente>(this.apiUrl + '/' + id);
