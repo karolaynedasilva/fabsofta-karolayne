@@ -41,9 +41,8 @@
                         [(ngModel)]="paciente.telefone" name="telefone" required #telefone="ngModel" mask="(00) 00000-0000" [ngClass]="{'is-invalid': telefone.invalid && telefone.touched}">
                     <div *ngIf="telefone.invalid && telefone.touched" class="text-danger">Telefone é obrigatório.</div>
                 </div>
-                <button class="btn btn-primary" type="submit" (click)="salvar()">Salvar</button>
             </form>
         </div>
-        <!-- <button class="btn btn-primary" type="submit" (click)="salvar()">Salvar</button> -->
+        <button class="btn btn-primary" type="submit" (click)="salvar()">Salvar</button>
     </div>
 </main>
