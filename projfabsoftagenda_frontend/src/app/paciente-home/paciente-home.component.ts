@@ -40,7 +40,8 @@ export class PacienteHomeComponent {
     });
 
     this.fotoFamiliarService.listarPorPaciente(this.pacienteId).subscribe(lista => {
+      console.log('Fotos do paciente:', lista);
       this.fotos = lista;
-    });
+  });
   }
 }

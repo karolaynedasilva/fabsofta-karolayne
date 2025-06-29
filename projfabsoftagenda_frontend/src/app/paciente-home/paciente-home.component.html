@@ -17,8 +17,14 @@
     <h4>Galeria de Fotos</h4>
     <div class="row">
       <div class="col-md-3 mb-3" *ngFor="let f of fotos">
-        <img [src]="'data:image/jpeg;base64,' + f.foto" class="img-fluid rounded" alt="Foto do paciente">
+        <img [src]="'data:image/jpeg;base64,' + f.foto"
+            class="img-fluid rounded shadow"
+            alt="Foto do paciente">
       </div>
     </div>
+    <div *ngIf="fotos.length === 0" class="text-muted mt-2">
+      Nenhuma foto foi enviada ainda.
+    </div>
   </section>
+
 </main>
