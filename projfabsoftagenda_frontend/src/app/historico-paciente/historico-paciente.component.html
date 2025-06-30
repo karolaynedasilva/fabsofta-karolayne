@@ -1,0 +1,24 @@
+<main class="container">
+  <h2>Histórico do Paciente</h2>
+
+  <section class="mt-4">
+    <h4>🧠 Atividades Realizadas</h4>
+    <ul *ngIf="atividades.length > 0; else semAtividades" class="list-group">
+      <li class="list-group-item" *ngFor="let a of atividades">
+        <strong>{{ a.titulo }}</strong> ({{ a.tipo }})<br>
+        <small>{{ a.descricao }}</small>
+      </li>
+    </ul>
+    <ng-template #semAtividades><p>Nenhuma atividade registrada.</p></ng-template>
+  </section>
+
+  <!-- <section class="mt-4">
+    <h4>🌡️ Registros de Humor</h4>
+    <ul *ngIf="listaHumor.length > 0; else semHumor" class="list-group">
+      <li class="list-group-item" *ngFor="let h of listaHumor">
+        {{ h.dataHora | date: 'dd/MM/yyyy' }} — {{ h.humor }}
+      </li>
+    </ul>
+    <ng-template #semHumor><p>Nenhum humor registrado.</p></ng-template>
+  </section> -->
+</main>

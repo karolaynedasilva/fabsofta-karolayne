@@ -1,27 +1,92 @@
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 w-75" id="main">
-      <h2 class="text-center">Bem-vindo, Cuidador!</h2>
-      <p class="text-center">Escolha uma opção abaixo:</p>
-  
-      <div class="row mt-4">
-        <div class="col-md-6">
-          <div class="card" (click)="navegarPara('/pacientes/novo')">
-            <div class="card-body text-center">
-              <h5 class="card-title">Cadastrar Paciente</h5>
-              <p class="card-text">Adicione um novo paciente ao sistema.</p>
-            </div>
-          </div>
+<!-- <div class="container py-5">
+  <h2 class="text-center">Bem-vindo, Cuidador!</h2>
+  <p class="text-center">Escolha uma opção abaixo:</p>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
+    <div class="col">
+      <div class="card h-100 hover-shadow" (click)="navegarPara('/pacientes/novo')">
+        <div class="card-body text-center">
+          <h5 class="card-title">Cadastrar Paciente</h5>
+          <p class="card-text">Adicione um novo paciente ao sistema.</p>
         </div>
-  
-        <div class="col-md-6">
-          <div class="card" (click)="navegarPara('/lembretes/novo')">
-            <div class="card-body text-center">
-              <h5 class="card-title">Criar Lembrete</h5>
-              <p class="card-text">Registre um novo lembrete para os pacientes.</p>
-            </div>
-          </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100 hover-shadow" (click)="navegarPara('/lembretes/novo')">
+        <div class="card-body text-center">
+          <h5 class="card-title">Criar Lembrete</h5>
+          <p class="card-text">Registre um novo lembrete para os pacientes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100 hover-shadow" (click)="navegarPara('/atividades/novo')">
+        <div class="card-body text-center">
+          <h5 class="card-title">Criar Atividade</h5>
+          <p class="card-text">Registre uma nova atividade para os pacientes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100 hover-shadow" (click)="navegarPara('/historico')">
+        <div class="card-body text-center">
+          <h5 class="card-title">Registrar Histórico</h5>
+          <p class="card-text">Adicione registros clínicos ou de evolução do paciente.</p>
         </div>
       </div>
     </div>
   </div>
-  
+</div> -->
+<main class="container">
+  <div class="container py-5">
+    <h2 class="text-center">Bem-vindo, Cuidador!</h2>
+    <p class="text-center">Escolha uma opção abaixo:</p>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
+      
+      <div class="col">
+        <div class="card h-100 hover-shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title">Cadastrar Paciente</h5>
+            <p class="card-text">Adicione um novo paciente ao sistema.</p>
+            <button (click)="navegarParaPacientes()" class="btn btn-primary mt-2">Acessar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 hover-shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title">Criar Lembrete</h5>
+            <p class="card-text">Registre um novo lembrete para os pacientes.</p>
+            <button (click)="navegarParaLembretes()" class="btn btn-primary mt-2">Acessar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 hover-shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title">Criar Atividade</h5>
+            <p class="card-text">Registre uma nova atividade para os pacientes.</p>
+            <button (click)="navegarParaAtividades()" class="btn btn-primary mt-2">Acessar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 hover-shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title">Registrar Histórico</h5>
+            <p class="card-text">Adicione registros clínicos ou de evolução do paciente.</p>
+            <button (click)="navegarParaHistorico()" class="btn btn-primary mt-2">Acessar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>

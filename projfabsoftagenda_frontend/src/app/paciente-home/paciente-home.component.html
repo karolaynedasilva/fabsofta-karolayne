@@ -1,5 +1,29 @@
 <main class="container py-4">
+  
   <h2>Bem-vindo, {{ paciente?.nome }}</h2>
+  <div class="container my-4">
+  <h5>Como você está se sentindo hoje?</h5>
+  <div class="d-flex gap-2 mt-2">
+    <span 
+      *ngFor="let emoji of humores" 
+      (click)="selecionarHumor(emoji)" 
+      class="fs-3 cursor-pointer"
+      [ngClass]="{ 'border border-primary rounded p-1': humorSelecionado === emoji }">
+      {{ emoji }}
+    </span>
+  </div>
+
+  <button 
+    class="btn btn-sm btn-success mt-3" 
+    [disabled]="!humorSelecionado"
+    (click)="registrarHumor()">
+    Registrar Humor
+  </button>
+
+  <div *ngIf="humorEnviado" class="alert alert-success mt-2 p-2">
+    Humor registrado com sucesso!
+  </div>
+</div>
 
   <section class="mt-4">
     <h4>Lembretes</h4>
