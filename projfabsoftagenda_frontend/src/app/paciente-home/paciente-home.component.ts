@@ -7,6 +7,8 @@ import { Lembrete } from '../model/lembrete';
 import { FotoFamiliar } from '../model/foto-familiar';
 import { FotoFamiliarService } from '../service/foto-familiar.service';
 import { CommonModule } from '@angular/common';
+import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
+import { AtividadeInterativa } from '../model/atividadeinterativa';
 
 @Component({
   selector: 'app-paciente-home',
@@ -19,13 +21,15 @@ export class PacienteHomeComponent {
   pacienteId!: number;
   paciente!: Paciente;
   lembretes: Lembrete[] = [];
-  fotos: FotoFamiliar[] = []; // ou objeto, dependendo do seu model
+  fotos: FotoFamiliar[] = []; 
+  atividades: AtividadeInterativa[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private pacienteService: PacienteService,
     private lembreteService: LembreteService,
-    private fotoFamiliarService: FotoFamiliarService
+    private fotoFamiliarService: FotoFamiliarService,
+    private atividadeService: AtividadeInterativaService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +46,10 @@ export class PacienteHomeComponent {
     this.fotoFamiliarService.listarPorPaciente(this.pacienteId).subscribe(lista => {
       console.log('Fotos do paciente:', lista);
       this.fotos = lista;
-  });
+    });
+    this.atividadeService.listarPorPaciente(this.pacienteId).subscribe(lista => {
+      console.log('Atividades do paciente:', lista);
+      this.atividades = lista;
+   });
   }
 }

@@ -27,4 +27,14 @@
     </div>
   </section>
 
+  <h2 class="mt-4">Atividades Interativas</h2>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let a of atividades">
+      <strong>{{ a.titulo }}</strong> — {{ a.tipo }}  
+      <br />
+      <small>{{ a.descricao }}</small>
+    </li>
+  </ul>
+
+
 </main>

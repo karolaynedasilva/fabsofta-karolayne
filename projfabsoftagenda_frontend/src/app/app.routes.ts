@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { FotoFamiliarComponent } from './foto/foto-familiar.component';
 import { FormLembreteComponent } from './form-lembrete/form-lembrete.component';
 import { PacienteHomeComponent } from './paciente-home/paciente-home.component';
+import { AtividadeInterativaComponent } from './atividadeinterativa/atividadeinterativa.component';
+import { FormAtividadeComponent } from './form-atividade/form-atividade.component';
 
 
 export const routes: Routes = [
@@ -23,5 +25,8 @@ export const routes: Routes = [
   { path: 'paciente-home/:id',  component: PacienteHomeComponent,canActivate: [AuthGuard] },
   { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
   { path: 'fotos-familiares', component: FotoFamiliarComponent, canActivate: [AuthGuard] },
+  { path: 'atividades', component: AtividadeInterativaComponent, canActivate: [AuthGuard]  },
+  { path: 'atividades/novo', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
+  { path: 'atividades/alterar/:id', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

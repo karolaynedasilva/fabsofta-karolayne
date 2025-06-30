@@ -1,0 +1,42 @@
+<main class="container">
+  <h2>Atividades Interativas</h2>
+  <a (click)="novo()" class="btn btn-primary">Nova</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Tipo</th>
+        <th>Paciente</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let atividade of listaAtividades">
+        <td>{{ atividade.titulo }}</td>
+        <td>{{ atividade.descricao }}</td>
+        <td>{{ atividade.tipo }}</td>
+        <td>{{ atividade.paciente?.nome }}</td>
+        <td>
+          <a (click)="alterar(atividade)" class="btn btn-secondary">Alterar</a>
+          <a (click)="abrirConfirmacao(atividade)" class="btn btn-danger">Excluir</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" #myModal tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Excluir atividade</h5></div>
+      <div class="modal-body">Confirma a exclusão da atividade?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="confirmarExclusao()">Sim</button>
+      </div>
+    </div>
+  </div>
+</div>

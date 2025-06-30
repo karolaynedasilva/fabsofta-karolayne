@@ -1,0 +1,32 @@
+<main class="container">
+  <h2>Cadastrar Atividade Interativa</h2>
+
+  <form #formAtividade="ngForm" (ngSubmit)="salvar()" novalidate>
+    <div class="mb-3">
+      <label class="form-label">Paciente</label>
+      <select class="form-select" name="paciente" [(ngModel)]="atividade.paciente" required>
+        <option [ngValue]="null" disabled>Selecione</option>
+        <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Título</label>
+      <input class="form-control" type="text" name="titulo" [(ngModel)]="atividade.titulo" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descrição</label>
+      <textarea class="form-control" name="descricao" [(ngModel)]="atividade.descricao" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Tipo</label>
+      <input class="form-control" type="text" name="tipo" [(ngModel)]="atividade.tipo" required>
+    </div>
+
+    <div class="text-end">
+      <button class="btn btn-primary" type="submit">Salvar</button>
+    </div>
+  </form>
+</main>
