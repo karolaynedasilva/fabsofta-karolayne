@@ -1,64 +1,100 @@
 <main class="container py-4">
-  
-  <h2>Bem-vindo, {{ paciente?.nome }}</h2>
-  <div class="container my-4">
-  <h5>Como você está se sentindo hoje?</h5>
-  <div class="d-flex gap-2 mt-2">
-    <span 
-      *ngFor="let emoji of humores" 
-      (click)="selecionarHumor(emoji)" 
-      class="fs-3 cursor-pointer"
-      [ngClass]="{ 'border border-primary rounded p-1': humorSelecionado === emoji }">
-      {{ emoji }}
-    </span>
-  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 rounded shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand">👤 Meu Bem-Estar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPaciente">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarPaciente">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="">Fotos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Atividades</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Histórico</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h2 class="mb-4">Bem-vindo, {{ paciente?.nome }}!</h2>
 
-  <button 
-    class="btn btn-sm btn-success mt-3" 
-    [disabled]="!humorSelecionado"
-    (click)="registrarHumor()">
-    Registrar Humor
-  </button>
+  <div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title ">🌡️ Termômetro de Humor</h5>
+    <p class="card-text ">Como você está se sentindo hoje?</p>
 
-  <div *ngIf="humorEnviado" class="alert alert-success mt-2 p-2">
-    Humor registrado com sucesso!
+    <div class="d-flex justify-content-center gap-3">
+      <span 
+        *ngFor="let emoji of humores" 
+        (click)="selecionarHumor(emoji)" 
+        class="fs-3 cursor-pointer"
+        [ngClass]="{ 'border border-primary rounded p-2': humorSelecionado === emoji }">
+        {{ emoji }}
+      </span>
+    </div>
+
+    <div class="text-center mt-3">
+      <button 
+        class="btn btn-success btn-humor"
+        [disabled]="!humorSelecionado"
+        (click)="registrarHumor()">
+        Registrar Humor
+      </button>
+    </div>
+
+    <div *ngIf="humorEnviado" class="alert alert-success mt-3 text-center">
+      Humor registrado com sucesso!
+    </div>
   </div>
 </div>
+  <section class="mb-4">
+  <h4>Lembretes</h4>
+  
+  <div *ngIf="lembretes.length > 0; else semLembretes">
+    <div 
+      *ngFor="let l of lembretes" 
+      class="alert alert-primary d-flex justify-content-between align-items-center"
+      role="alert">
+      
+      <div>
+        <strong>{{ l.titulo }}</strong> — {{ l.data }}<br />
+        <small>{{ l.descricao }}</small>
+      </div>
 
-  <section class="mt-4">
-    <h4>Lembretes</h4>
-    <ul *ngIf="lembretes.length > 0; else semLembretes">
-      <li *ngFor="let l of lembretes">
-        📅 <strong>{{ l.data }}</strong> - {{ l.titulo }}: {{ l.descricao }}
-      </li>
-    </ul>
-    <ng-template #semLembretes>
-      <p>Nenhum lembrete cadastrado.</p>
-    </ng-template>
-  </section>
+      <span class="badge bg-light text-dark px-2 rounded-pill">
+        📅
+      </span>
+    </div>
+  </div>
 
-  <section class="mt-4">
+  <ng-template #semLembretes>
+    <p class="text-muted">Nenhum lembrete cadastrado.</p>
+  </ng-template>
+</section>
+  <section class="mb-4">
     <h4>Galeria de Fotos</h4>
     <div class="row">
       <div class="col-md-3 mb-3" *ngFor="let f of fotos">
-        <img [src]="'data:image/jpeg;base64,' + f.foto"
-            class="img-fluid rounded shadow"
-            alt="Foto do paciente">
+        <img 
+          [src]="'data:image/jpeg;base64,' + f.foto"
+          class="img-fluid rounded shadow"
+          alt="Foto do paciente">
       </div>
     </div>
-    <div *ngIf="fotos.length === 0" class="text-muted mt-2">
+    <div *ngIf="fotos.length === 0" class="text-muted">
       Nenhuma foto foi enviada ainda.
     </div>
   </section>
 
-  <h2 class="mt-4">Atividades Interativas</h2>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let a of atividades">
-      <strong>{{ a.titulo }}</strong> — {{ a.tipo }}  
-      <br />
-      <small>{{ a.descricao }}</small>
-    </li>
-  </ul>
-
-
+  <section>
+    <h4>Atividades Interativas</h4>
+    <ul *ngIf="atividades.length > 0; else semAtividades" class="list-group">
+      <li class="list-group-item" *ngFor="let a of atividades">
+        <strong>{{ a.titulo }}</strong> — {{ a.tipo }}<br />
+        <small>{{ a.descricao }}</small>
+      </li>
+    </ul>
+    <ng-template #semAtividades>
+      <p class="text-muted">Nenhuma atividade registrada.</p>
+    </ng-template>
+  </section>
 </main>

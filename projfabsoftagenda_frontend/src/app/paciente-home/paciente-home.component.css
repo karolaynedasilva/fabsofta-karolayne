@@ -1,0 +1,25 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.list-group-item {
+  background-color: #fdfdfd;
+  border-left: 4px solid #17a2b8;
+}
+
+h4 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+section {
+  padding-bottom: 1rem;
+}
+.navbar-brand {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.btn-humor {
+  min-width: 220px; 
+}
