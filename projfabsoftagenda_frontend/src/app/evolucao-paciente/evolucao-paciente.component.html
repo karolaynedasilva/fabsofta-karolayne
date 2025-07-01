@@ -1,0 +1,16 @@
+<main class="container">
+  <h2>Evolução do Paciente</h2>
+
+  <div *ngIf="evolucoes.length > 0; else nenhuma" class="mt-4">
+    <div *ngFor="let ev of evolucoes" class="alert alert-info mb-3">
+      <h6>{{ ev.data | date: 'dd/MM/yyyy HH:mm' }} — <strong>{{ ev.autor || 'Anônimo' }}</strong></h6>
+      <p><strong>Descrição:</strong> {{ ev.descricao }}</p>
+      <p *ngIf="ev.observacoes"><strong>Observações:</strong> {{ ev.observacoes }}</p>
+      <p *ngIf="ev.nivelEngajamento"><strong>Engajamento:</strong> {{ ev.nivelEngajamento }}</p>
+    </div>
+  </div>
+
+  <ng-template #nenhuma>
+    <p class="text-muted">Nenhum registro de evolução encontrado.</p>
+  </ng-template>
+</main>

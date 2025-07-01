@@ -1,0 +1,49 @@
+<main class="container">
+  <h2>Registrar Evolução do Paciente</h2>
+
+  <form #formEvolucao="ngForm" (ngSubmit)="salvar()" class="card p-4 mt-3" novalidate>
+
+    <div class="mb-3">
+      <label class="form-label">Descrição *</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="evolucao.descricao"
+        name="descricao"
+        required>
+      </textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Observações</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="evolucao.observacoes"
+        name="observacoes">
+      </textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Nível de Engajamento</label>
+      <select
+        class="form-select"
+        [(ngModel)]="evolucao.nivelEngajamento"
+        name="nivelEngajamento">
+        <option value="">Selecionar</option>
+        <option value="Alto">Alto</option>
+        <option value="Moderado">Moderado</option>
+        <option value="Baixo">Baixo</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Autor do Registro</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="evolucao.autor"
+        name="autor" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar Evolução</button>
+  </form>
+</main>

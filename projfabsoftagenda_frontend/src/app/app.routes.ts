@@ -13,6 +13,9 @@ import { AtividadeInterativaComponent } from './atividadeinterativa/atividadeint
 import { FormAtividadeComponent } from './form-atividade/form-atividade.component';
 import { HistoricoPacienteComponent } from './historico-paciente/historico-paciente.component';
 import { FormCuidadorComponent } from './form-cuidador/form-cuidador.component';
+import { FormEvolucaoComponent } from './form-evolucao/form-evolucao.component';
+import { EvolucaoPacienteComponent } from './evolucao-paciente/evolucao-paciente.component';
+import { EvolucaoDashboardComponent } from './evolucao-dashboard/evolucao-dashboard.component';
 
 
 export const routes: Routes = [
@@ -33,5 +36,8 @@ export const routes: Routes = [
   { path: 'atividades/novo', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
   { path: 'atividades/alterar/:id', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
   { path: 'historico-paciente/:id', component: HistoricoPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'evolucao/paciente/:id', component: EvolucaoPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'evolucao/novo/:id', component: FormEvolucaoComponent, canActivate: [AuthGuard] },
+  { path: 'evolucao', component: EvolucaoDashboardComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

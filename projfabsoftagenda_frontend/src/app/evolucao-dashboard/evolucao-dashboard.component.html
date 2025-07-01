@@ -1,0 +1,29 @@
+<main class="container">
+  <h2 class="mb-4">Evolução por Paciente</h2>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pacientes">
+        <td>{{ p.nome }}</td>
+        <td>{{ p.email }}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-2" (click)="novaEvolucao(p.id)">
+            + Evolução
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="verEvolucoes(p.id)">
+            Ver Evoluções
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="pacientes.length === 0" class="text-muted">Nenhum paciente encontrado.</div>
+</main>
