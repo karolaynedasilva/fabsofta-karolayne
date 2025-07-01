@@ -20,6 +20,7 @@
         <td>{{ atividade.paciente?.nome }}</td>
         <td>
           <a (click)="alterar(atividade)" class="btn btn-secondary">Alterar</a>
+          &nbsp;
           <a (click)="abrirConfirmacao(atividade)" class="btn btn-danger">Excluir</a>
         </td>
       </tr>
@@ -27,7 +28,6 @@
   </table>
 </main>
 
-<!-- Modal de confirmação -->
 <div class="modal fade" #myModal tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

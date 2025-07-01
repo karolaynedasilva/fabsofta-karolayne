@@ -29,18 +29,21 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HomecuidadorService } from '../service/homecuidador.service';
 
 @Component({
   selector: 'app-homecuidador',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterLink],
+  imports: [HttpClientModule, CommonModule,],
   templateUrl: './homecuidador.component.html',
-  styleUrl: './homecuidador.component.css'
+  styleUrl: './homecuidador.component.css',
+   providers: [HomecuidadorService, Router]
 })
 export class HomecuidadorComponent {
   constructor(
   private router: Router,
   private activeRouter: ActivatedRoute
+  
   ) {}
   
 
@@ -57,6 +60,6 @@ export class HomecuidadorComponent {
   }
 
   navegarParaHistorico() {
-    this.router.navigate(['/historico']);
+    this.router.navigate(['/evolucao']);
   }
 }

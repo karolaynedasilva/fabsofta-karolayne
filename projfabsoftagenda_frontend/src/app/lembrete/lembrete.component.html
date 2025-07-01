@@ -18,9 +18,10 @@
                 <td>{{umLembrete.descricao}}</td>
                 <td>{{ umLembrete.data | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ umLembrete.hora}}</td>                
-                <td>{{umLembrete.nomePaciente}}</td>
+                <td>{{umLembrete.paciente?.nome}}</td>
                 <td>
                     <a (click)="alterar(umLembrete)" class="btn btn-secondary">Alterar</a>
+                    &nbsp;
                     <a (click)="abrirConfirmacao(umLembrete)" class="btn btn-danger">Excluir</a>
                 </td>
             </tr>
