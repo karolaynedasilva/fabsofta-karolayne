@@ -5,14 +5,16 @@
             <tr>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Senha</th>
+                <th>Endereco</th>
+                <th>Telefone</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let umCuidador of listaCuidadores">
                 <td>{{umCuidador.nome}}</td>
                 <td>{{umCuidador.email}}</td>
-                <td>{{umCuidador.senha}}</td>
+                <td>{{umCuidador.endereco}}</td>
+                <td>{{umCuidador.telefone}}</td>
             </tr>
         </tbody>
     </table>

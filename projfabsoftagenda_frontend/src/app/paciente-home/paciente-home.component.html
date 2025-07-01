@@ -1,16 +1,13 @@
 <main class="container py-4">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 rounded shadow">
     <div class="container-fluid">
-      <a class="navbar-brand">👤 Meu Bem-Estar</a>
+      <a class="navbar-brand"> Meu Bem-Estar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPaciente">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarPaciente">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="">Fotos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Atividades</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Histórico</a></li>
+         
         </ul>
       </div>
     </div>
@@ -56,7 +53,7 @@
       role="alert">
       
       <div>
-        <strong>{{ l.titulo }}</strong> — {{ l.data }}<br />
+        <strong>{{ l.titulo }}</strong> — {{ l.data| date: 'dd/MM/yyyy' }}<br />
         <small>{{ l.descricao }}</small>
       </div>
 
