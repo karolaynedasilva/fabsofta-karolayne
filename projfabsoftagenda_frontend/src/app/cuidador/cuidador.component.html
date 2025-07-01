@@ -1,5 +1,6 @@
 <main class="container">
     <h2>Cuidadores</h2>
+    <a (click)="novo()" class="btn btn-primary">Novo</a>
     <table class="table">
         <thead>
             <tr>
@@ -7,6 +8,7 @@
                 <th>Email</th>
                 <th>Endereco</th>
                 <th>Telefone</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -15,7 +17,29 @@
                 <td>{{umCuidador.email}}</td>
                 <td>{{umCuidador.endereco}}</td>
                 <td>{{umCuidador.telefone}}</td>
+                <td>
+                    <a (click)="alterar(umCuidador)" class="btn btn-secondary">Alterar</a>
+                    <a (click)="abrirConfirmacao(umCuidador)" class="btn btn-danger">Excluir</a>
+                </td>
             </tr>
         </tbody>
     </table>
 </main>
+
+<div class="modal fade" tabindex="-1" #modalExcluir>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir <strong>{{ cuidadorSelecionado?.nome }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmarExclusao()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,12 +12,15 @@ import { PacienteHomeComponent } from './paciente-home/paciente-home.component';
 import { AtividadeInterativaComponent } from './atividadeinterativa/atividadeinterativa.component';
 import { FormAtividadeComponent } from './form-atividade/form-atividade.component';
 import { HistoricoPacienteComponent } from './historico-paciente/historico-paciente.component';
+import { FormCuidadorComponent } from './form-cuidador/form-cuidador.component';
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
   { path: 'pacientes', component: PacienteComponent, canActivate: [AuthGuard]},
-  { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard]},
+  { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard] },
+  { path: 'cuidadores/novo', component: FormCuidadorComponent, canActivate: [AuthGuard] },
+  { path: 'cuidadores/alterar/:id', component: FormCuidadorComponent, canActivate: [AuthGuard] },
   { path: 'pacientes/novo', component: FormPacienteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes', component: LembreteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
