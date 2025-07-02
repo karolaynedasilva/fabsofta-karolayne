@@ -61,17 +61,16 @@ export class PacienteHomeComponent {
   }
 
   registrarHumor() {
-    // Aqui você poderia enviar para o backend se quiser
     console.log("Humor selecionado:", this.humorSelecionado);
     this.humorEnviado = true;
-
-    // Resetar depois de um tempo (opcional)
     setTimeout(() => {
       this.humorSelecionado = null;
       this.humorEnviado = false;
     }, 2000);
   }
 }
+
+
 // import { Component } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
 // import { CommonModule } from '@angular/common';

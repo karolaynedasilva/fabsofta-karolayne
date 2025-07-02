@@ -16,7 +16,7 @@ import { FotoFamiliarService } from '../service/foto-familiar.service';
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './foto-familiar.component.html',
   styleUrl: './foto-familiar.component.css',
-  providers: [FotoFamiliarService, PacienteService]
+  providers: [FotoFamiliarService, PacienteService, Router]
 })
 export class FotoFamiliarComponent {
   @ViewChild('formFotoFamiliar') formFotoFamiliar!: NgForm;
