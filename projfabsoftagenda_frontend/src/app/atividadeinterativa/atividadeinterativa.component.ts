@@ -13,7 +13,7 @@ import { AtividadeInterativaService } from '../service/atividadeinterativa.servi
   imports: [HttpClientModule, RouterLink, CommonModule, FormsModule],
   templateUrl: './atividadeinterativa.component.html',
   styleUrl: './atividadeinterativa.component.css',
-  providers: [AtividadeInterativaService]
+  providers: [AtividadeInterativaService, Router]
 })
 export class AtividadeInterativaComponent {
   @ViewChild('myModal') modalElement!: ElementRef;
