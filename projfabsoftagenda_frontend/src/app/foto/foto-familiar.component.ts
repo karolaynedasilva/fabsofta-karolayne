@@ -23,6 +23,8 @@ export class FotoFamiliarComponent {
 
   fotoFamiliar: FotoFamiliar = new FotoFamiliar();
   pacientes: Paciente[] = [];
+  mensagemSucesso: boolean = false;
+
 
   constructor(
     private fotoFamiliarService: FotoFamiliarService,

@@ -23,8 +23,8 @@ export class LoginComponent {
       next: (res: any) => {
         localStorage.setItem('usuario', JSON.stringify(res));
 
-        if (res.includes('Paciente')) {
-          this.router.navigate(['/homepaciente/1']);
+        if (res.includes('Administrador')) {
+          this.router.navigate(['/cuidadores']);
         } else if (res.includes('Cuidador')) {
           this.router.navigate(['/homecuidador']);
         } else {
