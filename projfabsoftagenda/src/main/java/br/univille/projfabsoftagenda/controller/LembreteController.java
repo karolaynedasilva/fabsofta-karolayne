@@ -1,6 +1,9 @@
 package br.univille.projfabsoftagenda.controller;
 
 import br.univille.projfabsoftagenda.entity.Lembrete;
+import br.univille.projfabsoftagenda.entity.Paciente;
+import br.univille.projfabsoftagenda.repository.LembreteRepository;
+import br.univille.projfabsoftagenda.repository.PacienteRepository;
 import br.univille.projfabsoftagenda.service.LembreteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +15,18 @@ import java.util.List;
 public class LembreteController {
 
     private final LembreteService service;
+    private final PacienteRepository pacienteRepository;
+    private final LembreteRepository lembreteRepository;
 
-    public LembreteController(LembreteService service) {
+    public LembreteController(LembreteService service, PacienteRepository pacienteRepository, LembreteRepository lembreteRepository) {
         this.service = service;
+        this.pacienteRepository = pacienteRepository;
+        this.lembreteRepository = lembreteRepository;
+    }
+
+    @GetMapping("/paciente/{pacienteId}")
+    public List<Lembrete> listarPorPaciente(@PathVariable Long pacienteId) {
+        return lembreteRepository.findByPacienteId(pacienteId);
     }
 
     @GetMapping
@@ -31,6 +43,11 @@ public class LembreteController {
 
     @PostMapping
     public Lembrete criar(@RequestBody Lembrete lembrete) {
+        if (lembrete.getPaciente() != null && lembrete.getPaciente().getId() > 0) {
+            Paciente paciente = pacienteRepository.findById(lembrete.getPaciente().getId())
+                    .orElse(null);
+            lembrete.setPaciente(paciente);
+        }
         return service.salvar(lembrete);
     }
 
@@ -38,9 +55,15 @@ public class LembreteController {
     public ResponseEntity<Lembrete> atualizar(@PathVariable Long id, @RequestBody Lembrete novoLembrete) {
         return service.buscarPorId(id)
                      .map(lembreteExistente -> {
+                         lembreteExistente.setTitulo(novoLembrete.getTitulo());
                          lembreteExistente.setDescricao(novoLembrete.getDescricao());
-                         lembreteExistente.setDataHora(novoLembrete.getDataHora());
-                         lembreteExistente.setPaciente(novoLembrete.getPaciente());
+                         lembreteExistente.setData(novoLembrete.getData());
+                         lembreteExistente.setHora(novoLembrete.getHora());
+                         if (novoLembrete.getPaciente() != null && novoLembrete.getPaciente().getId() > 0) {
+                             Paciente paciente = pacienteRepository.findById(novoLembrete.getPaciente().getId())
+                                     .orElse(null);
+                             lembreteExistente.setPaciente(paciente);
+                         }
                          return ResponseEntity.ok(service.salvar(lembreteExistente));
                      })
                      .orElse(ResponseEntity.notFound().build());

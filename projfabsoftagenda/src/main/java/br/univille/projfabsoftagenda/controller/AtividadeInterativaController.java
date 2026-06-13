@@ -1,6 +1,9 @@
 package br.univille.projfabsoftagenda.controller;
 
 import br.univille.projfabsoftagenda.entity.AtividadeInterativa;
+import br.univille.projfabsoftagenda.entity.Paciente;
+import br.univille.projfabsoftagenda.repository.AtividadeInterativaRepository;
+import br.univille.projfabsoftagenda.repository.PacienteRepository;
 import br.univille.projfabsoftagenda.service.AtividadeInterativaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +15,18 @@ import java.util.List;
 public class AtividadeInterativaController {
 
     private final AtividadeInterativaService service;
+    private final PacienteRepository pacienteRepository;
+    private final AtividadeInterativaRepository atividadeRepository;
 
-    public AtividadeInterativaController(AtividadeInterativaService service) {
+    public AtividadeInterativaController(AtividadeInterativaService service, PacienteRepository pacienteRepository, AtividadeInterativaRepository atividadeRepository) {
         this.service = service;
+        this.pacienteRepository = pacienteRepository;
+        this.atividadeRepository = atividadeRepository;
+    }
+
+    @GetMapping("/paciente/{pacienteId}")
+    public List<AtividadeInterativa> listarPorPaciente(@PathVariable Long pacienteId) {
+        return atividadeRepository.findByPacienteId(pacienteId);
     }
 
     @GetMapping
@@ -31,6 +43,10 @@ public class AtividadeInterativaController {
 
     @PostMapping
     public AtividadeInterativa criar(@RequestBody AtividadeInterativa atividade) {
+        if (atividade.getPaciente() != null && atividade.getPaciente().getId() > 0) {
+            Paciente paciente = pacienteRepository.findById(atividade.getPaciente().getId()).orElse(null);
+            atividade.setPaciente(paciente);
+        }
         return service.salvar(atividade);
     }
 

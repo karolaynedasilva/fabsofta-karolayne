@@ -1,7 +1,7 @@
 package br.univille.projfabsoftagenda.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Lembrete {
@@ -10,8 +10,10 @@ public class Lembrete {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String titulo;
     private String descricao;
-    private LocalDateTime dataHora;
+    private LocalDate data;
+    private String hora;
     
     @ManyToOne
     private Paciente paciente;
@@ -32,6 +34,14 @@ public class Lembrete {
         this.id = id;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -40,11 +50,19 @@ public class Lembrete {
         this.descricao = descricao;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 }
