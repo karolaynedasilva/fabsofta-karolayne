@@ -1,33 +1,47 @@
-<div class="container mt-5" style="max-width: 400px;">
-  <h3 class="mb-4 text-center">Login</h3>
-
-  <form (ngSubmit)="autenticar()" #formLogin="ngForm">
-    <div class="mb-3">
-      <label for="email" class="form-label">E-mail</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        [(ngModel)]="usuario.email"
-        name="email"
-        required
-        placeholder="Digite seu email"
-      />
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#5B4FCF" opacity="0.15"/>
+          <path d="M11 7h2v2h-2zM11 11h2v6h-2z" fill="#5B4FCF"/>
+          <circle cx="12" cy="12" r="9" stroke="#5B4FCF" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <h2>Meu Bem-Estar</h2>
+      <p>Entre com suas credenciais para continuar</p>
     </div>
 
-    <div class="mb-3">
-      <label for="senha" class="form-label">Senha</label>
-      <input
-        type="password"
-        class="form-control"
-        id="senha"
-        [(ngModel)]="usuario.senha"
-        name="senha"
-        required
-        placeholder="Digite sua senha"
-      />
-    </div>
+    <form (ngSubmit)="autenticar()" #formLogin="ngForm">
+      <div style="margin-bottom: 20px;">
+        <label class="form-label-mod">E-mail</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="usuario.email"
+          name="email"
+          required
+          placeholder="seu@email.com"
+          style="height:46px;"
+        />
+      </div>
 
-    <button type="submit" class="btn btn-primary w-100">Entrar</button>
-  </form>
+      <div style="margin-bottom: 28px;">
+        <label class="form-label-mod">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          [(ngModel)]="usuario.senha"
+          name="senha"
+          required
+          placeholder="••••••••"
+          style="height:46px;"
+        />
+      </div>
+
+      <button type="submit" class="btn-primary-mod" style="width:100%; justify-content:center; height:46px; font-size:0.95rem;">
+        Entrar
+      </button>
+    </form>
+  </div>
 </div>

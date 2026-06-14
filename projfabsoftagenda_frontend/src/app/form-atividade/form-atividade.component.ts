@@ -15,7 +15,7 @@ import { PacienteService } from '../service/paciente.service';
   templateUrl: './form-atividade.component.html',
   styleUrl: './form-atividade.component.css',
   imports: [CommonModule, FormsModule, HttpClientModule],
-  providers: [AtividadeInterativaService, PacienteService, Router]
+
 })
 export class FormAtividadeComponent {
   @ViewChild('formAtividade') formAtividade!: NgForm;

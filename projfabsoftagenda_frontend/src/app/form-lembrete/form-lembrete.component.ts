@@ -15,7 +15,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './form-lembrete.component.html',
   styleUrl: './form-lembrete.component.css',
-  providers: [LembreteService, PacienteService, Router, provideNgxMask()]
+  providers: [provideNgxMask()]
 })
 export class FormLembreteComponent {
   lembrete: any = {};

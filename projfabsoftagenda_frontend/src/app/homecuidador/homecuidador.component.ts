@@ -37,7 +37,7 @@ import { HomecuidadorService } from '../service/homecuidador.service';
   imports: [HttpClientModule, CommonModule,],
   templateUrl: './homecuidador.component.html',
   styleUrl: './homecuidador.component.css',
-   providers: [HomecuidadorService, Router]
+   providers: []
 })
 export class HomecuidadorComponent {
   constructor(

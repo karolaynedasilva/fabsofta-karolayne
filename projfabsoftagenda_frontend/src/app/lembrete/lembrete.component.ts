@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { Lembrete } from '../model/lembrete';
 import { LembreteService } from '../service/lembrete.service';
@@ -11,10 +11,10 @@ import { LembreteService } from '../service/lembrete.service';
 @Component({
   selector: 'app-lembrete',
   standalone: true,
-  imports: [HttpClientModule,RouterLink, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule],
   templateUrl: './lembrete.component.html',
   styleUrl: './lembrete.component.css',
-  providers: [LembreteService, Router]
+  providers: []
 })
 export class LembreteComponent {
 

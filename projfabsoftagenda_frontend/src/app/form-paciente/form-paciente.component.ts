@@ -12,7 +12,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   imports: [HttpClientModule, CommonModule, FormsModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './form-paciente.component.html',
   styleUrl: './form-paciente.component.css',
-  providers: [PacienteService, Router, provideNgxMask()]
+  providers: [provideNgxMask()]
 })
 export class FormPacienteComponent {
     paciente: Paciente = new Paciente();

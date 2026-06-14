@@ -12,7 +12,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
   standalone: true,
   templateUrl: './form-cuidador.component.html',
   styleUrl: './form-cuidador.component.css',
-  providers: [CuidadorService, provideNgxMask()],
+  providers: [provideNgxMask()],
   imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe]
 })
 export class FormCuidadorComponent {

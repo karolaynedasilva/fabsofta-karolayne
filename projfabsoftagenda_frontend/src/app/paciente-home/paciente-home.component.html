@@ -1,97 +1,88 @@
-<main class="container py-4">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 rounded shadow">
-    <div class="container-fluid">
-      <a class="navbar-brand"> Meu Bem-Estar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPaciente">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarPaciente">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-         
-        </ul>
-      </div>
+<div class="page-content">
+  <!-- Patient header -->
+  <div style="background: linear-gradient(135deg, #20C5B5 0%, #0e9990 100%); border-radius:16px; padding:28px 32px; margin-bottom:28px; color:#fff; display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <p style="opacity:0.75; font-size:0.82rem; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Perfil do Paciente</p>
+      <h2 style="font-size:1.5rem; font-weight:700; margin:0;">{{ paciente?.nome }}</h2>
     </div>
-  </nav>
-  <h2 class="mb-4">Bem-vindo, {{ paciente?.nome }}!</h2>
+    <div style="width:60px; height:60px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:700; color:#fff;">
+      {{ paciente?.nome?.charAt(0)?.toUpperCase() }}
+    </div>
+  </div>
 
-  <div class="card shadow-sm mb-4">
-  <div class="card-body">
-    <h5 class="card-title ">🌡️ Termômetro de Humor</h5>
-    <p class="card-text ">Como você está se sentindo hoje?</p>
+  <!-- Humor Termometer -->
+  <div class="card-modern" style="margin-bottom:24px;">
+    <h4 style="font-weight:700; font-size:1rem; margin-bottom:4px;">🌡️ Termômetro de Humor</h4>
+    <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom:20px;">Como você está se sentindo hoje?</p>
 
-    <div class="d-flex justify-content-center gap-3">
-      <span 
-        *ngFor="let emoji of humores" 
-        (click)="selecionarHumor(emoji)" 
-        class="fs-3 cursor-pointer"
-        [ngClass]="{ 'border border-primary rounded p-2': humorSelecionado === emoji }">
+    <div style="display:flex; justify-content:center; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+      <span
+        *ngFor="let emoji of humores"
+        (click)="selecionarHumor(emoji)"
+        class="humor-emoji"
+        [class.selected]="humorSelecionado === emoji">
         {{ emoji }}
       </span>
     </div>
 
-    <div class="text-center mt-3">
-      <button 
-        class="btn btn-success btn-humor"
-        [disabled]="!humorSelecionado"
-        (click)="registrarHumor()">
+    <div style="text-align:center;">
+      <button class="btn-accent-mod" [disabled]="!humorSelecionado" (click)="registrarHumor()">
         Registrar Humor
       </button>
     </div>
 
-    <div *ngIf="humorEnviado" class="alert alert-success mt-3 text-center">
-      Humor registrado com sucesso!
+    <div *ngIf="humorEnviado" class="alert-mod success" style="margin-top:16px; text-align:center;">
+      ✓ Humor registrado com sucesso!
     </div>
+  </div>
+
+  <!-- Lembretes -->
+  <div class="card-modern" style="margin-bottom:24px;">
+    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">📅 Lembretes</h4>
+
+    <div *ngIf="lembretes.length > 0; else semLembretes">
+      <div *ngFor="let l of lembretes" style="display:flex; align-items:flex-start; gap:12px; padding:14px; background:var(--primary-light); border-radius:10px; margin-bottom:10px;">
+        <div style="font-size:1.2rem; margin-top:2px;">🔔</div>
+        <div style="flex:1;">
+          <div style="font-weight:600; color:var(--primary);">{{ l.titulo }}</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:2px;">{{ l.descricao }}</div>
+        </div>
+        <span class="badge-mod badge-teal">{{ l.data | date: 'dd/MM' }}</span>
+      </div>
+    </div>
+    <ng-template #semLembretes>
+      <p style="color:var(--text-secondary); font-size:0.875rem;">Nenhum lembrete cadastrado.</p>
+    </ng-template>
+  </div>
+
+  <!-- Fotos -->
+  <div class="card-modern" style="margin-bottom:24px;">
+    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">📷 Galeria de Fotos</h4>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap:12px;">
+      <img *ngFor="let f of fotos"
+        [src]="'data:image/jpeg;base64,' + f.foto"
+        style="width:100%; height:140px; object-fit:cover; border-radius:10px; border:1px solid var(--border);"
+        alt="Foto do paciente">
+    </div>
+    <div *ngIf="fotos.length === 0" style="color:var(--text-secondary); font-size:0.875rem;">
+      Nenhuma foto enviada ainda.
+    </div>
+  </div>
+
+  <!-- Atividades -->
+  <div class="card-modern">
+    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">🧩 Atividades Interativas</h4>
+    <div *ngIf="atividades.length > 0; else semAtividades">
+      <div *ngFor="let a of atividades" style="padding:14px; border:1px solid var(--border); border-radius:10px; margin-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="badge-mod badge-violet">{{ a.tipo }}</span>
+          <strong>{{ a.titulo }}</strong>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.82rem; margin-top:6px; margin-bottom:0;">{{ a.descricao }}</p>
+      </div>
+    </div>
+    <ng-template #semAtividades>
+      <p style="color:var(--text-secondary); font-size:0.875rem;">Nenhuma atividade registrada.</p>
+    </ng-template>
   </div>
 </div>
-  <section class="mb-4">
-  <h4>Lembretes</h4>
-  
-  <div *ngIf="lembretes.length > 0; else semLembretes">
-    <div 
-      *ngFor="let l of lembretes" 
-      class="alert alert-primary d-flex justify-content-between align-items-center"
-      role="alert">
-      
-      <div>
-        <strong>{{ l.titulo }}</strong> — {{ l.data| date: 'dd/MM/yyyy' }}<br />
-        <small>{{ l.descricao }}</small>
-      </div>
-
-      <span class="badge bg-light text-dark px-2 rounded-pill">
-        📅
-      </span>
-    </div>
-  </div>
-
-  <ng-template #semLembretes>
-    <p class="text-muted">Nenhum lembrete cadastrado.</p>
-  </ng-template>
-</section>
-  <section class="mb-4">
-    <h4>Galeria de Fotos</h4>
-    <div class="row">
-      <div class="col-md-3 mb-3" *ngFor="let f of fotos">
-        <img 
-          [src]="'data:image/jpeg;base64,' + f.foto"
-          class="img-fluid rounded shadow"
-          alt="Foto do paciente">
-      </div>
-    </div>
-    <div *ngIf="fotos.length === 0" class="text-muted">
-      Nenhuma foto foi enviada ainda.
-    </div>
-  </section>
-
-  <section>
-    <h4>Atividades Interativas</h4>
-    <ul *ngIf="atividades.length > 0; else semAtividades" class="list-group">
-      <li class="list-group-item" *ngFor="let a of atividades">
-        <strong>{{ a.titulo }}</strong> — {{ a.tipo }}<br />
-        <small>{{ a.descricao }}</small>
-      </li>
-    </ul>
-    <ng-template #semAtividades>
-      <p class="text-muted">Nenhuma atividade registrada.</p>
-    </ng-template>
-  </section>
-</main>

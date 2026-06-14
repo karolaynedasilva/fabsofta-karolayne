@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { AtividadeInterativa } from '../model/atividadeinterativa';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
@@ -10,10 +10,10 @@ import { AtividadeInterativaService } from '../service/atividadeinterativa.servi
 @Component({
   selector: 'app-atividade-interativa',
   standalone: true,
-  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule],
   templateUrl: './atividadeinterativa.component.html',
   styleUrl: './atividadeinterativa.component.css',
-  providers: [AtividadeInterativaService, Router]
+  providers: []
 })
 export class AtividadeInterativaComponent {
   @ViewChild('myModal') modalElement!: ElementRef;

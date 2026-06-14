@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CuidadorService } from '../service/cuidador.service';
 import { Cuidador } from '../model/cuidador';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   standalone: true,
   templateUrl: './cuidador.component.html',
   styleUrl: './cuidador.component.css',
-  imports: [CommonModule, HttpClientModule, RouterLink]
+  imports: [CommonModule, HttpClientModule]
 })
 export class CuidadorComponent {
   cuidadorSelecionado!: Cuidador;

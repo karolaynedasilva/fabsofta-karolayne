@@ -3,17 +3,17 @@ import { Paciente } from '../model/paciente';
 import { PacienteService } from '../service/paciente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-paciente',
-  imports: [HttpClientModule, CommonModule, RouterLink,],
+  imports: [HttpClientModule, CommonModule],
   templateUrl: './paciente.component.html',
   styleUrl: './paciente.component.css',
-  providers: [PacienteService, Router, provideNgxMask()]
+  providers: [provideNgxMask()]
 })
 export class PacienteComponent {
 
