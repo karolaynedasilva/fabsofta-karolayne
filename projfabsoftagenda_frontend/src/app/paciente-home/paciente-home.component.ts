@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../service/paciente.service';
 import { LembreteService } from '../service/lembrete.service';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
 import { AtividadeInterativa } from '../model/atividadeinterativa';
 import { EmergenciaService } from '../service/emergencia.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-paciente-home',
@@ -18,13 +20,13 @@ import { EmergenciaService } from '../service/emergencia.service';
   styleUrl: './paciente-home.component.css',
   imports: [CommonModule]
 })
-export class PacienteHomeComponent {
+export class PacienteHomeComponent implements OnInit {
   pacienteId!: number;
   paciente!: Paciente;
   lembretes: Lembrete[] = [];
-  fotos: FotoFamiliar[] = []; 
+  fotos: FotoFamiliar[] = [];
   atividades: AtividadeInterativa[] = [];
-   humores: string[] = ['😖', '😟', '😐', '🙂', '😌'];
+  humores: string[] = ['😖', '😟', '😐', '🙂', '😌'];
   humorSelecionado: string | null = null;
   humorEnviado = false;
   sosEnviado = false;
@@ -42,30 +44,36 @@ export class PacienteHomeComponent {
   ngOnInit(): void {
     this.pacienteId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.pacienteService.getPacienteById(this.pacienteId).subscribe(p => {
-      this.paciente = p;
-    });
+    this.pacienteService.getPacienteById(this.pacienteId).pipe(
+      catchError(() => of(null))
+    ).subscribe(p => { if (p) this.paciente = p; });
 
-    this.lembreteService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-      this.lembretes = lista;
-    });
+    this.lembreteService.listarPorPaciente(this.pacienteId).pipe(
+      catchError(() => of([]))
+    ).subscribe(lista => { this.lembretes = lista; });
 
-    this.fotoFamiliarService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-      console.log('Fotos do paciente:', lista);
-      this.fotos = lista;
-    });
-    this.atividadeService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-      console.log('Atividades do paciente:', lista);
-      this.atividades = lista;
-   });
+    this.fotoFamiliarService.listarPorPaciente(this.pacienteId).pipe(
+      catchError(() => of([]))
+    ).subscribe(lista => { this.fotos = lista; });
+
+    this.atividadeService.listarPorPaciente(this.pacienteId).pipe(
+      catchError(() => of([]))
+    ).subscribe(lista => { this.atividades = lista; });
   }
-   selecionarHumor(emoji: string) {
+
+  // Retorna a src correta usando o mimeType salvo ou fallback para jpeg
+  fotoSrc(f: FotoFamiliar): string {
+    const mime = f.mimeType || 'image/jpeg';
+    return `data:${mime};base64,${f.foto}`;
+  }
+
+  selecionarHumor(emoji: string) {
     this.humorSelecionado = emoji;
     this.humorEnviado = false;
   }
 
   registrarHumor() {
-    console.log("Humor selecionado:", this.humorSelecionado);
+    if (!this.humorSelecionado) return;
     this.humorEnviado = true;
     setTimeout(() => {
       this.humorSelecionado = null;
@@ -80,9 +88,7 @@ export class PacienteHomeComponent {
       next: () => {
         this.sosEnviando = false;
         this.sosEnviado = true;
-        setTimeout(() => {
-          this.sosEnviado = false;
-        }, 4000);
+        setTimeout(() => { this.sosEnviado = false; }, 4000);
       },
       error: () => {
         this.sosEnviando = false;
@@ -91,90 +97,3 @@ export class PacienteHomeComponent {
     });
   }
 }
-
-
-// import { Component } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-// import { CommonModule } from '@angular/common';
-
-// import { PacienteService } from '../service/paciente.service';
-// import { LembreteService } from '../service/lembrete.service';
-// import { FotoFamiliarService } from '../service/foto-familiar.service';
-// import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
-// import { HumorService } from '../service/humor.service';
-
-// import { Paciente } from '../model/paciente';
-// import { Lembrete } from '../model/lembrete';
-// import { FotoFamiliar } from '../model/foto-familiar';
-// import { AtividadeInterativa } from '../model/atividadeinterativa';
-
-// @Component({
-//   selector: 'app-paciente-home',
-//   standalone: true,
-//   templateUrl: './paciente-home.component.html',
-//   styleUrl: './paciente-home.component.css',
-//   imports: [CommonModule]
-// })
-// export class PacienteHomeComponent {
-//   pacienteId!: number;
-//   paciente!: Paciente;
-
-//   lembretes: Lembrete[] = [];
-//   fotos: FotoFamiliar[] = [];
-//   atividades: AtividadeInterativa[] = [];
-
-//   humores: string[] = ['😖', '😟', '😐', '🙂', '😌'];
-//   humorSelecionado: string | null = null;
-//   humorEnviado = false;
-
-//   constructor(
-//     private route: ActivatedRoute,
-//     private pacienteService: PacienteService,
-//     private lembreteService: LembreteService,
-//     private fotoFamiliarService: FotoFamiliarService,
-//     private atividadeService: AtividadeInterativaService,
-//     private humorService: HumorService
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.pacienteId = Number(this.route.snapshot.paramMap.get('id'));
-
-//     this.pacienteService.getPacienteById(this.pacienteId).subscribe(p => {
-//       this.paciente = p;
-//     });
-
-//     this.lembreteService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-//       this.lembretes = lista;
-//     });
-
-//     this.fotoFamiliarService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-//       this.fotos = lista;
-//     });
-
-//     this.atividadeService.listarPorPaciente(this.pacienteId).subscribe(lista => {
-//       this.atividades = lista;
-//     });
-//   }
-
-//   selecionarHumor(emoji: string) {
-//     this.humorSelecionado = emoji;
-//     this.humorEnviado = false;
-//   }
-
-//   registrarHumor() {
-//     if (this.humorSelecionado) {
-//       const payload = {
-//         paciente: { id: this.pacienteId },
-//         humor: this.humorSelecionado
-//       };
-
-//       this.humorService.salvar(payload).subscribe(() => {
-//         this.humorEnviado = true;
-//         setTimeout(() => {
-//           this.humorSelecionado = null;
-//           this.humorEnviado = false;
-//         }, 2000);
-//       });
-//     }
-//   }
-// }

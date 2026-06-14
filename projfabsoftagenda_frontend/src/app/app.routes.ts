@@ -15,25 +15,26 @@ import { HistoricoPacienteComponent } from './historico-paciente/historico-pacie
 import { FormCuidadorComponent } from './form-cuidador/form-cuidador.component';
 import { EmergenciasComponent } from './emergencia/emergencias.component';
 
-
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'pacientes', component: PacienteComponent, canActivate: [AuthGuard]},
-  { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard] },
-  { path: 'cuidadores/novo', component: FormCuidadorComponent, canActivate: [AuthGuard] },
-  { path: 'cuidadores/alterar/:id', component: FormCuidadorComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/novo', component: FormPacienteComponent, canActivate: [AuthGuard]},
-  { path: 'lembretes', component: LembreteComponent, canActivate: [AuthGuard]},
-  { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
-  { path: 'lembretes/alterar/:id', component: FormLembreteComponent, canActivate: [AuthGuard] },
-  { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard]},
-  { path: 'emergencias', component: EmergenciasComponent, canActivate: [AuthGuard]},
-  { path: 'paciente-home/:id',  component: PacienteHomeComponent,canActivate: [AuthGuard] },
-  { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
-  { path: 'fotos-familiares', component: FotoFamiliarComponent, canActivate: [AuthGuard] },
-  { path: 'atividades', component: AtividadeInterativaComponent, canActivate: [AuthGuard]  },
-  { path: 'atividades/novo', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
-  { path: 'atividades/alterar/:id', component: FormAtividadeComponent, canActivate: [AuthGuard]  },
-  { path: 'historico-paciente/:id', component: HistoricoPacienteComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: 'login',                       component: LoginComponent },
+  { path: 'pacientes',                   component: PacienteComponent,          canActivate: [AuthGuard] },
+  { path: 'pacientes/novo',              component: FormPacienteComponent,       canActivate: [AuthGuard] },
+  { path: 'pacientes/alterar/:id',       component: FormPacienteComponent,       canActivate: [AuthGuard] },
+  { path: 'cuidadores',                  component: CuidadorComponent,           canActivate: [AuthGuard] },
+  { path: 'cuidadores/novo',             component: FormCuidadorComponent,       canActivate: [AuthGuard] },
+  { path: 'cuidadores/alterar/:id',      component: FormCuidadorComponent,       canActivate: [AuthGuard] },
+  { path: 'lembretes',                   component: LembreteComponent,           canActivate: [AuthGuard] },
+  { path: 'lembretes/novo',              component: FormLembreteComponent,       canActivate: [AuthGuard] },
+  { path: 'lembretes/alterar/:id',       component: FormLembreteComponent,       canActivate: [AuthGuard] },
+  { path: 'homecuidador',                component: HomecuidadorComponent,       canActivate: [AuthGuard] },
+  { path: 'emergencias',                 component: EmergenciasComponent,        canActivate: [AuthGuard] },
+  { path: 'paciente-home/:id',           component: PacienteHomeComponent,       canActivate: [AuthGuard] },
+  { path: 'pacientes-home/:id',          component: PacienteHomeComponent,       canActivate: [AuthGuard] }, // alias
+  { path: 'fotos-familiares',            component: FotoFamiliarComponent,       canActivate: [AuthGuard] },
+  { path: 'atividades',                  component: AtividadeInterativaComponent, canActivate: [AuthGuard] },
+  { path: 'atividades/novo',             component: FormAtividadeComponent,      canActivate: [AuthGuard] },
+  { path: 'atividades/alterar/:id',      component: FormAtividadeComponent,      canActivate: [AuthGuard] },
+  { path: 'historico-paciente/:id',      component: HistoricoPacienteComponent,  canActivate: [AuthGuard] },
+  { path: '',                            redirectTo: 'login', pathMatch: 'full' },
+  { path: '**',                          redirectTo: 'login' }
 ];

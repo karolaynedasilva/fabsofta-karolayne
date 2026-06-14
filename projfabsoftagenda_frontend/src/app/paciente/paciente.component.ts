@@ -18,7 +18,6 @@ export class PacienteComponent implements OnInit, OnDestroy {
   public listaPacientes: Paciente[] = [];
   public modalAberto = false;
   public pacienteSelecionado!: Paciente;
-
   private routerSub!: Subscription;
 
   constructor(
@@ -29,8 +28,10 @@ export class PacienteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.carregarLista();
 
+    // Recarrega SOMENTE ao navegar de volta para /pacientes
     this.routerSub = this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
+      filter(e => e instanceof NavigationEnd),
+      filter((e: any) => e.urlAfterRedirects === '/pacientes')
     ).subscribe(() => {
       this.carregarLista();
     });
@@ -69,9 +70,7 @@ export class PacienteComponent implements OnInit, OnDestroy {
         this.fecharConfirmacao();
         this.carregarLista();
       },
-      error => {
-        console.error('Erro ao excluir paciente:', error);
-      }
+      error => console.error('Erro ao excluir paciente:', error)
     );
   }
 }

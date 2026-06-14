@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { EmergenciaService } from '../service/emergencia.service';
 import { Emergencia } from '../model/emergencia';
 
 @Component({
   selector: 'app-emergencias',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './emergencias.component.html',
   styleUrl: './emergencias.component.css'
 })
-export class EmergenciasComponent {
+export class EmergenciasComponent implements OnInit {
   emergencias: Emergencia[] = [];
 
   constructor(private emergenciaService: EmergenciaService) {}
@@ -23,7 +22,7 @@ export class EmergenciasComponent {
   carregar(): void {
     this.emergenciaService.listarTodas().subscribe(lista => {
       this.emergencias = lista.sort((a, b) =>
-        new Date(b.horario).getTime() - new Date(a.horario).getTime()
+        this.toDate(b.horario).getTime() - this.toDate(a.horario).getTime()
       );
     });
   }
@@ -34,8 +33,28 @@ export class EmergenciasComponent {
     });
   }
 
+  // Converte qualquer formato de data/hora do backend para Date
+  private toDate(horario: string): Date {
+    if (!horario) return new Date(0);
+    // Tenta parse direto
+    const d = new Date(horario);
+    if (!isNaN(d.getTime())) return d;
+    // Tenta formato "yyyy-MM-dd HH:mm:ss" (sem T)
+    const normalizado = horario.replace(' ', 'T');
+    const d2 = new Date(normalizado);
+    if (!isNaN(d2.getTime())) return d2;
+    return new Date(0);
+  }
+
   formatarHorario(horario: string): string {
-    const data = new Date(horario);
-    return data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const data = this.toDate(horario);
+    if (isNaN(data.getTime())) return '—';
+    return data.toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 }
