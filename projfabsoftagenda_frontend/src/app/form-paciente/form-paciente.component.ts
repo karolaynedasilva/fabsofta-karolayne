@@ -34,7 +34,7 @@ export class FormPacienteComponent {
     if (this.formPaciente.valid) {
       this.pacienteService.savePaciente(this.paciente)
         .subscribe(res => {
-          this.router.navigate(['pacientes']);
+          this.router.navigate(['/pacientes']);
         });
     } else {
       this.formPaciente.form.markAllAsTouched();

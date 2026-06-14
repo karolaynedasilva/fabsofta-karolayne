@@ -37,7 +37,7 @@ import { HomecuidadorService } from '../service/homecuidador.service';
   imports: [HttpClientModule, CommonModule,],
   templateUrl: './homecuidador.component.html',
   styleUrl: './homecuidador.component.css',
-   providers: []
+   providers: [HomecuidadorService, Router]
 })
 export class HomecuidadorComponent {
   constructor(
@@ -61,5 +61,9 @@ export class HomecuidadorComponent {
 
   navegarParaHistorico() {
     this.router.navigate(['/evolucao']);
+  }
+
+  navegarParaEmergencias() {
+    this.router.navigate(['/emergencias']);
   }
 }

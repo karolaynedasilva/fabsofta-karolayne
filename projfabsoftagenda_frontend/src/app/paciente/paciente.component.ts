@@ -1,74 +1,77 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Paciente } from '../model/paciente';
 import { PacienteService } from '../service/paciente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import * as bootstrap from 'bootstrap';
-import { FormsModule } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-paciente',
   imports: [HttpClientModule, CommonModule],
   templateUrl: './paciente.component.html',
-  styleUrl: './paciente.component.css',
-  providers: [provideNgxMask()]
+  styleUrl: './paciente.component.css'
 })
-export class PacienteComponent {
-
-  paciente: Paciente = new Paciente();
-
-  // Buscando o #myModal encontra a referencia do html e guarda na variavel
-  @ViewChild('myModal') modalElement!: ElementRef;
-  private modal!: bootstrap.Modal;
-  //copiar a referncia do cliente para essa varivel 
-  private pacienteSelecionado!: Paciente;
+export class PacienteComponent implements OnInit, OnDestroy {
 
   public listaPacientes: Paciente[] = [];
+  public modalAberto = false;
+  public pacienteSelecionado!: Paciente;
+
+  private routerSub!: Subscription;
 
   constructor(
     private pacienteService: PacienteService,
-    private router: Router,
-    private activeRouter: ActivatedRoute
- ){}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.carregarLista();
+
+    this.routerSub = this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.carregarLista();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSub) this.routerSub.unsubscribe();
+  }
+
+  carregarLista(): void {
     this.pacienteService.getPacientes().subscribe(resposta => {
-        this.listaPacientes = resposta;
-    })
-  }
-  novo(){
-    this.router.navigate(['/pacientes/novo'])
+      this.listaPacientes = resposta;
+    });
   }
 
-  alterar(paciente:Paciente){
-    this.router.navigate(['pacientes/alterar', paciente.id])
+  novo(): void {
+    this.router.navigate(['/pacientes/novo']);
   }
 
-  abrirConfirmacao(paciente:Paciente) {
+  alterar(paciente: Paciente): void {
+    this.router.navigate(['/pacientes/alterar', paciente.id]);
+  }
+
+  abrirConfirmacao(paciente: Paciente): void {
     this.pacienteSelecionado = paciente;
-    this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
-    this.modal.show();
+    this.modalAberto = true;
   }
 
-  fecharConfirmacao() {
-    this.modal.hide();
+  fecharConfirmacao(): void {
+    this.modalAberto = false;
   }
 
-  confirmarExclusao(id:number) {
+  confirmarExclusao(): void {
     this.pacienteService.excluirPaciente(this.pacienteSelecionado.id).subscribe(
-        () => {
-            this.fecharConfirmacao();
-            this.pacienteService.getPacientes().subscribe(
-              pacientes => {
-                this.listaPacientes = pacientes;
-              }
-            );
-        },
-        error => {
-            console.error('Erro ao excluir paciente:', error);
-        }
+      () => {
+        this.fecharConfirmacao();
+        this.carregarLista();
+      },
+      error => {
+        console.error('Erro ao excluir paciente:', error);
+      }
     );
   }
 }

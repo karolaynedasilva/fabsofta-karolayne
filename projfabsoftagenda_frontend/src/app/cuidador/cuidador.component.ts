@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CuidadorService } from '../service/cuidador.service';
 import { Cuidador } from '../model/cuidador';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './cuidador.component.css',
   imports: [CommonModule, HttpClientModule]
 })
-export class CuidadorComponent {
+export class CuidadorComponent implements OnDestroy {
   cuidadorSelecionado!: Cuidador;
   @ViewChild('modalExcluir') modalElement!: ElementRef;
   modal!: bootstrap.Modal;
@@ -45,12 +45,26 @@ export class CuidadorComponent {
 
   abrirConfirmacao(c: Cuidador) {
     this.cuidadorSelecionado = c;
-    this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    if (!this.modal) {
+      this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    }
     this.modal.show();
   }
 
   fecharConfirmacao() {
-    this.modal.hide();
+    if (this.modal) {
+      this.modal.hide();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.modal) {
+      this.modal.dispose();
+    }
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
   }
 
   confirmarExclusao() {

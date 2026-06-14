@@ -20,6 +20,13 @@ export class AppComponent implements OnInit {
       filter(e => e instanceof NavigationEnd)
     ).subscribe((e: any) => {
       this.mostrarSidebar = !e.url.startsWith('/login') && e.url !== '/';
+
+      // Limpeza preventiva: remove backdrops de modal "fantasmas"
+      // que possam ter ficado presos no <body> e bloqueando cliques.
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.classList.remove('modal-open');
+      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty('padding-right');
     });
   }
 

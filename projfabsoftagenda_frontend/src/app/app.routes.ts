@@ -13,6 +13,7 @@ import { AtividadeInterativaComponent } from './atividadeinterativa/atividadeint
 import { FormAtividadeComponent } from './form-atividade/form-atividade.component';
 import { HistoricoPacienteComponent } from './historico-paciente/historico-paciente.component';
 import { FormCuidadorComponent } from './form-cuidador/form-cuidador.component';
+import { EmergenciasComponent } from './emergencia/emergencias.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'lembretes/novo', component: FormLembreteComponent, canActivate: [AuthGuard]},
   { path: 'lembretes/alterar/:id', component: FormLembreteComponent, canActivate: [AuthGuard] },
   { path: 'homecuidador', component: HomecuidadorComponent, canActivate: [AuthGuard]},
+  { path: 'emergencias', component: EmergenciasComponent, canActivate: [AuthGuard]},
   { path: 'paciente-home/:id',  component: PacienteHomeComponent,canActivate: [AuthGuard] },
   { path: 'pacientes/alterar/:id', component: FormPacienteComponent, canActivate: [AuthGuard] },
   { path: 'fotos-familiares', component: FotoFamiliarComponent, canActivate: [AuthGuard] },

@@ -9,6 +9,7 @@ import { FotoFamiliarService } from '../service/foto-familiar.service';
 import { CommonModule } from '@angular/common';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
 import { AtividadeInterativa } from '../model/atividadeinterativa';
+import { EmergenciaService } from '../service/emergencia.service';
 
 @Component({
   selector: 'app-paciente-home',
@@ -26,13 +27,16 @@ export class PacienteHomeComponent {
    humores: string[] = ['😖', '😟', '😐', '🙂', '😌'];
   humorSelecionado: string | null = null;
   humorEnviado = false;
+  sosEnviado = false;
+  sosEnviando = false;
 
   constructor(
     private route: ActivatedRoute,
     private pacienteService: PacienteService,
     private lembreteService: LembreteService,
     private fotoFamiliarService: FotoFamiliarService,
-    private atividadeService: AtividadeInterativaService
+    private atividadeService: AtividadeInterativaService,
+    private emergenciaService: EmergenciaService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +71,24 @@ export class PacienteHomeComponent {
       this.humorSelecionado = null;
       this.humorEnviado = false;
     }, 2000);
+  }
+
+  acionarSos() {
+    if (this.sosEnviando) return;
+    this.sosEnviando = true;
+    this.emergenciaService.acionarSos(this.pacienteId).subscribe({
+      next: () => {
+        this.sosEnviando = false;
+        this.sosEnviado = true;
+        setTimeout(() => {
+          this.sosEnviado = false;
+        }, 4000);
+      },
+      error: () => {
+        this.sosEnviando = false;
+        alert('Não foi possível enviar o alerta. Tente novamente.');
+      }
+    });
   }
 }
 

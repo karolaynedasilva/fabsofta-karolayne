@@ -55,19 +55,17 @@
   </div>
 </div>
 
-<div class="modal fade" #myModal tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="font-weight:700;">Excluir Paciente</h5>
-      </div>
-      <div class="modal-body" style="padding:20px 24px; color:var(--text-secondary);">
-        Tem certeza que deseja excluir este paciente? Esta ação não pode ser desfeita.
-      </div>
-      <div class="modal-footer" style="gap:10px;">
-        <button type="button" class="btn-ghost-mod" (click)="fecharConfirmacao()">Cancelar</button>
-        <button type="button" class="btn-danger-mod" (click)="confirmarExclusao(paciente.id)">Sim, excluir</button>
-      </div>
+<!-- Modal Angular puro — sem Bootstrap JS, sem aria-hidden travado -->
+<div class="confirm-overlay" *ngIf="modalAberto" (click)="fecharConfirmacao()">
+  <div class="confirm-dialog" (click)="$event.stopPropagation()">
+    <h5 style="font-weight:700; margin-bottom:8px;">Excluir Paciente</h5>
+    <p style="color:var(--text-secondary); margin-bottom:24px;">
+      Tem certeza que deseja excluir <strong>{{ pacienteSelecionado?.nome }}</strong>?
+      Esta ação não pode ser desfeita.
+    </p>
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <button class="btn-ghost-mod" (click)="fecharConfirmacao()">Cancelar</button>
+      <button class="btn-danger-mod" (click)="confirmarExclusao()">Sim, excluir</button>
     </div>
   </div>
 </div>

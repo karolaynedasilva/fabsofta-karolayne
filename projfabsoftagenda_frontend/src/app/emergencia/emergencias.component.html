@@ -1,0 +1,56 @@
+<main class="container py-4">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 rounded shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand"> Meu Bem-Estar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarEmergencias">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarEmergencias">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/homecuidador">Início</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <h2 class="mb-4">🚨 Emergências Recebidas</h2>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>Horário</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emergencia of emergencias">
+            <td>{{ emergencia.paciente?.nome }}</td>
+            <td>{{ formatarHorario(emergencia.horario) }}</td>
+            <td>
+              <span class="badge"
+                    [ngClass]="emergencia.status === 'PENDENTE' ? 'bg-danger' : 'bg-success'">
+                {{ emergencia.status === 'PENDENTE' ? 'Pendente' : 'Atendida' }}
+              </span>
+            </td>
+            <td>
+              <button *ngIf="emergencia.status === 'PENDENTE'"
+                      class="btn btn-sm btn-outline-success"
+                      (click)="atender(emergencia)">
+                Marcar como atendida
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="emergencias.length === 0">
+            <td colspan="4" class="text-center text-muted">Nenhuma emergência registrada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
