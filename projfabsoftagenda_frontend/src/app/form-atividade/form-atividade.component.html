@@ -22,7 +22,13 @@
 
     <div class="mb-3">
       <label class="form-label">Tipo</label>
-      <input class="form-control" type="text" name="tipo" [(ngModel)]="atividade.tipo" required>
+      <select class="form-select" name="tipo" [(ngModel)]="atividade.tipo" required>
+        <option [ngValue]="null" disabled>Selecione</option>
+        <option value="CACAPALAVRAS">Caça-Palavras</option>
+        <option value="ESCREVER_MEMORIA">Escrever Memória</option>
+        <option value="COMPLETAR_PALAVRAS">Completar Palavras</option>
+        <option value="MEMORIZAR_IMAGEM">Memorizar Imagem</option>
+      </select>
     </div>
 
     <div class="text-end">

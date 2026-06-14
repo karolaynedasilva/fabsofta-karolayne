@@ -16,7 +16,7 @@ import { FormCuidadorComponent } from './form-cuidador/form-cuidador.component';
 
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent},
   { path: 'pacientes', component: PacienteComponent, canActivate: [AuthGuard]},
   { path: 'cuidadores', component: CuidadorComponent, canActivate: [AuthGuard] },
   { path: 'cuidadores/novo', component: FormCuidadorComponent, canActivate: [AuthGuard] },
