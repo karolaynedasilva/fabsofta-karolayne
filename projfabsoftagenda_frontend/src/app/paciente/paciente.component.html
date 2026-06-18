@@ -1,47 +1,79 @@
-<main class="container">
-    <h2>Pacientes</h2>
-    <a (click)="novo()" class="btn btn-primary">Novo</a>
-    <table class="table">
+<app-header></app-header>
+
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1;font-size:0.75rem;letter-spacing:0.1em;">Gerenciamento</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.6rem;">Pacientes</h1>
+        <p class="mb-0" style="color:#64748b;font-size:0.88rem;">{{ listaPacientes.length }} paciente(s) cadastrado(s)</p>
+      </div>
+      <button (click)="novo()" class="btn fw-semibold px-4" style="background:#6366f1;color:#fff;border-radius:10px;border:none;">
+        + Novo Paciente
+      </button>
+    </div>
+
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);overflow:hidden;">
+
+      <div *ngIf="listaPacientes.length === 0" class="text-center py-5">
+        <p style="color:#94a3b8;" class="mb-3">Nenhum paciente cadastrado ainda.</p>
+        <button (click)="novo()" class="btn btn-sm fw-semibold px-4" style="background:#6366f1;color:#fff;border-radius:8px;border:none;">
+          Cadastrar primeiro paciente
+        </button>
+      </div>
+
+      <table *ngIf="listaPacientes.length > 0" class="table mb-0" style="border-collapse:separate;">
         <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Endereço</th>
-                <th>Email</th>
-                <th>Telefone de Emergência</th>
-                <th></th>
-            </tr>
+          <tr style="border-bottom:1px solid #f1f5f9;">
+            <th class="ps-4 py-3 fw-semibold" style="color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#fff;border:none;">Nome</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#fff;border:none;">Idade</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#fff;border:none;">Email</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#fff;border:none;">Telefone</th>
+            <th class="pe-4 py-3 text-end fw-semibold" style="color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#fff;border:none;">Ações</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let umPaciente of listaPacientes">
-                <td>{{umPaciente.nome}}</td>
-                <td>{{umPaciente.idade}}</td>
-                <td>{{umPaciente.endereco}}</td>
-                <td>{{umPaciente.email}}</td>
-                <td>{{umPaciente.telefone}}</td>
-                <td>
-                    <a (click)="alterar(umPaciente)" class="btn btn-secondary">Alterar</a>
-                    &nbsp;
-                    <a (click)="abrirConfirmacao(umPaciente)" class="btn btn-danger">Excluir</a>
-                </td>
-            </tr>
+          <tr *ngFor="let umPaciente of listaPacientes" style="border-bottom:1px solid #f8fafc;transition:background 0.15s;"
+              onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='#fff'">
+            <td class="ps-4 py-3" style="border:none;">
+              <div class="d-flex align-items-center gap-3">
+                <div style="width:36px;height:36px;background:#ede9fe;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#7c3aed;font-size:0.85rem;">
+                  {{ umPaciente.nome?.charAt(0)?.toUpperCase() }}
+                </div>
+                <span class="fw-semibold" style="color:#0f172a;">{{ umPaciente.nome }}</span>
+              </div>
+            </td>
+            <td class="py-3" style="border:none;color:#475569;">{{ umPaciente.idade }} anos</td>
+            <td class="py-3" style="border:none;color:#64748b;">{{ umPaciente.email }}</td>
+            <td class="py-3" style="border:none;color:#64748b;">{{ umPaciente.telefone }}</td>
+            <td class="pe-4 py-3 text-end" style="border:none;">
+              <button (click)="verHistorico(umPaciente.id)" class="btn btn-sm me-1 fw-semibold" style="background:#ede9fe;color:#6d28d9;border:none;border-radius:8px;">Histórico</button>
+              <button (click)="verContatos(umPaciente.id)" class="btn btn-sm me-1 fw-semibold" style="background:#fee2e2;color:#dc2626;border:none;border-radius:8px;">Contatos</button>
+              <button (click)="alterar(umPaciente)" class="btn btn-sm me-1 fw-semibold" style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;">Editar</button>
+              <button (click)="abrirConfirmacao(umPaciente)" class="btn btn-sm fw-semibold" style="background:#fef2f2;color:#dc2626;border:none;border-radius:8px;">Excluir</button>
+            </td>
+          </tr>
         </tbody>
-    </table>
-</main>
+      </table>
+    </div>
+
+  </div>
+</div>
 
 <div class="modal fade" #myModal tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Excluir paciente</h5>
-            </div>
-            <div class="modal-body">
-            Confirma a exclusão do paciente?
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="confirmarExclusao(paciente.id)">Sim</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold" style="color:#0f172a;">Excluir paciente</h5>
+      </div>
+      <div class="modal-body px-4 py-3" style="color:#64748b;">
+        Tem certeza que deseja excluir <strong style="color:#0f172a;">{{ paciente?.nome }}</strong>? Esta ação não pode ser desfeita.
+      </div>
+      <div class="modal-footer border-0 pb-4 px-4">
+        <button type="button" class="btn fw-semibold" style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;" (click)="fecharConfirmacao()">Cancelar</button>
+        <button type="button" class="btn fw-semibold" style="background:#dc2626;color:#fff;border:none;border-radius:8px;" (click)="confirmarExclusao(paciente.id)">Excluir</button>
+      </div>
     </div>
+  </div>
 </div>

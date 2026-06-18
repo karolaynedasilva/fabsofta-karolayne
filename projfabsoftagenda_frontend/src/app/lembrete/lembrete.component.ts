@@ -6,15 +6,16 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { Lembrete } from '../model/lembrete';
 import { LembreteService } from '../service/lembrete.service';
+import { HeaderComponent } from '../header/header.component';
 
 
 @Component({
   selector: 'app-lembrete',
   standalone: true,
-  imports: [HttpClientModule,RouterLink, CommonModule, FormsModule],
+  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule, HeaderComponent],
   templateUrl: './lembrete.component.html',
   styleUrl: './lembrete.component.css',
-  providers: [LembreteService, Router]
+  providers: [LembreteService]
 })
 export class LembreteComponent {
 

@@ -6,14 +6,15 @@ import { Router, RouterLink } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { AtividadeInterativa } from '../model/atividadeinterativa';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-atividade-interativa',
   standalone: true,
-  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule],
+  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule, HeaderComponent],
   templateUrl: './atividadeinterativa.component.html',
   styleUrl: './atividadeinterativa.component.css',
-  providers: [AtividadeInterativaService, Router]
+  providers: [AtividadeInterativaService]
 })
 export class AtividadeInterativaComponent {
   @ViewChild('myModal') modalElement!: ElementRef;

@@ -1,41 +1,104 @@
-<main class="container">
-  <h2>Atividades Interativas</h2>
-  <a (click)="novo()" class="btn btn-primary">Nova</a>
+<app-header></app-header>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Tipo</th>
-        <th>Paciente</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let atividade of listaAtividades">
-        <td>{{ atividade.titulo }}</td>
-        <td>{{ atividade.descricao }}</td>
-        <td>{{ atividade.tipo }}</td>
-        <td>{{ atividade.paciente?.nome }}</td>
-        <td>
-          <a (click)="alterar(atividade)" class="btn btn-secondary">Alterar</a>
-          &nbsp;
-          <a (click)="abrirConfirmacao(atividade)" class="btn btn-danger">Excluir</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</main>
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1;font-size:0.75rem;letter-spacing:0.1em;">Gerenciamento</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.6rem;">Atividades</h1>
+        <p class="mb-0" style="color:#64748b;font-size:0.88rem;">{{ listaAtividades.length }} atividade(s) cadastrada(s)</p>
+      </div>
+      <button (click)="novo()" class="btn fw-semibold px-4"
+        style="background:#6366f1;color:#fff;border-radius:10px;border:none;">
+        + Nova Atividade
+      </button>
+    </div>
+
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);overflow:hidden;">
+
+      <div *ngIf="listaAtividades.length === 0" class="text-center py-5">
+        <div style="width:52px;height:52px;background:#dcfce7;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#16a34a" viewBox="0 0 16 16">
+            <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+        </div>
+        <p class="fw-semibold mb-1" style="color:#0f172a;">Nenhuma atividade ainda</p>
+        <p style="color:#94a3b8;font-size:0.88rem;" class="mb-3">Registre a primeira atividade para um paciente.</p>
+        <button (click)="novo()" class="btn btn-sm fw-semibold px-4"
+          style="background:#6366f1;color:#fff;border-radius:8px;border:none;">
+          + Criar atividade
+        </button>
+      </div>
+
+      <table *ngIf="listaAtividades.length > 0" class="table mb-0">
+        <thead>
+          <tr style="border-bottom:2px solid #f1f5f9;">
+            <th class="ps-4 py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Título</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Descrição</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Tipo</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Paciente</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Status</th>
+            <th class="pe-4 py-3 text-end fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let atividade of listaAtividades"
+              style="border-bottom:1px solid #f8fafc;transition:background 0.15s;"
+              onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='#fff'">
+            <td class="ps-4 py-3" style="border:none;">
+              <span class="fw-semibold" style="color:#0f172a;">{{ atividade.titulo }}</span>
+            </td>
+            <td class="py-3" style="border:none;color:#64748b;max-width:220px;">
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ atividade.descricao }}</span>
+            </td>
+            <td class="py-3" style="border:none;">
+              <span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">
+                {{ atividade.tipo }}
+              </span>
+            </td>
+            <td class="py-3" style="border:none;">
+              <span style="background:#f0f9ff;color:#0369a1;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">
+                {{ atividade.paciente?.nome }}
+              </span>
+            </td>
+            <td class="py-3" style="border:none;">
+              <span [style.background]="atividade.confirmado ? '#f0fdf4' : '#fef9c3'"
+                    [style.color]="atividade.confirmado ? '#15803d' : '#92400e'"
+                    style="padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:700;">
+                {{ atividade.confirmado ? '✓ Feita' : 'Pendente' }}
+              </span>
+            </td>
+            <td class="pe-4 py-3 text-end" style="border:none;">
+              <button (click)="alterar(atividade)" class="btn btn-sm me-2 fw-semibold"
+                style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.82rem;">Editar</button>
+              <button (click)="abrirConfirmacao(atividade)" class="btn btn-sm fw-semibold"
+                style="background:#fef2f2;color:#dc2626;border:none;border-radius:8px;font-size:0.82rem;">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
 
 <div class="modal fade" #myModal tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Excluir atividade</h5></div>
-      <div class="modal-body">Confirma a exclusão da atividade?</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="confirmarExclusao()">Sim</button>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold" style="color:#0f172a;">Excluir atividade</h5>
+      </div>
+      <div class="modal-body px-4 py-3" style="color:#64748b;font-size:0.92rem;">
+        Tem certeza que deseja excluir esta atividade? Esta ação não pode ser desfeita.
+      </div>
+      <div class="modal-footer border-0 pb-4 px-4">
+        <button type="button" class="btn fw-semibold"
+          style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;"
+          (click)="fecharConfirmacao()">Cancelar</button>
+        <button type="button" class="btn fw-semibold"
+          style="background:#dc2626;color:#fff;border:none;border-radius:8px;"
+          (click)="confirmarExclusao()">Excluir</button>
       </div>
     </div>
   </div>

@@ -22,6 +22,11 @@ public class LembreteController {
         return service.listarTodos();
     }
 
+    @GetMapping("/paciente/{pacienteId}")
+    public List<Lembrete> listarPorPaciente(@PathVariable Long pacienteId) {
+        return service.listarPorPaciente(pacienteId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Lembrete> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -38,12 +43,22 @@ public class LembreteController {
     public ResponseEntity<Lembrete> atualizar(@PathVariable Long id, @RequestBody Lembrete novoLembrete) {
         return service.buscarPorId(id)
                      .map(lembreteExistente -> {
+                         lembreteExistente.setTitulo(novoLembrete.getTitulo());
                          lembreteExistente.setDescricao(novoLembrete.getDescricao());
-                         lembreteExistente.setDataHora(novoLembrete.getDataHora());
+                         lembreteExistente.setData(novoLembrete.getData());
+                         lembreteExistente.setHora(novoLembrete.getHora());
                          lembreteExistente.setPaciente(novoLembrete.getPaciente());
                          return ResponseEntity.ok(service.salvar(lembreteExistente));
                      })
                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}/confirmar")
+    public ResponseEntity<Lembrete> confirmar(@PathVariable Long id) {
+        return service.buscarPorId(id).map(l -> {
+            l.setConfirmado(true);
+            return ResponseEntity.ok(service.salvar(l));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

@@ -31,4 +31,8 @@ export class LembreteService {
   excluirLembrete(id: any){
     return this.http.delete<Lembrete>(this.apiUrl + '/' + id);
   }
+
+  confirmar(id: number) {
+    return this.http.put(`${this.apiUrl}/${id}/confirmar`, {});
+  }
 }

@@ -21,6 +21,11 @@ public class LembreteServiceImpl implements LembreteService {
     }
 
     @Override
+    public List<Lembrete> listarPorPaciente(Long pacienteId) {
+        return repository.findByPacienteId(pacienteId);
+    }
+
+    @Override
     public Optional<Lembrete> buscarPorId(Long id) {
         return repository.findById(id);
     }

@@ -21,6 +21,11 @@ public class AtividadeInterativaServiceImpl implements AtividadeInterativaServic
     }
 
     @Override
+    public List<AtividadeInterativa> listarPorPaciente(Long pacienteId) {
+        return repository.findByPacienteId(pacienteId);
+    }
+
+    @Override
     public Optional<AtividadeInterativa> buscarPorId(Long id) {
         return repository.findById(id);
     }

@@ -6,13 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-form-paciente',
-  imports: [HttpClientModule, CommonModule, FormsModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
+  imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe, HeaderComponent],
   templateUrl: './form-paciente.component.html',
   styleUrl: './form-paciente.component.css',
-  providers: [PacienteService, Router, provideNgxMask()]
+  providers: [PacienteService, provideNgxMask()]
 })
 export class FormPacienteComponent {
     paciente: Paciente = new Paciente();
@@ -31,13 +32,16 @@ export class FormPacienteComponent {
       }
     }
     salvar() {
-    if (this.formPaciente.valid) {
-      this.pacienteService.savePaciente(this.paciente)
-        .subscribe(res => {
-          this.router.navigate(['pacientes']);
+      if (this.formPaciente.valid) {
+        this.pacienteService.savePaciente(this.paciente).subscribe(() => {
+          this.router.navigate(['/pacientes']);
         });
-    } else {
-      this.formPaciente.form.markAllAsTouched();
+      } else {
+        this.formPaciente.form.markAllAsTouched();
+      }
     }
-  }
+
+    voltar() {
+      this.router.navigate(['/pacientes']);
+    }
 }

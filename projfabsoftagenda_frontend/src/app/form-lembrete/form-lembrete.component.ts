@@ -8,14 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-form-lembrete',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
+  imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe, HeaderComponent],
   templateUrl: './form-lembrete.component.html',
   styleUrl: './form-lembrete.component.css',
-  providers: [LembreteService, PacienteService, Router, provideNgxMask()]
+  providers: [LembreteService, PacienteService, provideNgxMask()]
 })
 export class FormLembreteComponent {
   lembrete: any = {};
@@ -58,11 +59,16 @@ export class FormLembreteComponent {
         paciente: this.lembrete.paciente // envia o objeto completo
       };
 
-      this.lembreteService.saveLembrete(lembreteParaSalvar).subscribe(() => {
-        this.router.navigate(['lembretes']);
+      this.lembreteService.saveLembrete(lembreteParaSalvar).subscribe({
+        next: () => this.router.navigate(['/lembretes']),
+        error: (err) => alert('Erro ao salvar lembrete: ' + (err?.message || JSON.stringify(err)))
       });
     } else {
       this.formLembrete.form.markAllAsTouched();
     }
+  }
+
+  voltar() {
+    this.router.navigate(['/lembretes']);
   }
 }

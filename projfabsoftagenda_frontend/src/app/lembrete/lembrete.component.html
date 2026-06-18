@@ -1,47 +1,107 @@
-<main class="container">
-    <h2>Lembretes</h2>
-    <a (click)="novo()" class="btn btn-primary">Novo</a>
-    <table class="table">
+<app-header></app-header>
+
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1;font-size:0.75rem;letter-spacing:0.1em;">Gerenciamento</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.6rem;">Lembretes</h1>
+        <p class="mb-0" style="color:#64748b;font-size:0.88rem;">{{ listaLembretes.length }} lembrete(s) cadastrado(s)</p>
+      </div>
+      <button (click)="novo()" class="btn fw-semibold px-4"
+        style="background:#6366f1;color:#fff;border-radius:10px;border:none;">
+        + Novo Lembrete
+      </button>
+    </div>
+
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);overflow:hidden;">
+
+      <div *ngIf="listaLembretes.length === 0" class="text-center py-5">
+        <div style="width:52px;height:52px;background:#ede9fe;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#7c3aed" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+          </svg>
+        </div>
+        <p class="fw-semibold mb-1" style="color:#0f172a;">Nenhum lembrete ainda</p>
+        <p style="color:#94a3b8;font-size:0.88rem;" class="mb-3">Crie o primeiro lembrete para um paciente.</p>
+        <button (click)="novo()" class="btn btn-sm fw-semibold px-4"
+          style="background:#6366f1;color:#fff;border-radius:8px;border:none;">
+          + Criar lembrete
+        </button>
+      </div>
+
+      <table *ngIf="listaLembretes.length > 0" class="table mb-0">
         <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Descricao</th>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Paciente</th>
-                <th></th>
-            </tr>
+          <tr style="border-bottom:2px solid #f1f5f9;">
+            <th class="ps-4 py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Título</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Descrição</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Data</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Hora</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Paciente</th>
+            <th class="py-3 fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Status</th>
+            <th class="pe-4 py-3 text-end fw-semibold" style="color:#94a3b8;font-size:0.73rem;text-transform:uppercase;letter-spacing:0.07em;background:#fff;border:none;">Ações</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let umLembrete of listaLembretes">
-                <td>{{umLembrete.titulo}}</td>
-                <td>{{umLembrete.descricao}}</td>
-                <td>{{ umLembrete.data | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ umLembrete.hora}}</td>                
-                <td>{{umLembrete.paciente?.nome}}</td>
-                <td>
-                    <a (click)="alterar(umLembrete)" class="btn btn-secondary">Alterar</a>
-                    &nbsp;
-                    <a (click)="abrirConfirmacao(umLembrete)" class="btn btn-danger">Excluir</a>
-                </td>
-            </tr>
+          <tr *ngFor="let umLembrete of listaLembretes"
+              style="border-bottom:1px solid #f8fafc;transition:background 0.15s;"
+              onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background='#fff'">
+            <td class="ps-4 py-3" style="border:none;">
+              <span class="fw-semibold" style="color:#0f172a;">{{ umLembrete.titulo }}</span>
+            </td>
+            <td class="py-3" style="border:none;color:#64748b;max-width:200px;">
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ umLembrete.descricao }}</span>
+            </td>
+            <td class="py-3" style="border:none;">
+              <span style="background:#ede9fe;color:#6d28d9;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">
+                {{ umLembrete.data }}
+              </span>
+            </td>
+            <td class="py-3" style="border:none;color:#475569;font-size:0.9rem;">{{ umLembrete.hora }}</td>
+            <td class="py-3" style="border:none;">
+              <span style="background:#f0f9ff;color:#0369a1;padding:3px 10px;border-radius:20px;font-size:0.8rem;font-weight:600;">
+                {{ umLembrete.paciente?.nome }}
+              </span>
+            </td>
+            <td class="py-3" style="border:none;">
+              <span [style.background]="umLembrete.confirmado ? '#f0fdf4' : '#fef9c3'"
+                    [style.color]="umLembrete.confirmado ? '#15803d' : '#92400e'"
+                    style="padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:700;">
+                {{ umLembrete.confirmado ? '✓ Feito' : 'Pendente' }}
+              </span>
+            </td>
+            <td class="pe-4 py-3 text-end" style="border:none;">
+              <button (click)="alterar(umLembrete)" class="btn btn-sm me-2 fw-semibold"
+                style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.82rem;">Editar</button>
+              <button (click)="abrirConfirmacao(umLembrete)" class="btn btn-sm fw-semibold"
+                style="background:#fef2f2;color:#dc2626;border:none;border-radius:8px;font-size:0.82rem;">Excluir</button>
+            </td>
+          </tr>
         </tbody>
-    </table>
-</main>
+      </table>
+    </div>
+
+  </div>
+</div>
 
 <div class="modal fade" #myModal tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Excluir lembrete</h5>
-            </div>
-            <div class="modal-body">
-            Confirma a exclusão do lembrete?
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="confirmarExclusao()">Sim</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0" style="border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold" style="color:#0f172a;">Excluir lembrete</h5>
+      </div>
+      <div class="modal-body px-4 py-3" style="color:#64748b;font-size:0.92rem;">
+        Tem certeza que deseja excluir este lembrete? Esta ação não pode ser desfeita.
+      </div>
+      <div class="modal-footer border-0 pb-4 px-4">
+        <button type="button" class="btn fw-semibold"
+          style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;"
+          (click)="fecharConfirmacao()">Cancelar</button>
+        <button type="button" class="btn fw-semibold"
+          style="background:#dc2626;color:#fff;border:none;border-radius:8px;"
+          (click)="confirmarExclusao()">Excluir</button>
+      </div>
     </div>
+  </div>
 </div>

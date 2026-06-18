@@ -1,33 +1,54 @@
-<div class="container mt-5" style="max-width: 400px;">
-  <h3 class="mb-4 text-center">Login</h3>
+<div style="min-height:100vh;background:#f1f4f9;display:flex;align-items:center;justify-content:center;">
+  <div style="width:100%;max-width:400px;padding:0 16px;">
 
-  <form (ngSubmit)="autenticar()" #formLogin="ngForm">
-    <div class="mb-3">
-      <label for="email" class="form-label">E-mail</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        [(ngModel)]="usuario.email"
-        name="email"
-        required
-        placeholder="Digite seu email"
-      />
+    <div class="text-center mb-4">
+      <p class="fw-bold mb-1" style="color:#6366f1;font-size:1.1rem;letter-spacing:-0.3px;">Meu Bem-Estar</p>
+      <h1 class="fw-bold mb-1" style="color:#0f172a;font-size:1.6rem;">Área do Cuidador</h1>
+      <p style="color:#64748b;font-size:0.9rem;">Entre com suas credenciais para acessar.</p>
     </div>
 
-    <div class="mb-3">
-      <label for="senha" class="form-label">Senha</label>
-      <input
-        type="password"
-        class="form-control"
-        id="senha"
-        [(ngModel)]="usuario.senha"
-        name="senha"
-        required
-        placeholder="Digite sua senha"
-      />
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.08);padding:32px;">
+      <form (ngSubmit)="autenticar()" #formLogin="ngForm">
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1" style="color:#374151;font-size:0.9rem;">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="usuario.email"
+            name="email"
+            required
+            placeholder="seu@email.com"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="fw-semibold mb-1" style="color:#374151;font-size:0.9rem;">Senha</label>
+          <input
+            type="password"
+            class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="usuario.senha"
+            name="senha"
+            required
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn w-100 fw-semibold"
+          style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:11px;">
+          Entrar
+        </button>
+      </form>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Entrar</button>
-  </form>
+    <p class="text-center mt-4" style="color:#94a3b8;font-size:0.85rem;">
+      É paciente?
+      <a routerLink="/login/paciente" style="color:#6366f1;font-weight:600;text-decoration:none;">Acesse aqui</a>
+    </p>
+
+  </div>
 </div>

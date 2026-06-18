@@ -1,0 +1,94 @@
+<app-header></app-header>
+
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
+  <div class="container py-4" style="max-width:700px;">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:1.4rem;">
+          Contatos de Emergência
+        </h1>
+        <p class="mb-0" style="color:#64748b; font-size:0.88rem;">
+          Paciente: <strong>{{ paciente?.nome }}</strong>
+        </p>
+      </div>
+      <button *ngIf="!mostrarForm" (click)="abrirForm()"
+        style="background:#6366f1; color:#fff; border:none; border-radius:10px; padding:9px 20px; font-weight:600; font-size:0.88rem; cursor:pointer;">
+        + Novo Contato
+      </button>
+    </div>
+
+    <!-- Feedback -->
+    <div *ngIf="mensagem" style="background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.88rem; font-weight:600;">
+      ✓ {{ mensagem }}
+    </div>
+
+    <!-- Formulário -->
+    <div *ngIf="mostrarForm" style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; margin-bottom:20px;">
+      <h3 class="fw-bold mb-3" style="color:#0f172a; font-size:1rem;">
+        {{ editando ? 'Editar Contato' : 'Novo Contato' }}
+      </h3>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:5px;">Nome *</label>
+          <input type="text" [(ngModel)]="novoContato.nome"
+            style="width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:9px 13px; font-size:0.9rem; outline:none;"
+            onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'"
+            placeholder="Nome completo">
+        </div>
+        <div class="col-sm-6">
+          <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:5px;">Telefone *</label>
+          <input type="tel" [(ngModel)]="novoContato.telefone"
+            style="width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:9px 13px; font-size:0.9rem; outline:none;"
+            onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'"
+            placeholder="(00) 00000-0000">
+        </div>
+        <div class="col-12">
+          <label style="font-size:0.82rem; font-weight:600; color:#374151; display:block; margin-bottom:5px;">Relação (parentesco)</label>
+          <input type="text" [(ngModel)]="novoContato.relacao"
+            style="width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:9px 13px; font-size:0.9rem; outline:none;"
+            onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'"
+            placeholder="Ex: Filho(a), Cônjuge, Irmão(ã)...">
+        </div>
+      </div>
+      <div class="d-flex gap-2 mt-3">
+        <button (click)="salvar()" [disabled]="!novoContato.nome.trim() || !novoContato.telefone.trim()"
+          style="background:#6366f1; color:#fff; border:none; border-radius:10px; padding:9px 24px; font-weight:600; font-size:0.88rem; cursor:pointer;">
+          Salvar
+        </button>
+        <button (click)="cancelar()"
+          style="background:#f1f5f9; color:#475569; border:none; border-radius:10px; padding:9px 20px; font-weight:600; font-size:0.88rem; cursor:pointer;">
+          Cancelar
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de contatos -->
+    <div *ngIf="contatos.length === 0 && !mostrarForm"
+      style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:40px; text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:12px;">📞</div>
+      <p style="color:#64748b; font-size:0.95rem; margin:0;">Nenhum contato de emergência cadastrado.</p>
+    </div>
+
+    <div *ngFor="let c of contatos; let last = last"
+      [style.margin-bottom]="last ? '0' : '10px'"
+      style="background:#fff; border-radius:14px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:18px 20px; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div class="fw-semibold" style="color:#0f172a; font-size:0.92rem;">{{ c.nome }}</div>
+        <div style="color:#64748b; font-size:0.82rem;">{{ c.relacao }}</div>
+        <div style="color:#6366f1; font-size:0.88rem; font-weight:600; margin-top:2px;">{{ c.telefone }}</div>
+      </div>
+      <div class="d-flex gap-2">
+        <button (click)="abrirForm(c)"
+          style="background:#f1f5f9; color:#475569; border:none; border-radius:8px; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+          Editar
+        </button>
+        <button (click)="excluir(c.id!)"
+          style="background:#fef2f2; color:#dc2626; border:none; border-radius:8px; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+          Excluir
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

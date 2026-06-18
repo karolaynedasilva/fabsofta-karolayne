@@ -22,6 +22,11 @@ public class AtividadeInterativaController {
         return service.listarTodos();
     }
 
+    @GetMapping("/paciente/{pacienteId}")
+    public List<AtividadeInterativa> listarPorPaciente(@PathVariable Long pacienteId) {
+        return service.listarPorPaciente(pacienteId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AtividadeInterativa> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
@@ -38,11 +43,21 @@ public class AtividadeInterativaController {
     public ResponseEntity<AtividadeInterativa> atualizar(@PathVariable Long id, @RequestBody AtividadeInterativa novaAtividade) {
         return service.buscarPorId(id)
                      .map(atividadeExistente -> {
+                         atividadeExistente.setTitulo(novaAtividade.getTitulo());
                          atividadeExistente.setTipo(novaAtividade.getTipo());
                          atividadeExistente.setDescricao(novaAtividade.getDescricao());
+                         atividadeExistente.setPaciente(novaAtividade.getPaciente());
                          return ResponseEntity.ok(service.salvar(atividadeExistente));
                      })
                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}/confirmar")
+    public ResponseEntity<AtividadeInterativa> confirmar(@PathVariable Long id) {
+        return service.buscarPorId(id).map(a -> {
+            a.setConfirmado(true);
+            return ResponseEntity.ok(service.salvar(a));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
