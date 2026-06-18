@@ -82,6 +82,11 @@ export class PacienteHomeComponent implements OnInit {
     return this.paciente?.nome?.split(' ')[0] ?? '';
   }
 
+  fotoSrc(f: FotoFamiliar): string {
+    const mime = f.mimeType || 'image/jpeg';
+    return `data:${mime};base64,${f.foto}`;
+  }
+
   selecionarHumor(h: { emoji: string; valor: number }) {
     this.humorSelecionado = h;
     this.humorEnviado = false;

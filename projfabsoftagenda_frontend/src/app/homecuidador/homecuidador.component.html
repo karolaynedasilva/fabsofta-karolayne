@@ -108,6 +108,19 @@
       <div class="col-md-4">
         <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
           <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#fee2e2;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🚨</div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Emergências</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Veja os alertas de SOS enviados pelos pacientes.</p>
+            <button (click)="navegarParaEmergencias()" class="btn w-100 fw-semibold" style="background:#dc2626;color:#fff;border-radius:10px;padding:10px;border:none;">
+              Acessar Emergências →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
             <div class="mb-4" style="width:48px;height:48px;background:#e0f2fe;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">📅</div>
             <h5 class="fw-bold mb-1" style="color:#0f172a;">Calendário</h5>
             <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Visualize todos os lembretes organizados por data.</p>

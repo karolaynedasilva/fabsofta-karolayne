@@ -51,11 +51,16 @@
 
         <div class="mb-3">
           <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Tipo</label>
-          <input class="form-control" type="text"
+          <select class="form-select"
             style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
             name="tipo" [(ngModel)]="atividade.tipo" required #tipo="ngModel"
-            placeholder="Ex: Jogo, Exercício de memória, Pintura..."
             [ngClass]="{'is-invalid': tipo.invalid && tipo.touched}">
+            <option [ngValue]="null" disabled>Selecione o tipo</option>
+            <option value="CACAPALAVRAS">Caça-Palavras</option>
+            <option value="ESCREVER_MEMORIA">Escrever Memória</option>
+            <option value="COMPLETAR_PALAVRAS">Completar Palavras</option>
+            <option value="MEMORIZAR_IMAGEM">Memorizar Imagem</option>
+          </select>
           <div *ngIf="tipo.invalid && tipo.touched" class="invalid-feedback">Tipo é obrigatório.</div>
         </div>
 

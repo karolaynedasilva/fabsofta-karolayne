@@ -10,7 +10,10 @@ public class AtividadeInterativa {
     private long id;
 
     private String titulo;
-    private String tipo;
+
+    @Enumerated(EnumType.STRING)
+    private TipoAtividade tipo;
+
     private String descricao;
 
     @ManyToOne
@@ -24,8 +27,8 @@ public class AtividadeInterativa {
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public TipoAtividade getTipo() { return tipo; }
+    public void setTipo(TipoAtividade tipo) { this.tipo = tipo; }
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }

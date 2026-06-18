@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(): boolean | UrlTree {
     const usuario = localStorage.getItem('usuario_cuidador');
-    if (usuario) return true;
+    if (usuario) {
+      return true;
+    }
 
-    this.router.navigate(['/login']);
-    return false;
+    return this.router.createUrlTree(['/login']);
   }
 }

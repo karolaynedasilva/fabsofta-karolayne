@@ -238,7 +238,7 @@
       </div>
       <div class="row g-3">
         <div class="col-6 col-md-3" *ngFor="let f of fotos">
-          <img [src]="'data:image/jpeg;base64,' + f.foto"
+          <img [src]="fotoSrc(f)"
             style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1);"
             alt="Foto familiar">
         </div>

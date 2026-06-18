@@ -58,20 +58,6 @@ export class FotoFamiliarComponent {
     }
   }
 
-  // salvar() {
-  //   if (this.formFotoFamiliar.valid) {
-  //     this.fotoFamiliarService.salvar(this.fotoFamiliar).subscribe({
-  //       next: () => this.router.navigate(['/fotos-familiares']),
-  //       error: err => {
-  //         console.error('Erro ao salvar foto familiar:', err);
-  //         alert('Erro ao salvar imagem.');
-  //       }
-  //     });
-  //   } else {
-  //     this.formFotoFamiliar.form.markAllAsTouched();
-  //   }
-  // }
-
   salvar() {
   if (!this.formFotoFamiliar) return;
 

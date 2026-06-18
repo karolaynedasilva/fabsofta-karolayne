@@ -14,6 +14,8 @@ public class Cuidador {
     private String nome;
     private String email;
     private String senha;
+    private String endereco;
+    private String telefone;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Paciente> pacientes;
@@ -48,6 +50,22 @@ public class Cuidador {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public List<Paciente> getPacientes() {

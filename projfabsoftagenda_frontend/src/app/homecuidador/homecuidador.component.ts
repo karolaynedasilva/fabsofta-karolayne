@@ -38,4 +38,8 @@ export class HomecuidadorComponent implements OnInit, OnDestroy {
       this.chamadosPendentes = this.chamadosPendentes.filter(c => c.id !== id);
     });
   }
+
+  navegarParaEmergencias() {
+    this.router.navigate(['/emergencias']);
+  }
 }

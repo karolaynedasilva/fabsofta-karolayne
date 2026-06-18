@@ -1,8 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { Lembrete } from '../model/lembrete';
 import { LembreteService } from '../service/lembrete.service';
@@ -17,7 +17,7 @@ import { HeaderComponent } from '../header/header.component';
   styleUrl: './lembrete.component.css',
   providers: [LembreteService]
 })
-export class LembreteComponent {
+export class LembreteComponent implements OnDestroy {
 
   lembrete: Lembrete = new Lembrete();
 
@@ -49,12 +49,26 @@ export class LembreteComponent {
 
   abrirConfirmacao(lembrete: Lembrete) {
     this.lembreteSelecionado = lembrete;
-    this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    if (!this.modal) {
+      this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    }
     this.modal.show();
   }
 
   fecharConfirmacao() {
-    this.modal.hide();
+    if (this.modal) {
+      this.modal.hide();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.modal) {
+      this.modal.dispose();
+    }
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
   }
 
   confirmarExclusao() {

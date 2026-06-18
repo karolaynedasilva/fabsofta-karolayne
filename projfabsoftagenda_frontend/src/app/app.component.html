@@ -1,2 +1,75 @@
+<div class="app-shell">
+  <!-- Sidebar -->
+  <aside class="sidebar" *ngIf="mostrarSidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="white"/>
+          <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z" fill="rgba(255,255,255,0.5)"/>
+          <path d="M11 7h2v2h-2zM11 11h2v6h-2z" fill="white"/>
+        </svg>
+      </div>
+      <span>Meu<br>Bem-Estar</span>
+    </div>
 
-<router-outlet />
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <a class="sidebar-link" routerLink="/homecuidador" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Menu
+      </a>
+      <a class="sidebar-link" routerLink="/pacientes" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+        Pacientes
+      </a>
+      <a class="sidebar-link" routerLink="/lembretes" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
+        </svg>
+        Lembretes
+      </a>
+      <a class="sidebar-link" routerLink="/atividades" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Atividades
+      </a>
+
+      <div class="nav-section-label" style="margin-top:8px">Gestão</div>
+      <a class="sidebar-link" routerLink="/cuidadores" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        Cuidadores
+      </a>
+      <a class="sidebar-link" routerLink="/fotos-familiares" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Fotos
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-link" (click)="sair()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main area -->
+  <div [class]="mostrarSidebar ? 'main-content' : 'full-content'">
+    <router-outlet />
+  </div>
+</div>

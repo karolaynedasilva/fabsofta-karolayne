@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { HeaderComponent } from '../header/header.component';
   styleUrl: './atividadeinterativa.component.css',
   providers: [AtividadeInterativaService]
 })
-export class AtividadeInterativaComponent {
+export class AtividadeInterativaComponent implements OnDestroy {
   @ViewChild('myModal') modalElement!: ElementRef;
   private modal!: bootstrap.Modal;
 
@@ -48,12 +48,26 @@ export class AtividadeInterativaComponent {
 
   abrirConfirmacao(atividade: AtividadeInterativa) {
     this.atividadeSelecionada = atividade;
-    this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    if (!this.modal) {
+      this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    }
     this.modal.show();
   }
 
   fecharConfirmacao() {
-    this.modal.hide();
+    if (this.modal) {
+      this.modal.hide();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.modal) {
+      this.modal.dispose();
+    }
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
   }
 
   confirmarExclusao() {
