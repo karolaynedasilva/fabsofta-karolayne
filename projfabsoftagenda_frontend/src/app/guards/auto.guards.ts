@@ -6,7 +6,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean | UrlTree {
-    const usuario = localStorage.getItem('usuario');
+    const usuario = localStorage.getItem('usuario_cuidador');
     if (usuario) {
       return true;
     }

@@ -1,35 +1,87 @@
-<main class="container">
-  <h2>Cadastrar Lembrete</h2>
-  <form #formLembrete="ngForm" (ngSubmit)="salvar()" novalidate>
-    <div class="mb-3">
-      <label class="form-label">Paciente</label>
-      <select class="form-select"name="paciente" required [(ngModel)]="lembrete.paciente" #paciente="ngModel">
-      <option [ngValue]="null" disabled>Selecione o paciente</option>
-      <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
-    </select>
+<app-header></app-header>
+
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5" style="max-width:620px;">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <button type="button" (click)="voltar()"
+        style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:7px 16px;font-size:0.85rem;color:#475569;font-weight:600;cursor:pointer;line-height:1;">
+        ← Voltar
+      </button>
+      <div>
+        <p class="text-uppercase fw-semibold mb-0" style="color:#6366f1;font-size:0.72rem;letter-spacing:0.1em;">Lembretes</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.4rem;">{{ lembrete.id ? 'Editar Lembrete' : 'Novo Lembrete' }}</h1>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Título</label>
-      <input class="form-control" type="text" name="titulo" required [(ngModel)]="lembrete.titulo">
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.08);padding:32px;">
+      <form #formLembrete="ngForm" (ngSubmit)="salvar()" novalidate>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Paciente</label>
+          <select class="form-select"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="paciente" required [(ngModel)]="lembrete.paciente" #paciente="ngModel"
+            [ngClass]="{'is-invalid': paciente.invalid && paciente.touched}">
+            <option [ngValue]="null" disabled>Selecione o paciente</option>
+            <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+          </select>
+          <div *ngIf="paciente.invalid && paciente.touched" class="invalid-feedback">Selecione um paciente.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Título</label>
+          <input class="form-control" type="text"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="titulo" required [(ngModel)]="lembrete.titulo" #titulo="ngModel"
+            [ngClass]="{'is-invalid': titulo.invalid && titulo.touched}"
+            placeholder="Ex: Tomar remédio">
+          <div *ngIf="titulo.invalid && titulo.touched" class="invalid-feedback">Título é obrigatório.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Descrição</label>
+          <textarea class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="descricao" rows="3" required [(ngModel)]="lembrete.descricao" #descricao="ngModel"
+            [ngClass]="{'is-invalid': descricao.invalid && descricao.touched}"
+            placeholder="Detalhes do lembrete..."></textarea>
+          <div *ngIf="descricao.invalid && descricao.touched" class="invalid-feedback">Descrição é obrigatória.</div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Data</label>
+            <input type="date" class="form-control"
+              style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+              name="data" required [(ngModel)]="lembrete.data" #data="ngModel"
+              [ngClass]="{'is-invalid': data.invalid && data.touched}">
+            <div *ngIf="data.invalid && data.touched" class="invalid-feedback">Data é obrigatória.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Hora</label>
+            <input type="time" class="form-control"
+              style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+              name="hora" required [(ngModel)]="lembrete.hora" #hora="ngModel"
+              [ngClass]="{'is-invalid': hora.invalid && hora.touched}">
+            <div *ngIf="hora.invalid && hora.touched" class="invalid-feedback">Hora é obrigatória.</div>
+          </div>
+        </div>
+
+        <hr style="border-color:#f1f5f9;margin-bottom:20px;">
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" (click)="voltar()"
+            style="background:#f1f5f9;color:#475569;border:none;border-radius:10px;padding:10px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+            Cancelar
+          </button>
+          <button type="submit"
+            style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+            Salvar Lembrete
+          </button>
+        </div>
+
+      </form>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Descrição</label>
-      <textarea class="form-control" name="descricao" required [(ngModel)]="lembrete.descricao"></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Data</label>
-      <input type="date" class="form-control" name="data" required [(ngModel)]="lembrete.data">
-    </div>
-    <div class="col-md-6">
-      <label for="hora" class="form-label">Hora</label>
-      <input type="time" class="form-control" id="inputHora" name="hora" [(ngModel)]="lembrete.hora" required>
-    </div>
-
-    <div class="text-end">
-      <button type="submit" class="btn btn-primary">Salvar</button>
-    </div>
-  </form>
-</main>
+  </div>
+</div>

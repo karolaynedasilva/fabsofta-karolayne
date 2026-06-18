@@ -1,38 +1,83 @@
-<main class="container">
-  <h2>Cadastrar Atividade Interativa</h2>
+<app-header></app-header>
 
-  <form #formAtividade="ngForm" (ngSubmit)="salvar()" novalidate>
-    <div class="mb-3">
-      <label class="form-label">Paciente</label>
-      <select class="form-select" name="paciente" [(ngModel)]="atividade.paciente" required>
-        <option [ngValue]="null" disabled>Selecione</option>
-        <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
-      </select>
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5" style="max-width:620px;">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <button type="button" (click)="voltar()"
+        style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:7px 16px;font-size:0.85rem;color:#475569;font-weight:600;cursor:pointer;line-height:1;">
+        ← Voltar
+      </button>
+      <div>
+        <p class="text-uppercase fw-semibold mb-0" style="color:#6366f1;font-size:0.72rem;letter-spacing:0.1em;">Atividades</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.4rem;">{{ atividade.id ? 'Editar Atividade' : 'Nova Atividade' }}</h1>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Título</label>
-      <input class="form-control" type="text" name="titulo" [(ngModel)]="atividade.titulo" required>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.08);padding:32px;">
+      <form #formAtividade="ngForm" (ngSubmit)="salvar()" novalidate>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Paciente</label>
+          <select class="form-select"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="paciente" [(ngModel)]="atividade.paciente" required #paciente="ngModel"
+            [ngClass]="{'is-invalid': paciente.invalid && paciente.touched}">
+            <option [ngValue]="null" disabled>Selecione o paciente</option>
+            <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+          </select>
+          <div *ngIf="paciente.invalid && paciente.touched" class="invalid-feedback">Selecione um paciente.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Título</label>
+          <input class="form-control" type="text"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="titulo" [(ngModel)]="atividade.titulo" required #titulo="ngModel"
+            [ngClass]="{'is-invalid': titulo.invalid && titulo.touched}"
+            placeholder="Ex: Exercício de memória">
+          <div *ngIf="titulo.invalid && titulo.touched" class="invalid-feedback">Título é obrigatório.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Descrição</label>
+          <textarea class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="descricao" rows="3" [(ngModel)]="atividade.descricao" required #descricao="ngModel"
+            [ngClass]="{'is-invalid': descricao.invalid && descricao.touched}"
+            placeholder="Descreva a atividade..."></textarea>
+          <div *ngIf="descricao.invalid && descricao.touched" class="invalid-feedback">Descrição é obrigatória.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Tipo</label>
+          <select class="form-select"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            name="tipo" [(ngModel)]="atividade.tipo" required #tipo="ngModel"
+            [ngClass]="{'is-invalid': tipo.invalid && tipo.touched}">
+            <option [ngValue]="null" disabled>Selecione o tipo</option>
+            <option value="CACAPALAVRAS">Caça-Palavras</option>
+            <option value="ESCREVER_MEMORIA">Escrever Memória</option>
+            <option value="COMPLETAR_PALAVRAS">Completar Palavras</option>
+            <option value="MEMORIZAR_IMAGEM">Memorizar Imagem</option>
+          </select>
+          <div *ngIf="tipo.invalid && tipo.touched" class="invalid-feedback">Tipo é obrigatório.</div>
+        </div>
+
+        <hr style="border-color:#f1f5f9;margin-bottom:20px;">
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" (click)="voltar()"
+            style="background:#f1f5f9;color:#475569;border:none;border-radius:10px;padding:10px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+            Cancelar
+          </button>
+          <button type="submit"
+            style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+            Salvar Atividade
+          </button>
+        </div>
+
+      </form>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Descrição</label>
-      <textarea class="form-control" name="descricao" [(ngModel)]="atividade.descricao" required></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Tipo</label>
-      <select class="form-select" name="tipo" [(ngModel)]="atividade.tipo" required>
-        <option [ngValue]="null" disabled>Selecione</option>
-        <option value="CACAPALAVRAS">Caça-Palavras</option>
-        <option value="ESCREVER_MEMORIA">Escrever Memória</option>
-        <option value="COMPLETAR_PALAVRAS">Completar Palavras</option>
-        <option value="MEMORIZAR_IMAGEM">Memorizar Imagem</option>
-      </select>
-    </div>
-
-    <div class="text-end">
-      <button class="btn btn-primary" type="submit">Salvar</button>
-    </div>
-  </form>
-</main>
+  </div>
+</div>

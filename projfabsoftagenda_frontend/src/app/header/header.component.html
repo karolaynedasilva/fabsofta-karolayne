@@ -1,0 +1,76 @@
+<nav style="background:#fff; border-bottom:1px solid #e2e8f0; height:60px;" class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+       routerLink="/homecuidador"
+       style="color:#6366f1; font-size:1.05rem; letter-spacing:-0.3px; text-decoration:none;">
+      <span style="width:28px;height:28px;background:#6366f1;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#fff" viewBox="0 0 16 16">
+          <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+      </span>
+      Meu Bem-Estar
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navAdmin">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navAdmin">
+      <ul class="navbar-nav me-auto gap-1 ms-4">
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/homecuidador"
+             routerLinkActive="active-nav"
+             [routerLinkActiveOptions]="{exact:true}">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/pacientes"
+             routerLinkActive="active-nav">Pacientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/lembretes"
+             routerLinkActive="active-nav">Lembretes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/atividades"
+             routerLinkActive="active-nav">Atividades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/medicamentos"
+             routerLinkActive="active-nav">Medicamentos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-3 py-1 rounded-2 fw-medium"
+             style="font-size:0.88rem;"
+             routerLink="/calendario"
+             routerLinkActive="active-nav">Calendário</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2">
+          <div style="width:32px;height:32px;background:#ede9fe;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#7c3aed;font-size:0.78rem;">
+            {{ nomeUsuario?.charAt(0)?.toUpperCase() }}
+          </div>
+          <span style="color:#475569; font-size:0.85rem; font-weight:500;">{{ nomeUsuario }}</span>
+        </div>
+        <button class="btn btn-sm fw-semibold"
+          style="background:#f1f5f9;color:#475569;border-radius:8px;border:none;font-size:0.82rem;padding:5px 14px;"
+          (click)="logout()">Sair</button>
+      </div>
+    </div>
+
+  </div>
+</nav>
+

@@ -1,93 +1,136 @@
-<!-- <div class="container py-5">
-  <h2 class="text-center">Bem-vindo, Cuidador!</h2>
-  <p class="text-center">Escolha uma opção abaixo:</p>
+<app-header></app-header>
 
-  <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
-    <div class="col">
-      <div class="card h-100 hover-shadow" (click)="navegarPara('/pacientes/novo')">
-        <div class="card-body text-center">
-          <h5 class="card-title">Cadastrar Paciente</h5>
-          <p class="card-text">Adicione um novo paciente ao sistema.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 hover-shadow" (click)="navegarPara('/lembretes/novo')">
-        <div class="card-body text-center">
-          <h5 class="card-title">Criar Lembrete</h5>
-          <p class="card-text">Registre um novo lembrete para os pacientes.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 hover-shadow" (click)="navegarPara('/atividades/novo')">
-        <div class="card-body text-center">
-          <h5 class="card-title">Criar Atividade</h5>
-          <p class="card-text">Registre uma nova atividade para os pacientes.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100 hover-shadow" (click)="navegarPara('/historico')">
-        <div class="card-body text-center">
-          <h5 class="card-title">Registrar Histórico</h5>
-          <p class="card-text">Adicione registros clínicos ou de evolução do paciente.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<main class="container">
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
   <div class="container py-5">
-    <h2 class="text-center">Bem-vindo, Cuidador!</h2>
-    <p class="text-center">Escolha uma opção abaixo:</p>
 
-    <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
-      
-      <div class="col">
-        <div class="card h-100 hover-shadow">
-          <div class="card-body text-center">
-            <h5 class="card-title">Cadastrar Paciente</h5>
-            <p class="card-text">Adicione um novo paciente ao sistema.</p>
-            <button (click)="navegarParaPacientes()" class="btn btn-primary mt-2">Acessar</button>
+    <!-- Banner de chamados de ajuda -->
+    <div *ngIf="chamadosPendentes.length > 0"
+      style="background:#fef2f2; border:1.5px solid #fca5a5; border-radius:16px; padding:20px 24px; margin-bottom:28px;">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="width:36px;height:36px;background:#fee2e2;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🆘</span>
+        <div>
+          <p class="fw-bold mb-0" style="color:#dc2626;font-size:1rem;">
+            {{ chamadosPendentes.length }} chamado(s) de ajuda pendente(s)
+          </p>
+          <p class="mb-0" style="color:#ef4444;font-size:0.82rem;">Pacientes precisando de atenção</p>
+        </div>
+      </div>
+
+      <div *ngFor="let c of chamadosPendentes"
+        style="background:#fff; border-radius:12px; padding:14px 16px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+        <div>
+          <p class="fw-semibold mb-0" style="color:#0f172a; font-size:0.95rem;">
+            {{ c.paciente?.nome }}
+          </p>
+          <p class="mb-0" style="color:#94a3b8; font-size:0.8rem;">{{ c.dataHora }}</p>
+        </div>
+        <button (click)="atender(c.id)"
+          style="background:#6366f1; color:#fff; border:none; border-radius:8px; padding:7px 16px; font-weight:600; font-size:0.82rem; cursor:pointer;">
+          Marcar como atendido
+        </button>
+      </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <div class="mb-5">
+      <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1; font-size:0.8rem; letter-spacing:0.1em;">Bem-vindo ao sistema</p>
+      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:2rem;">Painel do Cuidador</h1>
+      <p style="color:#64748b;">Selecione uma área para gerenciar.</p>
+    </div>
+
+    <!-- Cards de navegação -->
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#ede9fe;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#7c3aed" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.029 10 8 10c-2.029 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Pacientes</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Cadastre e gerencie os pacientes do sistema.</p>
+            <a routerLink="/pacientes" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
+              Ver Pacientes →
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="card h-100 hover-shadow">
-          <div class="card-body text-center">
-            <h5 class="card-title">Criar Lembrete</h5>
-            <p class="card-text">Registre um novo lembrete para os pacientes.</p>
-            <button (click)="navegarParaLembretes()" class="btn btn-primary mt-2">Acessar</button>
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#dbeafe;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Lembretes</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Crie lembretes e alertas diários para os pacientes.</p>
+            <a routerLink="/lembretes" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
+              Ver Lembretes →
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="card h-100 hover-shadow">
-          <div class="card-body text-center">
-            <h5 class="card-title">Criar Atividade</h5>
-            <p class="card-text">Registre uma nova atividade para os pacientes.</p>
-            <button (click)="navegarParaAtividades()" class="btn btn-primary mt-2">Acessar</button>
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#dcfce7;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#16a34a" viewBox="0 0 16 16">
+                <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Atividades</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Registre atividades para estimulação cognitiva.</p>
+            <a routerLink="/atividades" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
+              Ver Atividades →
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="card h-100 hover-shadow border-danger">
-          <div class="card-body text-center">
-            <h5 class="card-title">🚨 Emergências</h5>
-            <p class="card-text">Veja os alertas de SOS enviados pelos pacientes.</p>
-            <button (click)="navegarParaEmergencias()" class="btn btn-danger mt-2">Acessar</button>
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#fef3c7;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">💊</div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Medicamentos</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Cadastre e gerencie medicamentos dos pacientes.</p>
+            <a routerLink="/medicamentos" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
+              Ver Medicamentos →
+            </a>
           </div>
         </div>
       </div>
 
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#fee2e2;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🚨</div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Emergências</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Veja os alertas de SOS enviados pelos pacientes.</p>
+            <button (click)="navegarParaEmergencias()" class="btn w-100 fw-semibold" style="background:#dc2626;color:#fff;border-radius:10px;padding:10px;border:none;">
+              Acessar Emergências →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+          <div class="card-body p-4 d-flex flex-column">
+            <div class="mb-4" style="width:48px;height:48px;background:#e0f2fe;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">📅</div>
+            <h5 class="fw-bold mb-1" style="color:#0f172a;">Calendário</h5>
+            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Visualize todos os lembretes organizados por data.</p>
+            <a routerLink="/calendario" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
+              Ver Calendário →
+            </a>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
-</main>
+</div>

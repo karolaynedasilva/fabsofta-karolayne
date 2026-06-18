@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface AtividadeInterativaService {
     List<AtividadeInterativa> listarTodos();
+    List<AtividadeInterativa> listarPorPaciente(Long pacienteId);
     Optional<AtividadeInterativa> buscarPorId(Long id);
     AtividadeInterativa salvar(AtividadeInterativa atividade);
     void deletar(Long id);

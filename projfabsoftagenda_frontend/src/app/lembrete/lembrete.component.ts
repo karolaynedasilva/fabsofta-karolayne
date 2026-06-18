@@ -2,19 +2,20 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { Lembrete } from '../model/lembrete';
 import { LembreteService } from '../service/lembrete.service';
+import { HeaderComponent } from '../header/header.component';
 
 
 @Component({
   selector: 'app-lembrete',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule, HeaderComponent],
   templateUrl: './lembrete.component.html',
   styleUrl: './lembrete.component.css',
-  providers: []
+  providers: [LembreteService]
 })
 export class LembreteComponent implements OnDestroy {
 

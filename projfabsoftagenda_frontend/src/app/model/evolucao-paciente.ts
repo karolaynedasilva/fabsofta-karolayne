@@ -1,9 +1,8 @@
-export interface EvolucaoPaciente {
+import { Paciente } from './paciente';
+
+export class EvolucaoPaciente {
   id?: number;
-  data?: string;
-  descricao: string;
-  observacoes?: string;
-  nivelEngajamento?: string;
-  autor?: string;
-  paciente: { id: number };
+  texto: string = '';
+  dataHora?: string;
+  paciente?: Paciente;
 }

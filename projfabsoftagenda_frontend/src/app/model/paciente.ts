@@ -4,6 +4,6 @@ export class Paciente {
     nome: string;
     telefone: string;
     email: string;
-    endereco: string;   
-    // Paciente[]; lista
+    senha: string;
+    endereco: string;
 }

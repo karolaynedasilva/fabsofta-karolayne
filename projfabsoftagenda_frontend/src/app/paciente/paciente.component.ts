@@ -3,15 +3,18 @@ import { Paciente } from '../model/paciente';
 import { PacienteService } from '../service/paciente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { provideNgxMask } from 'ngx-mask';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-paciente',
-  imports: [HttpClientModule, CommonModule],
+  imports: [HttpClientModule, CommonModule, HeaderComponent],
   templateUrl: './paciente.component.html',
-  styleUrl: './paciente.component.css'
+  styleUrl: './paciente.component.css',
+  providers: [PacienteService, provideNgxMask()]
 })
 export class PacienteComponent implements OnInit, OnDestroy {
 
@@ -53,6 +56,14 @@ export class PacienteComponent implements OnInit, OnDestroy {
 
   alterar(paciente: Paciente): void {
     this.router.navigate(['/pacientes/alterar', paciente.id]);
+  }
+
+  verHistorico(id: number) {
+    this.router.navigate(['/historico-paciente', id]);
+  }
+
+  verContatos(id: number) {
+    this.router.navigate(['/contatos-emergencia', id]);
   }
 
   abrirConfirmacao(paciente: Paciente): void {

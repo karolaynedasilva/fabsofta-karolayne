@@ -2,18 +2,19 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 import { AtividadeInterativa } from '../model/atividadeinterativa';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-atividade-interativa',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, RouterLink, CommonModule, FormsModule, HeaderComponent],
   templateUrl: './atividadeinterativa.component.html',
   styleUrl: './atividadeinterativa.component.css',
-  providers: []
+  providers: [AtividadeInterativaService]
 })
 export class AtividadeInterativaComponent implements OnDestroy {
   @ViewChild('myModal') modalElement!: ElementRef;

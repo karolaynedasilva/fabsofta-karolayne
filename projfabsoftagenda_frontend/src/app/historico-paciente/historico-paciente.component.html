@@ -1,24 +1,131 @@
-<main class="container">
-  <h2>Histórico do Paciente</h2>
+<app-header></app-header>
 
-  <section class="mt-4">
-    <h4>🧠 Atividades Realizadas</h4>
-    <ul *ngIf="atividades.length > 0; else semAtividades" class="list-group">
-      <li class="list-group-item" *ngFor="let a of atividades">
-        <strong>{{ a.titulo }}</strong> ({{ a.tipo }})<br>
-        <small>{{ a.descricao }}</small>
-      </li>
-    </ul>
-    <ng-template #semAtividades><p>Nenhuma atividade registrada.</p></ng-template>
-  </section>
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
+  <div class="container py-4" style="max-width:900px;">
 
-  <!-- <section class="mt-4">
-    <h4>🌡️ Registros de Humor</h4>
-    <ul *ngIf="listaHumor.length > 0; else semHumor" class="list-group">
-      <li class="list-group-item" *ngFor="let h of listaHumor">
-        {{ h.dataHora | date: 'dd/MM/yyyy' }} — {{ h.humor }}
-      </li>
-    </ul>
-    <ng-template #semHumor><p>Nenhum humor registrado.</p></ng-template>
-  </section> -->
-</main>
+    <div class="mb-4">
+      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:1.5rem;">
+        Histórico — {{ paciente?.nome || 'Paciente' }}
+      </h1>
+      <p class="mb-0" style="color:#64748b; font-size:0.9rem;">Evolução, humor e atividades do paciente</p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Gráfico de Humor -->
+      <div class="col-12">
+        <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px;">
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <span style="width:34px;height:34px;background:#fef9c3;border-radius:10px;display:flex;align-items:center;justify-content:center;">💭</span>
+            <div>
+              <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Gráfico de Humor</h2>
+              <p class="mb-0" style="color:#94a3b8; font-size:0.78rem;">Últimos registros</p>
+            </div>
+          </div>
+
+          <div *ngIf="listaHumor.length === 0" class="text-center py-3">
+            <p style="color:#94a3b8; font-size:0.88rem;">Nenhum registro de humor ainda.</p>
+          </div>
+
+          <div *ngIf="listaHumor.length > 0" style="display:flex; align-items:flex-end; gap:10px; height:120px; padding:0 8px;">
+            <div *ngFor="let h of humorUltimos10"
+              style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;">
+              <span style="font-size:1rem; line-height:1;">{{ h.emoji }}</span>
+              <div [style.height.px]="alturaBarraHumor(h.valor)"
+                   [style.background]="corBarraHumor(h.valor)"
+                   style="width:100%; border-radius:6px 6px 0 0; min-height:8px; transition:height 0.3s;">
+              </div>
+              <span style="font-size:0.68rem; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:40px; text-align:center;">
+                {{ h.dataHora ? (h.dataHora | slice:0:5) : '' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Legenda -->
+          <div class="d-flex gap-3 mt-3 justify-content-center flex-wrap">
+            <span style="font-size:0.75rem; color:#64748b;">😖 Muito mal</span>
+            <span style="font-size:0.75rem; color:#64748b;">😟 Mal</span>
+            <span style="font-size:0.75rem; color:#64748b;">😐 Regular</span>
+            <span style="font-size:0.75rem; color:#64748b;">🙂 Bem</span>
+            <span style="font-size:0.75rem; color:#64748b;">😌 Muito bem</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evolução do Paciente -->
+      <div class="col-lg-6">
+        <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; height:100%;">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span style="width:34px;height:34px;background:#dbeafe;border-radius:10px;display:flex;align-items:center;justify-content:center;">📋</span>
+            <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Evolução do Paciente</h2>
+          </div>
+
+          <div class="mb-3">
+            <textarea [(ngModel)]="novaEvolucao" rows="3"
+              placeholder="Registre uma observação, evolução ou nota clínica..."
+              style="width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; font-size:0.88rem; resize:vertical; outline:none;"
+              onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e2e8f0'">
+            </textarea>
+            <button (click)="adicionarEvolucao()" [disabled]="!novaEvolucao.trim() || salvandoEvolucao"
+              style="background:#6366f1; color:#fff; border:none; border-radius:8px; padding:8px 18px; font-size:0.85rem; font-weight:600; cursor:pointer; margin-top:8px; opacity:1; transition:opacity 0.15s;"
+              [style.opacity]="novaEvolucao.trim() ? '1' : '0.5'">
+              {{ salvandoEvolucao ? 'Salvando...' : '+ Adicionar Registro' }}
+            </button>
+          </div>
+
+          <div *ngIf="evolucoes.length === 0" class="text-center py-2">
+            <p style="color:#94a3b8; font-size:0.85rem; margin:0;">Nenhum registro ainda.</p>
+          </div>
+
+          <div style="max-height:300px; overflow-y:auto;">
+            <div *ngFor="let e of evolucoes; let last = last"
+              [style.margin-bottom]="last ? '0' : '10px'"
+              style="background:#f8fafc; border-radius:10px; padding:12px 14px; border-left:3px solid #3b82f6; position:relative;">
+              <p style="color:#0f172a; font-size:0.88rem; margin:0 0 6px;">{{ e.texto }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span style="color:#94a3b8; font-size:0.75rem;">{{ e.dataHora }}</span>
+                <button (click)="excluirEvolucao(e.id!)"
+                  style="background:none; border:none; color:#fca5a5; cursor:pointer; font-size:0.75rem; font-weight:600; padding:0;">
+                  Excluir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atividades Realizadas -->
+      <div class="col-lg-6">
+        <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; height:100%;">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span style="width:34px;height:34px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">🧠</span>
+            <div>
+              <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Atividades</h2>
+              <p class="mb-0" style="color:#94a3b8; font-size:0.75rem;">{{ atividades.length }} registrada(s)</p>
+            </div>
+          </div>
+
+          <div *ngIf="atividades.length === 0" class="text-center py-3">
+            <p style="color:#94a3b8; font-size:0.88rem; margin:0;">Nenhuma atividade registrada.</p>
+          </div>
+
+          <div style="max-height:380px; overflow-y:auto;">
+            <div *ngFor="let a of atividades; let last = last"
+              [style.margin-bottom]="last ? '0' : '10px'"
+              style="background:#f0fdf4; border-radius:10px; padding:12px 14px; border-left:3px solid #22c55e;">
+              <div class="d-flex justify-content-between align-items-start">
+                <span class="fw-semibold" style="color:#0f172a; font-size:0.88rem;">{{ a.titulo }}</span>
+                <div class="d-flex gap-1 ms-2">
+                  <span style="background:#dcfce7; color:#15803d; border-radius:20px; padding:2px 8px; font-size:0.72rem; font-weight:600; white-space:nowrap;">{{ a.tipo }}</span>
+                  <span *ngIf="a.confirmado" style="background:#d1fae5; color:#065f46; border-radius:20px; padding:2px 8px; font-size:0.72rem; font-weight:600; white-space:nowrap;">✓ Feita</span>
+                </div>
+              </div>
+              <p style="color:#64748b; font-size:0.8rem; margin:4px 0 0;">{{ a.descricao }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,106 +1,249 @@
-<div class="page-content">
-
-  <!-- Header do paciente -->
-  <div style="background: linear-gradient(135deg, #20C5B5 0%, #0e9990 100%); border-radius:16px; padding:28px 32px; margin-bottom:28px; color:#fff; display:flex; align-items:center; justify-content:space-between;">
-    <div>
-      <p style="opacity:0.75; font-size:0.82rem; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Perfil do Paciente</p>
-      <h2 style="font-size:1.5rem; font-weight:700; margin:0;">{{ paciente?.nome || 'Carregando...' }}</h2>
-      <p style="opacity:0.75; font-size:0.875rem; margin:6px 0 0;" *ngIf="paciente?.idade">{{ paciente.idade }} anos</p>
-    </div>
-    <div style="width:60px; height:60px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:700; color:#fff;">
-      {{ paciente?.nome ? paciente.nome.charAt(0).toUpperCase() : '?' }}
-    </div>
-  </div>
-
-  <!-- Botão SOS -->
-  <div class="card-modern" style="margin-bottom:24px; border: 2px solid #F25C6E;">
-    <button
-      class="btn-danger-mod"
-      style="width:100%; justify-content:center; padding:16px; font-size:1rem; font-weight:700; border-radius:10px; background:#F25C6E; color:#fff; border:none;"
-      [disabled]="sosEnviando"
-      (click)="acionarSos()">
-      🔴 {{ sosEnviando ? 'Enviando...' : 'SOS — Pedir Ajuda' }}
-    </button>
-    <div *ngIf="sosEnviado" class="alert-mod success" style="margin-top:14px; text-align:center;">
-      ✅ Pedido de ajuda enviado! Um cuidador será notificado.
-    </div>
-  </div>
-
-  <!-- Humor -->
-  <div class="card-modern" style="margin-bottom:24px;">
-    <h4 style="font-weight:700; font-size:1rem; margin-bottom:4px;">🌡️ Termômetro de Humor</h4>
-    <p style="color:var(--text-secondary); font-size:0.875rem; margin-bottom:20px;">Como você está se sentindo hoje?</p>
-
-    <div style="display:flex; justify-content:center; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
-      <span
-        *ngFor="let emoji of humores"
-        (click)="selecionarHumor(emoji)"
-        class="humor-emoji"
-        [class.selected]="humorSelecionado === emoji">
-        {{ emoji }}
+<!-- Header do Paciente -->
+<nav style="background:#fff; border-bottom:1px solid #e2e8f0; height:60px; display:flex; align-items:center;">
+  <div class="container d-flex justify-content-between align-items-center">
+    <span class="fw-bold d-flex align-items-center gap-2" style="color:#6366f1; font-size:1.05rem;">
+      <span style="width:28px;height:28px;background:#6366f1;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#fff" viewBox="0 0 16 16">
+          <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
       </span>
-    </div>
-
-    <div style="text-align:center;">
-      <button class="btn-accent-mod" [disabled]="!humorSelecionado" (click)="registrarHumor()">
-        Registrar Humor
+      Meu Bem-Estar
+    </span>
+    <div class="d-flex align-items-center gap-2">
+      <div style="width:34px;height:34px;background:#ede9fe;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#7c3aed;font-size:0.85rem;">
+        {{ paciente?.nome?.charAt(0)?.toUpperCase() }}
+      </div>
+      <span style="color:#475569;font-size:0.88rem;font-weight:500;">{{ paciente?.nome }}</span>
+      <button (click)="logout()"
+        style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;padding:5px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;margin-left:4px;">
+        Sair
       </button>
     </div>
-    <div *ngIf="humorEnviado" class="alert-mod success" style="margin-top:16px; text-align:center;">
-      ✓ Humor registrado com sucesso!
-    </div>
   </div>
+</nav>
 
-  <!-- Lembretes -->
-  <div class="card-modern" style="margin-bottom:24px;">
-    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">📅 Lembretes</h4>
-    <div *ngIf="lembretes.length > 0; else semLembretes">
-      <div *ngFor="let l of lembretes"
-        style="display:flex; align-items:flex-start; gap:12px; padding:14px; background:var(--primary-light); border-radius:10px; margin-bottom:10px;">
-        <div style="font-size:1.2rem;">🔔</div>
-        <div style="flex:1;">
-          <div style="font-weight:600; color:var(--primary);">{{ l.titulo }}</div>
-          <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:2px;">{{ l.descricao }}</div>
-        </div>
-        <span class="badge-mod badge-teal">{{ l.data | date: 'dd/MM' }}</span>
+<!-- Conteúdo principal -->
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
+  <div class="container py-4" style="max-width:820px;">
+
+    <!-- Saudação -->
+    <div class="mb-4">
+      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:1.7rem;">
+        Olá, {{ primeiroNome }}! 👋
+      </h1>
+      <p style="color:#64748b; font-size:0.95rem;">Como você está hoje? Confira seus lembretes e atividades.</p>
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <div style="margin-bottom:20px;">
+      <button
+        (click)="pedirAjuda()"
+        [disabled]="ajudaCarregando || ajudaEnviada"
+        style="width:100%; padding:18px; border:none; border-radius:16px; font-size:1.1rem; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:12px;"
+        [style.background]="ajudaEnviada ? '#f0fdf4' : '#fef2f2'"
+        [style.color]="ajudaEnviada ? '#15803d' : '#dc2626'"
+        [style.box-shadow]="ajudaEnviada ? '0 1px 4px rgba(0,0,0,0.07)' : '0 4px 14px rgba(220,38,38,0.2)'"
+        [style.cursor]="(ajudaCarregando || ajudaEnviada) ? 'not-allowed' : 'pointer'">
+        <span style="font-size:1.4rem;">{{ ajudaEnviada ? '✓' : '🆘' }}</span>
+        <span>{{ ajudaCarregando ? 'Enviando...' : (ajudaEnviada ? 'Cuidador notificado! Aguarde.' : 'Preciso de Ajuda') }}</span>
+      </button>
+    </div>
+
+    <!-- Termômetro de Humor -->
+    <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; margin-bottom:20px;">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="font-size:1.2rem;">💭</span>
+        <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1.05rem;">Como você está se sentindo?</h2>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 mb-3">
+        <button
+          *ngFor="let h of humores"
+          (click)="selecionarHumor(h)"
+          style="background:none; border:2px solid transparent; border-radius:12px; padding:8px 12px; font-size:1.8rem; cursor:pointer; transition:all 0.15s; line-height:1;"
+          [style.border-color]="humorSelecionado?.emoji === h.emoji ? '#6366f1' : 'transparent'"
+          [style.background]="humorSelecionado?.emoji === h.emoji ? '#f5f3ff' : 'none'">
+          {{ h.emoji }}
+        </button>
+      </div>
+
+      <div class="text-center">
+        <button
+          (click)="registrarHumor()"
+          [disabled]="!humorSelecionado || humorCarregando"
+          style="background:#6366f1; color:#fff; border:none; border-radius:10px; padding:9px 24px; font-weight:600; font-size:0.9rem; cursor:pointer; transition:opacity 0.15s;"
+          [style.opacity]="humorSelecionado ? '1' : '0.4'"
+          [style.cursor]="humorSelecionado ? 'pointer' : 'not-allowed'">
+          {{ humorCarregando ? 'Registrando...' : 'Registrar humor' }}
+        </button>
+      </div>
+
+      <div *ngIf="humorEnviado" class="text-center mt-3"
+        style="background:#f0fdf4; color:#15803d; border-radius:8px; padding:8px; font-size:0.88rem; font-weight:600;">
+        ✓ Humor registrado com sucesso!
       </div>
     </div>
-    <ng-template #semLembretes>
-      <p style="color:var(--text-secondary); font-size:0.875rem;">Nenhum lembrete cadastrado.</p>
-    </ng-template>
-  </div>
 
-  <!-- Galeria de Fotos -->
-  <div class="card-modern" style="margin-bottom:24px;">
-    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">📷 Galeria de Fotos</h4>
-    <div *ngIf="fotos.length > 0; else semFotos"
-      style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap:12px;">
-      <img *ngFor="let f of fotos"
-        [src]="fotoSrc(f)"
-        style="width:100%; height:140px; object-fit:cover; border-radius:10px; border:1px solid var(--border);"
-        alt="Foto familiar">
-    </div>
-    <ng-template #semFotos>
-      <p style="color:var(--text-secondary); font-size:0.875rem;">Nenhuma foto enviada ainda.</p>
-    </ng-template>
-  </div>
-
-  <!-- Atividades -->
-  <div class="card-modern">
-    <h4 style="font-weight:700; font-size:1rem; margin-bottom:16px;">🧩 Atividades Interativas</h4>
-    <div *ngIf="atividades.length > 0; else semAtividades">
-      <div *ngFor="let a of atividades"
-        style="padding:14px; border:1px solid var(--border); border-radius:10px; margin-bottom:10px;">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
-          <span class="badge-mod badge-violet">{{ a.tipo }}</span>
-          <strong>{{ a.titulo }}</strong>
+    <!-- Medicamentos do dia -->
+    <div *ngIf="medicamentos.length > 0" style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; margin-bottom:20px;">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="width:34px;height:34px;background:#fef3c7;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;">💊</span>
+        <div>
+          <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Medicamentos</h2>
+          <p class="mb-0" style="color:#94a3b8; font-size:0.78rem;">Tome no horário indicado</p>
         </div>
-        <p style="color:var(--text-secondary); font-size:0.82rem; margin:0;">{{ a.descricao }}</p>
+      </div>
+      <div class="row g-2">
+        <div class="col-sm-6" *ngFor="let m of medicamentos">
+          <div style="background:#fffbeb; border-radius:12px; padding:14px 16px; border-left:3px solid #f59e0b;">
+            <div class="fw-semibold" style="color:#0f172a; font-size:0.9rem;">{{ m.nome }}</div>
+            <div style="color:#64748b; font-size:0.8rem;">{{ m.dosagem }}</div>
+            <div style="color:#92400e; font-size:0.78rem; font-weight:600; margin-top:4px;">⏰ {{ m.horario }}</div>
+            <div *ngIf="m.observacao" style="color:#94a3b8; font-size:0.75rem; margin-top:2px;">{{ m.observacao }}</div>
+          </div>
+        </div>
       </div>
     </div>
-    <ng-template #semAtividades>
-      <p style="color:var(--text-secondary); font-size:0.875rem;">Nenhuma atividade registrada.</p>
-    </ng-template>
-  </div>
 
+    <!-- Grid: Lembretes + Atividades -->
+    <div class="row g-4 mb-4">
+
+      <!-- Lembretes -->
+      <div class="col-lg-6">
+        <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); overflow:hidden; height:100%;">
+          <div style="padding:20px 20px 14px; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between;">
+            <div class="d-flex align-items-center gap-2">
+              <span style="width:34px;height:34px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#7c3aed" viewBox="0 0 16 16">
+                  <path d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917z"/>
+                </svg>
+              </span>
+              <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Lembretes</h2>
+            </div>
+            <span style="background:#ede9fe; color:#6d28d9; border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:700;">{{ lembretes.length }}</span>
+          </div>
+          <div style="padding:16px 20px;">
+            <div *ngIf="lembretes.length === 0" class="text-center py-3">
+              <p style="color:#94a3b8; font-size:0.88rem; margin:0;">Nenhum lembrete por enquanto.</p>
+            </div>
+            <div *ngFor="let l of lembretes; let last = last"
+              [style.margin-bottom]="last ? '0' : '10px'"
+              style="background:#fafbff; border-radius:12px; padding:14px 16px; border-left:3px solid; transition:border-color 0.15s;"
+              [style.border-left-color]="l.confirmado ? '#22c55e' : '#6366f1'">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <span class="fw-semibold" style="font-size:0.92rem;"
+                  [style.color]="l.confirmado ? '#15803d' : '#0f172a'">
+                  {{ l.confirmado ? '✓ ' : '' }}{{ l.titulo }}
+                </span>
+                <span style="background:#ede9fe; color:#6d28d9; border-radius:20px; padding:2px 9px; font-size:0.75rem; font-weight:600; white-space:nowrap; margin-left:8px;">
+                  {{ l.hora }}
+                </span>
+              </div>
+              <p style="color:#64748b; font-size:0.82rem; margin:0 0 8px;">{{ l.descricao }}</p>
+              <button *ngIf="!l.confirmado"
+                (click)="confirmarLembrete(l.id)"
+                [disabled]="confirmandoLembrete === l.id"
+                style="background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; border-radius:8px; padding:5px 14px; font-size:0.78rem; font-weight:600; cursor:pointer; width:100%;">
+                {{ confirmandoLembrete === l.id ? '...' : '✓ Marcar como feito' }}
+              </button>
+              <div *ngIf="l.confirmado"
+                style="background:#f0fdf4; color:#15803d; border-radius:8px; padding:5px 14px; font-size:0.78rem; font-weight:600; text-align:center;">
+                ✓ Concluído
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atividades -->
+      <div class="col-lg-6">
+        <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); overflow:hidden; height:100%;">
+          <div style="padding:20px 20px 14px; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between;">
+            <div class="d-flex align-items-center gap-2">
+              <span style="width:34px;height:34px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#16a34a" viewBox="0 0 16 16">
+                  <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+              </span>
+              <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Atividades</h2>
+            </div>
+            <span style="background:#dcfce7; color:#15803d; border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:700;">{{ atividades.length }}</span>
+          </div>
+          <div style="padding:16px 20px;">
+            <div *ngIf="atividades.length === 0" class="text-center py-3">
+              <p style="color:#94a3b8; font-size:0.88rem; margin:0;">Nenhuma atividade por enquanto.</p>
+            </div>
+            <div *ngFor="let a of atividades; let last = last"
+              [style.margin-bottom]="last ? '0' : '10px'"
+              style="background:#f0fdf4; border-radius:12px; padding:14px 16px; border-left:3px solid; transition:border-color 0.15s;"
+              [style.border-left-color]="a.confirmado ? '#22c55e' : '#86efac'">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <span class="fw-semibold" style="font-size:0.92rem;"
+                  [style.color]="a.confirmado ? '#15803d' : '#0f172a'">
+                  {{ a.confirmado ? '✓ ' : '' }}{{ a.titulo }}
+                </span>
+                <span style="background:#dcfce7; color:#15803d; border-radius:20px; padding:2px 9px; font-size:0.75rem; font-weight:600; white-space:nowrap; margin-left:8px;">
+                  {{ a.tipo }}
+                </span>
+              </div>
+              <p style="color:#64748b; font-size:0.82rem; margin:0 0 8px;">{{ a.descricao }}</p>
+              <button *ngIf="!a.confirmado"
+                (click)="confirmarAtividade(a.id)"
+                [disabled]="confirmandoAtividade === a.id"
+                style="background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; border-radius:8px; padding:5px 14px; font-size:0.78rem; font-weight:600; cursor:pointer; width:100%;">
+                {{ confirmandoAtividade === a.id ? '...' : '✓ Marcar como feita' }}
+              </button>
+              <div *ngIf="a.confirmado"
+                style="background:#d1fae5; color:#065f46; border-radius:8px; padding:5px 14px; font-size:0.78rem; font-weight:600; text-align:center;">
+                ✓ Concluída
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Contatos de Emergência -->
+    <div *ngIf="contatos.length > 0" style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; margin-bottom:20px;">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="width:34px;height:34px;background:#fee2e2;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;">📞</span>
+        <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Contatos de Emergência</h2>
+      </div>
+      <div class="row g-2">
+        <div class="col-sm-6" *ngFor="let c of contatos">
+          <div style="background:#fef2f2; border-radius:12px; padding:14px 16px; border-left:3px solid #fca5a5;">
+            <div class="fw-semibold" style="color:#0f172a; font-size:0.9rem;">{{ c.nome }}</div>
+            <div style="color:#64748b; font-size:0.8rem;">{{ c.relacao }}</div>
+            <a [href]="'tel:' + c.telefone"
+              style="color:#dc2626; font-size:0.88rem; font-weight:700; text-decoration:none; display:block; margin-top:4px;">
+              📞 {{ c.telefone }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Galeria de Fotos -->
+    <div *ngIf="fotos.length > 0" style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px;">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="width:34px;height:34px;background:#fef9c3;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ca8a04" viewBox="0 0 16 16">
+            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+          </svg>
+        </span>
+        <h2 class="fw-bold mb-0" style="color:#0f172a; font-size:1rem;">Galeria de Fotos</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-6 col-md-3" *ngFor="let f of fotos">
+          <img [src]="fotoSrc(f)"
+            style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1);"
+            alt="Foto familiar">
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

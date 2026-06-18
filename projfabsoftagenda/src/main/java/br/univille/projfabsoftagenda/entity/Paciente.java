@@ -13,6 +13,7 @@ public class Paciente {
     private String nome;
     private int idade;
     private String email;
+    private String senha;
     private String endereco;
     private String telefone;
     
@@ -67,6 +68,14 @@ public class Paciente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getTelefone() {

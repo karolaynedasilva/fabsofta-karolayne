@@ -6,13 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-form-paciente',
-  imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe, RouterLink],
+  imports: [HttpClientModule, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe, HeaderComponent],
   templateUrl: './form-paciente.component.html',
   styleUrl: './form-paciente.component.css',
-  providers: [provideNgxMask()]
+  providers: [PacienteService, provideNgxMask()]
 })
 export class FormPacienteComponent implements OnInit {
   paciente: Paciente = new Paciente();
@@ -30,8 +31,8 @@ export class FormPacienteComponent implements OnInit {
   ngOnInit(): void {
     const id = this.activeRouter.snapshot.paramMap.get('id');
     if (id) {
-      this.pacienteService.getPacienteById(id).subscribe(p => {
-        this.paciente = p;
+      this.pacienteService.getPacienteById(id).subscribe(paciente => {
+        this.paciente = paciente;
       });
     }
   }
@@ -46,7 +47,6 @@ export class FormPacienteComponent implements OnInit {
     this.salvando = true;
     this.pacienteService.savePaciente(this.paciente).subscribe({
       next: () => {
-        // NgZone.run garante que o navigate ocorre dentro do ciclo correto do Angular
         this.ngZone.run(() => {
           this.router.navigate(['/pacientes']);
         });
@@ -56,5 +56,9 @@ export class FormPacienteComponent implements OnInit {
         console.error('Erro ao salvar:', err);
       }
     });
+  }
+
+  voltar() {
+    this.router.navigate(['/pacientes']);
   }
 }

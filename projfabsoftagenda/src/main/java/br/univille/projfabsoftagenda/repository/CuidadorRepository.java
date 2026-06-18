@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.univille.projfabsoftagenda.entity.Cuidador;
 
 public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
-    
+    java.util.Optional<Cuidador> findByEmailAndSenha(String email, String senha);
 }

@@ -26,7 +26,7 @@ public class LembreteController {
 
     @GetMapping("/paciente/{pacienteId}")
     public List<Lembrete> listarPorPaciente(@PathVariable Long pacienteId) {
-        return lembreteRepository.findByPacienteId(pacienteId);
+        return service.listarPorPaciente(pacienteId);
     }
 
     @GetMapping
@@ -59,14 +59,18 @@ public class LembreteController {
                          lembreteExistente.setDescricao(novoLembrete.getDescricao());
                          lembreteExistente.setData(novoLembrete.getData());
                          lembreteExistente.setHora(novoLembrete.getHora());
-                         if (novoLembrete.getPaciente() != null && novoLembrete.getPaciente().getId() > 0) {
-                             Paciente paciente = pacienteRepository.findById(novoLembrete.getPaciente().getId())
-                                     .orElse(null);
-                             lembreteExistente.setPaciente(paciente);
-                         }
+                         lembreteExistente.setPaciente(novoLembrete.getPaciente());
                          return ResponseEntity.ok(service.salvar(lembreteExistente));
                      })
                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}/confirmar")
+    public ResponseEntity<Lembrete> confirmar(@PathVariable Long id) {
+        return service.buscarPorId(id).map(l -> {
+            l.setConfirmado(true);
+            return ResponseEntity.ok(service.salvar(l));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

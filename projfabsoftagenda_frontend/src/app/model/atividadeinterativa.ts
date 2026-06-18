@@ -4,6 +4,7 @@ export class AtividadeInterativa {
   id: number = 0;
   titulo: string = '';
   descricao: string = '';
-  tipo: string = ''; 
+  tipo: string = '';
   paciente!: Paciente;
+  confirmado: boolean = false;
 }

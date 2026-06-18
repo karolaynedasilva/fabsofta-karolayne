@@ -28,6 +28,10 @@ export class AtividadeInterativaService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
   getAtividadeById(id: number): Observable<AtividadeInterativa> {
-  return this.http.get<AtividadeInterativa>(`${this.apiUrl}/${id}`);
-}
+    return this.http.get<AtividadeInterativa>(`${this.apiUrl}/${id}`);
+  }
+
+  confirmar(id: number): Observable<AtividadeInterativa> {
+    return this.http.put<AtividadeInterativa>(`${this.apiUrl}/${id}/confirmar`, {});
+  }
 }

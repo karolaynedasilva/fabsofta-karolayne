@@ -16,7 +16,7 @@ import { FotoFamiliarService } from '../service/foto-familiar.service';
   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './foto-familiar.component.html',
   styleUrl: './foto-familiar.component.css',
-  providers: []
+  providers: [FotoFamiliarService, PacienteService]
 })
 export class FotoFamiliarComponent {
   @ViewChild('formFotoFamiliar') formFotoFamiliar!: NgForm;
@@ -57,20 +57,6 @@ export class FotoFamiliarComponent {
       reader.readAsDataURL(file);
     }
   }
-
-  // salvar() {
-  //   if (this.formFotoFamiliar.valid) {
-  //     this.fotoFamiliarService.salvar(this.fotoFamiliar).subscribe({
-  //       next: () => this.router.navigate(['/fotos-familiares']),
-  //       error: err => {
-  //         console.error('Erro ao salvar foto familiar:', err);
-  //         alert('Erro ao salvar imagem.');
-  //       }
-  //     });
-  //   } else {
-  //     this.formFotoFamiliar.form.markAllAsTouched();
-  //   }
-  // }
 
   salvar() {
   if (!this.formFotoFamiliar) return;

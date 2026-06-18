@@ -8,14 +8,15 @@ import { AtividadeInterativa } from '../model/atividadeinterativa';
 import { Paciente } from '../model/paciente';
 import { AtividadeInterativaService } from '../service/atividadeinterativa.service';
 import { PacienteService } from '../service/paciente.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-form-atividade',
   standalone: true,
   templateUrl: './form-atividade.component.html',
   styleUrl: './form-atividade.component.css',
-  imports: [CommonModule, FormsModule, HttpClientModule],
-
+  imports: [CommonModule, FormsModule, HttpClientModule, HeaderComponent],
+  providers: [AtividadeInterativaService, PacienteService]
 })
 export class FormAtividadeComponent {
   @ViewChild('formAtividade') formAtividade!: NgForm;
@@ -51,11 +52,16 @@ export class FormAtividadeComponent {
         paciente: this.atividade.paciente
       };
 
-      this.atividadeService.salvar(atividadeParaSalvar).subscribe(() => {
-        this.router.navigate(['/atividades']);
+      this.atividadeService.salvar(atividadeParaSalvar).subscribe({
+        next: () => this.router.navigate(['/atividades']),
+        error: (err) => alert('Erro ao salvar atividade: ' + (err?.message || JSON.stringify(err)))
       });
     } else {
       this.formAtividade.form.markAllAsTouched();
     }
+  }
+
+  voltar() {
+    this.router.navigate(['/atividades']);
   }
 }

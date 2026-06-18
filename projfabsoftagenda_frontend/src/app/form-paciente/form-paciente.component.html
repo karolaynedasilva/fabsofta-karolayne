@@ -1,65 +1,99 @@
-<div class="page-content">
-  <div class="page-header">
-    <h1>{{ paciente.id ? 'Editar' : 'Novo' }} Paciente</h1>
-    <p>Preencha os dados do paciente abaixo.</p>
-  </div>
+<app-header></app-header>
 
-  <div class="form-card">
-    <form #formPaciente="ngForm" class="row g-4" novalidate>
+<div style="background:#f1f4f9; min-height:calc(100vh - 56px);">
+  <div class="container py-5" style="max-width:680px;">
 
-      <div class="col-md-6">
-        <label class="form-label-mod">Nome</label>
-        <input type="text" class="form-control"
-          [(ngModel)]="paciente.nome" name="nome" required #nome="ngModel"
-          [ngClass]="{'is-invalid': nome.invalid && nome.touched}"
-          placeholder="Nome do paciente">
-        <div *ngIf="nome.invalid && nome.touched" class="error-msg">Nome é obrigatório.</div>
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <button type="button" (click)="voltar()"
+        style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:7px 16px;font-size:0.85rem;color:#475569;font-weight:600;cursor:pointer;line-height:1;">
+        ← Voltar
+      </button>
+      <div>
+        <p class="text-uppercase fw-semibold mb-0" style="color:#6366f1;font-size:0.72rem;letter-spacing:0.1em;">Pacientes</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.4rem;">{{ paciente.id ? 'Editar Paciente' : 'Novo Paciente' }}</h1>
       </div>
+    </div>
 
-      <div class="col-md-6">
-        <label class="form-label-mod">Idade</label>
-        <input type="number" class="form-control"
-          [(ngModel)]="paciente.idade" name="idade" required #idade="ngModel"
-          [ngClass]="{'is-invalid': idade.invalid && idade.touched}"
-          placeholder="Ex: 72">
-        <div *ngIf="idade.invalid && idade.touched" class="error-msg">Idade é obrigatória.</div>
-      </div>
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.08);padding:32px;">
+      <form #formPaciente="ngForm" class="row g-3" (ngSubmit)="salvar()" novalidate>
 
-      <div class="col-12">
-        <label class="form-label-mod">Endereço</label>
-        <input type="text" class="form-control"
-          [(ngModel)]="paciente.endereco" name="endereco" required #endereco="ngModel"
-          [ngClass]="{'is-invalid': endereco.invalid && endereco.touched}"
-          placeholder="Rua, número, bairro, cidade">
-        <div *ngIf="endereco.invalid && endereco.touched" class="error-msg">Endereço é obrigatório.</div>
-      </div>
+        <div class="col-md-6">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Nome</label>
+          <input type="text" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.nome" name="nome" required #nome="ngModel"
+            [ngClass]="{'is-invalid': nome.invalid && nome.touched}"
+            placeholder="Nome completo do paciente">
+          <div *ngIf="nome.invalid && nome.touched" class="invalid-feedback">Nome é obrigatório.</div>
+        </div>
 
-      <div class="col-md-6">
-        <label class="form-label-mod">Email</label>
-        <input type="email" class="form-control"
-          [(ngModel)]="paciente.email" name="email" required #email="ngModel"
-          [ngClass]="{'is-invalid': email.invalid && email.touched}"
-          placeholder="email@exemplo.com">
-        <div *ngIf="email.invalid && email.touched" class="error-msg">Email válido é obrigatório.</div>
-      </div>
+        <div class="col-md-6">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Idade</label>
+          <input type="number" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.idade" name="idade" required #idade="ngModel"
+            [ngClass]="{'is-invalid': idade.invalid && idade.touched}"
+            placeholder="Ex: 72">
+          <div *ngIf="idade.invalid && idade.touched" class="invalid-feedback">Idade é obrigatória.</div>
+        </div>
 
-      <div class="col-md-6">
-        <label class="form-label-mod">Telefone</label>
-        <input type="text" class="form-control"
-          [(ngModel)]="paciente.telefone" name="telefone" required #telefone="ngModel"
-          mask="(00) 00000-0000"
-          [ngClass]="{'is-invalid': telefone.invalid && telefone.touched}"
-          placeholder="(00) 00000-0000">
-        <div *ngIf="telefone.invalid && telefone.touched" class="error-msg">Telefone é obrigatório.</div>
-      </div>
+        <div class="col-12">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Endereço</label>
+          <input type="text" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.endereco" name="endereco" required #endereco="ngModel"
+            [ngClass]="{'is-invalid': endereco.invalid && endereco.touched}"
+            placeholder="Rua, número, bairro, cidade">
+          <div *ngIf="endereco.invalid && endereco.touched" class="invalid-feedback">Endereço é obrigatório.</div>
+        </div>
 
-      <div class="col-12" style="display:flex; gap:12px; justify-content:flex-end; padding-top:8px;">
-        <a class="btn-ghost-mod" routerLink="/pacientes">Cancelar</a>
-        <button type="button" class="btn-primary-mod" [disabled]="salvando" (click)="salvar()">
-          {{ salvando ? 'Salvando...' : 'Salvar Paciente' }}
-        </button>
-      </div>
+        <div class="col-md-6">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Email</label>
+          <input type="email" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.email" name="email" required #email="ngModel"
+            [ngClass]="{'is-invalid': email.invalid && email.touched}"
+            placeholder="paciente@email.com">
+          <div *ngIf="email.invalid && email.touched" class="invalid-feedback">Email válido é obrigatório.</div>
+        </div>
 
-    </form>
+        <div class="col-md-6">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Telefone</label>
+          <input type="text" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.telefone" name="telefone" required #telefone="ngModel"
+            mask="(00) 00000-0000"
+            [ngClass]="{'is-invalid': telefone.invalid && telefone.touched}"
+            placeholder="(00) 00000-0000">
+          <div *ngIf="telefone.invalid && telefone.touched" class="invalid-feedback">Telefone é obrigatório.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="fw-semibold mb-1 d-block" style="color:#374151;font-size:0.88rem;">Senha de acesso</label>
+          <input type="password" class="form-control"
+            style="border-radius:10px;border:1px solid #e2e8f0;padding:10px 14px;"
+            [(ngModel)]="paciente.senha" name="senha" required #senha="ngModel"
+            [ngClass]="{'is-invalid': senha.invalid && senha.touched}"
+            placeholder="••••••••">
+          <div *ngIf="senha.invalid && senha.touched" class="invalid-feedback">Senha é obrigatória.</div>
+        </div>
+
+        <div class="col-12 pt-2">
+          <hr style="border-color:#f1f5f9;margin-bottom:20px;">
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" (click)="voltar()"
+              style="background:#f1f5f9;color:#475569;border:none;border-radius:10px;padding:10px 20px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+              Cancelar
+            </button>
+            <button type="submit" [disabled]="salvando"
+              style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-weight:600;font-size:0.9rem;cursor:pointer;">
+              {{ salvando ? 'Salvando...' : 'Salvar Paciente' }}
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
   </div>
 </div>

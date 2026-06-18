@@ -7,6 +7,7 @@ export class Lembrete {
     data: Date;
     hora: string;
     nomePaciente: string;
-    paciente: Paciente; 
+    paciente: Paciente;
     pacienteId: number;
+    confirmado: boolean = false;
 }

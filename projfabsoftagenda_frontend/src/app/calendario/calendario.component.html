@@ -1,0 +1,98 @@
+<app-header></app-header>
+
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
+  <div class="container py-4" style="max-width:860px;">
+
+    <div class="mb-4">
+      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:1.5rem;">Calendário de Lembretes</h1>
+      <p class="mb-0" style="color:#64748b; font-size:0.9rem;">Visualize os lembretes de todos os pacientes por data</p>
+    </div>
+
+    <!-- Card calendário -->
+    <div style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); overflow:hidden;">
+
+      <!-- Navegação -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid #f1f5f9;">
+        <button (click)="mesAnterior()"
+          style="background:#f1f5f9; border:none; border-radius:8px; padding:7px 14px; color:#475569; font-weight:700; font-size:1rem; cursor:pointer;">
+          ‹
+        </button>
+        <span style="font-weight:700; color:#0f172a; font-size:1.05rem;">{{ tituloMes }}</span>
+        <button (click)="proximoMes()"
+          style="background:#f1f5f9; border:none; border-radius:8px; padding:7px 14px; color:#475569; font-weight:700; font-size:1rem; cursor:pointer;">
+          ›
+        </button>
+      </div>
+
+      <!-- Cabeçalho dos dias da semana -->
+      <div style="display:grid; grid-template-columns:repeat(7,1fr); border-bottom:1px solid #f1f5f9;">
+        <div *ngFor="let d of diasSemana"
+          style="padding:10px 4px; text-align:center; font-size:0.75rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;">
+          {{ d }}
+        </div>
+      </div>
+
+      <!-- Grade -->
+      <div style="padding:8px;">
+        <div *ngFor="let semana of semanas" style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:4px;">
+          <div *ngFor="let dia of semana"
+            (click)="selecionarDia(dia)"
+            [style.opacity]="dia.mesAtual ? '1' : '0.3'"
+            [style.cursor]="dia.mesAtual ? 'pointer' : 'default'"
+            style="border-radius:10px; padding:6px 4px; min-height:72px; transition:background 0.1s; position:relative;"
+            [style.background]="diaSelecionado?.diaNum === dia.diaNum && dia.mesAtual ? '#ede9fe' : (eHoje(dia) ? '#f5f3ff' : 'transparent')"
+            onmouseover="this.style.background=this.style.background||'#fafbff'"
+            onmouseout="this.style.background=this.style.background">
+            <div style="text-align:center; margin-bottom:4px;">
+              <span
+                [style.background]="eHoje(dia) ? '#6366f1' : 'transparent'"
+                [style.color]="eHoje(dia) ? '#fff' : '#374151'"
+                style="font-size:0.85rem; font-weight:600; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%;">
+                {{ dia.diaNum }}
+              </span>
+            </div>
+            <div *ngFor="let l of dia.lembretes.slice(0,2)"
+              style="background:#ede9fe; color:#6d28d9; border-radius:4px; padding:2px 5px; font-size:0.68rem; font-weight:600; margin-bottom:2px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+              {{ l.hora }} {{ l.titulo }}
+            </div>
+            <div *ngIf="dia.lembretes.length > 2"
+              style="font-size:0.68rem; color:#94a3b8; text-align:center; font-weight:600;">
+              +{{ dia.lembretes.length - 2 }} mais
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Detalhes do dia selecionado -->
+    <div *ngIf="diaSelecionado && diaSelecionado.lembretes.length > 0"
+      style="background:#fff; border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.07); padding:24px; margin-top:20px;">
+      <h3 class="fw-bold mb-3" style="color:#0f172a; font-size:1rem;">
+        Lembretes do dia {{ diaSelecionado.diaNum }}
+      </h3>
+      <div *ngFor="let l of diaSelecionado.lembretes; let last = last"
+        [style.margin-bottom]="last ? '0' : '10px'"
+        style="background:#fafbff; border-radius:12px; padding:14px 16px; border-left:3px solid #6366f1;">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="fw-semibold" style="color:#0f172a; font-size:0.9rem;">{{ l.titulo }}</div>
+            <div style="color:#64748b; font-size:0.82rem; margin-top:3px;">{{ l.descricao }}</div>
+            <div *ngIf="l.paciente?.nome" style="color:#94a3b8; font-size:0.78rem; margin-top:3px;">
+              Paciente: {{ l.paciente?.nome }}
+            </div>
+          </div>
+          <span style="background:#ede9fe; color:#6d28d9; border-radius:20px; padding:3px 10px; font-size:0.78rem; font-weight:600; white-space:nowrap; margin-left:8px;">
+            {{ l.hora }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="diaSelecionado && diaSelecionado.lembretes.length === 0"
+      style="background:#fff; border-radius:16px; padding:24px; text-align:center; margin-top:20px; box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+      <p style="color:#94a3b8; margin:0; font-size:0.9rem;">Nenhum lembrete para esse dia.</p>
+    </div>
+
+  </div>
+</div>

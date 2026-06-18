@@ -11,11 +11,15 @@ export class EvolucaoService {
 
   constructor(private http: HttpClient) {}
 
-  salvar(evolucao: EvolucaoPaciente): Observable<EvolucaoPaciente> {
-    return this.http.post<EvolucaoPaciente>(this.api, evolucao);
+  salvar(pacienteId: number, evolucao: EvolucaoPaciente): Observable<EvolucaoPaciente> {
+    return this.http.post<EvolucaoPaciente>(`${this.api}/paciente/${pacienteId}`, evolucao);
   }
 
   listarPorPaciente(pacienteId: number): Observable<EvolucaoPaciente[]> {
     return this.http.get<EvolucaoPaciente[]>(`${this.api}/paciente/${pacienteId}`);
+  }
+
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`);
   }
 }
