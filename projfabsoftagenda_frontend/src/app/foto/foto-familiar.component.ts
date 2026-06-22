@@ -8,12 +8,13 @@ import { Paciente } from '../model/paciente';
 import { PacienteService } from '../service/paciente.service';
 import { FotoFamiliar } from '../model/foto-familiar';
 import { FotoFamiliarService } from '../service/foto-familiar.service';
+import { HeaderComponent } from '../header/header.component';
 
 
 @Component({
   selector: 'app-foto-familiar',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, HeaderComponent],
   templateUrl: './foto-familiar.component.html',
   styleUrl: './foto-familiar.component.css',
   providers: [FotoFamiliarService, PacienteService]
@@ -24,6 +25,7 @@ export class FotoFamiliarComponent {
   fotoFamiliar: FotoFamiliar = new FotoFamiliar();
   pacientes: Paciente[] = [];
   mensagemSucesso: boolean = false;
+  mensagemErro: string = '';
 
 
   constructor(
@@ -59,19 +61,28 @@ export class FotoFamiliarComponent {
   }
 
   salvar() {
-  if (!this.formFotoFamiliar) return;
+    if (!this.formFotoFamiliar) return;
 
-  if (this.formFotoFamiliar.valid) {
-    this.fotoFamiliarService.salvar(this.fotoFamiliar).subscribe({
-      next: () => this.router.navigate(['/fotos-familiares']),
-      error: err => {
-        console.error('Erro ao salvar foto familiar:', err);
-        alert('Erro ao salvar imagem.');
-      }
-    });
-  } else {
-    this.formFotoFamiliar.form.markAllAsTouched();
+    this.mensagemSucesso = false;
+    this.mensagemErro = '';
+
+    if (this.formFotoFamiliar.valid) {
+      this.fotoFamiliarService.salvar(this.fotoFamiliar).subscribe({
+        next: () => {
+          this.mensagemSucesso = true;
+          this.fotoFamiliar = new FotoFamiliar();
+          this.formFotoFamiliar.resetForm();
+          setTimeout(() => this.mensagemSucesso = false, 4000);
+        },
+        error: err => {
+          console.error('Erro ao salvar foto familiar:', err);
+          this.mensagemErro = 'Erro ao salvar a imagem. Tente novamente.';
+          setTimeout(() => this.mensagemErro = '', 4000);
+        }
+      });
+    } else {
+      this.formFotoFamiliar.form.markAllAsTouched();
+    }
   }
-}
 
 }

@@ -24,11 +24,6 @@ public class AtividadeInterativaController {
         this.atividadeRepository = atividadeRepository;
     }
 
-    @GetMapping("/paciente/{pacienteId}")
-    public List<AtividadeInterativa> listarPorPaciente(@PathVariable Long pacienteId) {
-        return atividadeRepository.findByPacienteId(pacienteId);
-    }
-
     @GetMapping
     public List<AtividadeInterativa> listarTodos() {
         return service.listarTodos();

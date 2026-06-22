@@ -1,5 +1,6 @@
 package br.univille.projfabsoftagenda.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +42,16 @@ public class Foto {
 
 
     @Lob
-    private byte[] imagem; // Pode ser path ou bytes
+    @JsonProperty("foto")
+    private byte[] imagem;
 
+    private String mimeType;
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
 }
