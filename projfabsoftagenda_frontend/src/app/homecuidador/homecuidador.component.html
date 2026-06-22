@@ -1,134 +1,171 @@
 <app-header></app-header>
 
-<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
-  <div class="container py-5">
+<div style="background:#f0f6ff; min-height:calc(100vh - 60px);">
+  <div class="container py-5" style="max-width:960px;">
 
-    <!-- Banner de chamados de ajuda -->
+    <!-- Alerta de chamados -->
     <div *ngIf="chamadosPendentes.length > 0"
-      style="background:#fef2f2; border:1.5px solid #fca5a5; border-radius:16px; padding:20px 24px; margin-bottom:28px;">
-      <div class="d-flex align-items-center gap-2 mb-3">
-        <span style="width:36px;height:36px;background:#fee2e2;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🆘</span>
+      style="background:#fff1f2; border-left:4px solid #f87171; border-radius:12px; padding:16px 20px; margin-bottom:32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div class="d-flex align-items-center gap-3">
+        <span style="font-size:1.3rem;">🆘</span>
         <div>
-          <p class="fw-bold mb-0" style="color:#dc2626;font-size:1rem;">
+          <p class="fw-bold mb-0" style="color:#b91c1c; font-size:0.95rem;">
             {{ chamadosPendentes.length }} chamado(s) de ajuda pendente(s)
           </p>
-          <p class="mb-0" style="color:#ef4444;font-size:0.82rem;">Pacientes precisando de atenção</p>
+          <p class="mb-0" style="color:#ef4444; font-size:0.8rem;">Clique em cada item para marcar como atendido</p>
         </div>
       </div>
-
-      <div *ngFor="let c of chamadosPendentes"
-        style="background:#fff; border-radius:12px; padding:14px 16px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-        <div>
-          <p class="fw-semibold mb-0" style="color:#0f172a; font-size:0.95rem;">
-            {{ c.paciente?.nome }}
-          </p>
-          <p class="mb-0" style="color:#94a3b8; font-size:0.8rem;">{{ c.dataHora }}</p>
+      <div class="d-flex flex-wrap gap-2">
+        <div *ngFor="let c of chamadosPendentes"
+          style="background:#fff; border:1px solid #fecaca; border-radius:8px; padding:8px 14px; display:flex; align-items:center; gap:12px;">
+          <span style="color:#0f172a; font-size:0.88rem; font-weight:600;">{{ c.paciente?.nome }}</span>
+          <button (click)="atender(c.id)"
+            style="background:#f87171; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.78rem; font-weight:600; cursor:pointer;">
+            Atender
+          </button>
         </div>
-        <button (click)="atender(c.id)"
-          style="background:#6366f1; color:#fff; border:none; border-radius:8px; padding:7px 16px; font-weight:600; font-size:0.82rem; cursor:pointer;">
-          Marcar como atendido
-        </button>
       </div>
     </div>
 
     <!-- Cabeçalho -->
     <div class="mb-5">
-      <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1; font-size:0.8rem; letter-spacing:0.1em;">Bem-vindo ao sistema</p>
-      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:2rem;">Painel do Cuidador</h1>
-      <p style="color:#64748b;">Selecione uma área para gerenciar.</p>
+      <p style="color:#3b82f6; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;">Painel do cuidador</p>
+      <h1 class="fw-bold mb-1" style="color:#0f172a; font-size:1.75rem;">Olá, o que deseja gerenciar hoje?</h1>
+      <p style="color:#94a3b8; font-size:0.9rem; margin:0;">Selecione uma área abaixo.</p>
     </div>
 
-    <!-- Cards de navegação -->
-    <div class="row g-4">
+    <!-- Cards -->
+    <div class="row g-3">
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#ede9fe;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#7c3aed" viewBox="0 0 16 16">
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/pacientes" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.029 10 8 10c-2.029 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
               </svg>
             </div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Pacientes</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Cadastre e gerencie os pacientes do sistema.</p>
-            <a routerLink="/pacientes" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
-              Ver Pacientes →
-            </a>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Pacientes</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Cadastre e gerencie pacientes</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#dbeafe;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#2563eb" viewBox="0 0 16 16">
-                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/lembretes" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917z"/>
               </svg>
             </div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Lembretes</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Crie lembretes e alertas diários para os pacientes.</p>
-            <a routerLink="/lembretes" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
-              Ver Lembretes →
-            </a>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Lembretes</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Alertas diários para pacientes</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#dcfce7;border-radius:12px;display:flex;align-items:center;justify-content:center;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#16a34a" viewBox="0 0 16 16">
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/atividades" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
                 <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
               </svg>
             </div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Atividades</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Registre atividades para estimulação cognitiva.</p>
-            <a routerLink="/atividades" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
-              Ver Atividades →
-            </a>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Atividades</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Estimulação cognitiva</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#fef3c7;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">💊</div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Medicamentos</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Cadastre e gerencie medicamentos dos pacientes.</p>
-            <a routerLink="/medicamentos" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
-              Ver Medicamentos →
-            </a>
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/medicamentos" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6v-2A1.5 1.5 0 0 0 4.5 2h-3zm0 5A1.5 1.5 0 0 0 0 8.5v2A1.5 1.5 0 0 0 1.5 12h3A1.5 1.5 0 0 0 6 10.5v-2H0zm8.5-5A1.5 1.5 0 0 0 8 3.5v2h6v-2A1.5 1.5 0 0 0 12.5 2h-3zm0 5A1.5 1.5 0 0 0 8 8.5v2a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5v-2H8z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Medicamentos</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Gerencie medicamentos</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#fee2e2;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🚨</div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Emergências</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Veja os alertas de SOS enviados pelos pacientes.</p>
-            <button (click)="navegarParaEmergencias()" class="btn w-100 fw-semibold" style="background:#dc2626;color:#fff;border-radius:10px;padding:10px;border:none;">
-              Acessar Emergências →
-            </button>
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/cuidadores" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Cuidadores</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Gerencie a equipe</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
-      <div class="col-md-4">
-        <div class="card h-100 border-0" style="border-radius:16px; box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-          <div class="card-body p-4 d-flex flex-column">
-            <div class="mb-4" style="width:48px;height:48px;background:#e0f2fe;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">📅</div>
-            <h5 class="fw-bold mb-1" style="color:#0f172a;">Calendário</h5>
-            <p class="flex-grow-1 mb-4" style="color:#64748b;font-size:0.9rem;">Visualize todos os lembretes organizados por data.</p>
-            <a routerLink="/calendario" class="btn w-100 fw-semibold" style="background:#6366f1;color:#fff;border-radius:10px;padding:10px;">
-              Ver Calendário →
-            </a>
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/calendario" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Calendário</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Lembretes por data</p>
+            </div>
           </div>
-        </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a routerLink="/fotos-familiares" style="text-decoration:none;">
+          <div class="nav-card">
+            <div class="nav-icon" style="background:#dbeafe;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#2563eb" viewBox="0 0 16 16">
+                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="fw-bold mb-1" style="color:#0f172a; font-size:0.97rem;">Fotos</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Álbum familiar dos pacientes</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-sm-6 col-lg-4">
+        <a (click)="navegarParaEmergencias()" style="text-decoration:none; cursor:pointer;">
+          <div class="nav-card" style="border-color:#fecaca;">
+            <div class="nav-icon" style="background:#fee2e2;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dc2626" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="fw-bold mb-1" style="color:#b91c1c; font-size:0.97rem;">Emergências</p>
+              <p style="color:#94a3b8; font-size:0.82rem; margin:0;">Alertas SOS dos pacientes</p>
+            </div>
+          </div>
+        </a>
       </div>
 
     </div>

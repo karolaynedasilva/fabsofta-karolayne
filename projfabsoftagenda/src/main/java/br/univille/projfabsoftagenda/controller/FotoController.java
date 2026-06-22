@@ -1,5 +1,6 @@
 package br.univille.projfabsoftagenda.controller;
 
+import br.univille.projfabsoftagenda.entity.AlbumFotos;
 import br.univille.projfabsoftagenda.entity.Foto;
 import br.univille.projfabsoftagenda.entity.Paciente;
 import br.univille.projfabsoftagenda.repository.PacienteRepository;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -45,8 +47,29 @@ public class FotoController {
     }
 
     @PostMapping
-    public Foto criar(@RequestBody Foto foto) {
-        return service.salvar(foto);
+    public ResponseEntity<?> criar(@RequestBody FotoFamiliarDTO dto) {
+        if (dto.getPaciente() == null || dto.getPaciente().getId() == null) {
+            return ResponseEntity.badRequest().body("Paciente obrigatório");
+        }
+        Paciente paciente = pacienteRepository.findById(dto.getPaciente().getId()).orElse(null);
+        if (paciente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Foto foto = new Foto();
+        foto.setImagem(Base64.getDecoder().decode(dto.getFoto()));
+        foto.setMimeType(dto.getMimeType());
+        foto.setDescricao(dto.getArquivoFoto());
+
+        AlbumFotos album = paciente.getAlbum();
+        if (album == null) {
+            album = new AlbumFotos();
+            paciente.setAlbum(album);
+        }
+        album.adicionarFoto(foto);
+        pacienteRepository.save(paciente);
+
+        return ResponseEntity.ok(foto);
     }
 
     @PutMapping("/{id}")

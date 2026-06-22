@@ -1,36 +1,70 @@
-<main class="container mt-4">
-<h2>Album de Fotos</h2>
-  <form #formFotoFamiliar="ngForm" (ngSubmit)="salvar()" novalidate>
-    
+<app-header></app-header>
 
-    <div class="col-md-6">
-      <label for="paciente" class="form-label">Paciente</label>
-      <select class="form-select" required
-              [(ngModel)]="fotoFamiliar.paciente" name="paciente" #paciente="ngModel">
-        <option [ngValue]="null" disabled selected>Selecione um paciente</option>
-        <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
-      </select>
-      <div *ngIf="paciente.invalid && paciente.touched" class="text-danger">
-        Paciente é obrigatório.
+<div style="background:#f1f4f9; min-height:calc(100vh - 60px);">
+  <div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-uppercase fw-semibold mb-1" style="color:#6366f1;font-size:0.75rem;letter-spacing:0.1em;">Galeria</p>
+        <h1 class="fw-bold mb-0" style="color:#0f172a;font-size:1.6rem;">Álbum de Fotos Familiares</h1>
+        <p class="mb-0" style="color:#64748b;font-size:0.88rem;">Adicione fotos para os pacientes</p>
       </div>
     </div>
 
- 
-    <div class="col-md-6">
-      <label for="fileImagem" class="form-label">Imagem</label>
-      <input type="file" class="form-control" id="fileImagem" required
-             (change)="onFileSelected($event)" accept="image/*">
+    <div style="background:#fff;border-radius:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);padding:2rem;">
+      <form #formFotoFamiliar="ngForm" (ngSubmit)="salvar()" novalidate>
+        <div class="row g-4">
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" style="color:#374151;font-size:0.88rem;">Paciente</label>
+            <select class="form-select" required
+                    [(ngModel)]="fotoFamiliar.paciente" name="paciente" #paciente="ngModel"
+                    style="border-radius:10px;border-color:#e2e8f0;font-size:0.9rem;color:#0f172a;">
+              <option [ngValue]="null" disabled selected>Selecione um paciente</option>
+              <option *ngFor="let p of pacientes" [ngValue]="p">{{ p.nome }}</option>
+            </select>
+            <div *ngIf="paciente.invalid && paciente.touched" class="mt-1" style="color:#dc2626;font-size:0.8rem;">
+              Paciente é obrigatório.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" style="color:#374151;font-size:0.88rem;">Imagem</label>
+            <input type="file" class="form-control" id="fileImagem" required
+                   (change)="onFileSelected($event)" accept="image/*"
+                   style="border-radius:10px;border-color:#e2e8f0;font-size:0.9rem;">
+          </div>
+
+          <div class="col-12" *ngIf="fotoFamiliar.foto">
+            <label class="form-label fw-semibold" style="color:#374151;font-size:0.88rem;">Pré-visualização</label>
+            <div>
+              <img [src]="'data:' + fotoFamiliar.mimeType + ';base64,' + fotoFamiliar.foto"
+                   style="width:220px;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+            </div>
+          </div>
+
+          <div class="col-12" *ngIf="mensagemSucesso">
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 16px;color:#15803d;font-size:0.88rem;font-weight:500;">
+              Foto salva com sucesso!
+            </div>
+          </div>
+
+          <div class="col-12" *ngIf="mensagemErro">
+            <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;color:#dc2626;font-size:0.88rem;font-weight:500;">
+              {{ mensagemErro }}
+            </div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-end gap-2 pt-2">
+            <button type="submit" class="btn fw-semibold px-4"
+                    style="background:#6366f1;color:#fff;border-radius:10px;border:none;">
+              Salvar Foto
+            </button>
+          </div>
+
+        </div>
+      </form>
     </div>
 
- 
-    <div class="col-12" *ngIf="fotoFamiliar.foto">
-      <label class="form-label">Pré-visualização</label>
-      <img [src]="'data:' + fotoFamiliar.mimeType + ';base64,' + fotoFamiliar.foto" class="img-fluid" width="250">
-    </div>
-
-    <div class="col-12 text-end">
-       <button class="btn btn-primary" type="submit">Salvar</button>
-      
-    </div>
-  </form>
-</main>
+  </div>
+</div>
